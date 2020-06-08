@@ -1,0 +1,75 @@
+{
+    "fields": [
+        {
+            "name": "buying_price",
+            "type": "double"
+        },
+        {
+            "name": "selling_price",
+            "type": "double"
+        },
+        {
+            "name": "quantity",
+            "type": "integer"
+        },
+        {
+            "name": "details",
+            "type": "text"
+        },
+        {
+            "name": "image",
+            "type": "file"
+        },
+        {
+            "name": "groupname_id",
+            "type": "integer#unsigned"
+        },
+        {
+            "name": "manufacturer_id",
+            "type": "integer#unsigned"
+        },
+        {
+            "name": "shelf_id",
+            "type": "integer#unsigned"
+        },
+        {
+            "name": "medicine_type_id",
+            "type": "integer#unsigned"
+        }
+    ],
+    "foreign_keys": [
+        {
+            "column": "groupname_id",
+            "references": "id",
+            "on": "groupnames",
+            "onDelete": "cascade"
+        },
+        {
+            "column": "manufacturer_id",
+            "references": "id",
+            "on": "manufactures",
+            "onDelete": "cascade"
+        },
+        {
+            "column": "shelf_id",
+            "references": "id",
+            "on": "shelves",
+            "onDelete": "cascade"
+        },
+        {
+            "column": "medicine_type_id",
+            "references": "id",
+            "on": "medicinetypes",
+            "onDelete": "cascade"
+        }
+    ],
+    "relationships": [
+     
+    ],
+    "validations": [
+        {
+            "field": "name",
+            "rules": "required|max:100"
+        }
+    ]
+}

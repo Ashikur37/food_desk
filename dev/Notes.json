@@ -1,0 +1,51 @@
+{
+    "fields": [
+        {
+            "name": "title",
+            "type": "string"
+        },
+        {
+            "name": "image",
+            "type": "file"
+        },
+        {
+            "name": "priority",
+            "type": "text",
+            "options": {
+                "Low": "Low",
+                "Medium": "Medium",
+                "High": "High"
+
+            }
+        },
+        {
+            "name": "details",
+            "type": "text"
+        },
+        {
+            "name": "user_id",
+            "type": "integer#unsigned"
+        }
+    ],
+    "foreign_keys": [
+        {
+            "column": "user_id",
+            "references": "id",
+            "on": "users",
+            "onDelete": "cascade"
+        }
+    ],
+    "relationships": [
+        {
+            "name": "user",
+            "type": "belongsTo",
+            "class": "App\\User"
+        }
+    ],
+    "validations": [
+        {
+            "field": "title",
+            "rules": "required|max:100"
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+{
+    "fields": [
+        {
+            "name": "comment",
+            "type": "text"
+        },
+        {
+            "name": "image",
+            "type": "file"
+        }
+    ],
+    "foreign_keys": [
+      
+    ],
+    "relationships": [
+       
+    ],
+    "validations": [
+       
+    ]
+}

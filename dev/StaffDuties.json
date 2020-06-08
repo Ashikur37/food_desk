@@ -1,0 +1,44 @@
+{
+    "fields": [
+        {
+            "name": "start_time",
+            "type": "time"
+        },
+        {
+            "name": "end_time",
+            "type": "time"
+        },
+        {
+            "name": "day",
+            "type": "select",
+            "options": {
+                "Everyday":"Everyday",
+                "Saturday": "Saturday",
+                "Sunday": "Sunday",
+                "Monday": "Monday",
+                "Tuesday": "Saturday",
+                "Wednesday": "Wednesday",
+                "Thursday": "Thursday",
+                "Friday": "Friday"
+            }
+        },
+        {
+            "name": "staff_id",
+            "type": "integer#unsigned"
+        }
+    ],
+    "foreign_keys": [
+        {
+            "column": "staff_id",
+            "references": "id",
+            "on": "staffs",
+            "onDelete": "cascade"
+        }
+    ],
+    "relationships": [
+        
+    ],
+    "validations": [
+      
+    ]
+}

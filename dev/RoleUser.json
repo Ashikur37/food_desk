@@ -1,0 +1,49 @@
+{
+    "fields": [
+        
+        {
+            "name": "user_id",
+            "type": "integer#unsigned"
+        },
+        {
+            "name": "role_id",
+            "type": "integer#unsigned"
+        }
+    ],
+    "foreign_keys": [
+        {
+            "column": "user_id",
+            "references": "id",
+            "on": "users",
+            "onDelete": "cascade"
+        },
+        {
+            "column": "role_id",
+            "references": "id",
+            "on": "roles",
+            "onDelete": "cascade"
+        }
+    ],
+    "relationships": [
+        {
+            "name": "user",
+            "type": "belongsTo",
+            "class": "App\\User"
+        },
+        {
+            "name": "role",
+            "type": "belongsTo",
+            "class": "App\\Role"
+        }
+    ],
+    "validations": [
+        {
+            "field": "user_id",
+            "rules": "required"
+        },
+        {
+            "field": "role_id",
+            "rules": "required"
+        }
+    ]
+}

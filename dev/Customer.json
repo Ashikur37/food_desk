@@ -1,0 +1,36 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "phone",
+            "type": "string"
+        },
+        {
+            "name": "email",
+            "type": "string"
+        },
+        {
+            "name": "details",
+            "type": "text"
+        },
+        {
+            "name": "image",
+            "type": "file"
+        }
+    ],
+    "foreign_keys": [
+
+    ],
+    "relationships": [
+
+    ],
+    "validations": [
+        {
+            "field": "name",
+            "rules": "required|max:100"
+        }
+    ]
+}

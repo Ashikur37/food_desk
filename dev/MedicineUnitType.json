@@ -1,0 +1,53 @@
+{
+    "fields": [
+        {
+            "name": "quantity",
+            "type": "integer"
+        },
+        {
+            "name": "buying_Price",
+            "type": "double"
+        },
+        {
+            "name": "selling_price",
+            "type": "double"
+        },
+        {
+            "name": "medicine_id",
+            "type": "integer#unsigned"
+        },
+        {
+            "name": "unit_type_id",
+            "type": "integer#unsigned"
+        }
+    ],
+    "foreign_keys": [
+        {
+            "column": "medicine_id",
+            "references": "id",
+            "on": "medicines",
+            "onDelete": "cascade"
+        },
+        {
+            "column": "unit_type_id",
+            "references": "id",
+            "on": "unittypes",
+            "onDelete": "cascade"
+        }
+    ],
+    "relationships": [
+        {
+            "name": "Medicine",
+            "type": "belongsTo",
+            "class": "App\\Medicine"
+        },
+        {
+            "name": "UnitType",
+            "type": "belongsTo",
+            "class": "App\\UnitType"
+        }
+    ],
+    "validations": [
+      
+    ]
+}

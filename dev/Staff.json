@@ -1,0 +1,48 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "image",
+            "type": "file"
+        },
+        {
+            "name": "role",
+            "type": "string"
+        },
+        {
+            "name": "phone",
+            "type": "string"
+        },
+        {
+            "name": "email",
+            "type": "string"
+        },
+        {
+            "name": "address",
+            "type": "text"
+        },
+        {
+            "name": "salary",
+            "type": "double"
+        },
+        {
+            "name": "is_active",
+            "type": "integer"
+        }
+    ],
+    "foreign_keys": [
+       
+    ],
+    "relationships": [
+        
+    ],
+    "validations": [
+        {
+            "field": "name",
+            "rules": "required|max:100"
+        }
+    ]
+}

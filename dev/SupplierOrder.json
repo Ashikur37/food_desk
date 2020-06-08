@@ -1,0 +1,54 @@
+{
+    "fields": [
+        {
+            "name": "total",
+            "type": "string"
+        },
+        
+        {
+            "name": "paid",
+            "type": "double"
+        },
+        {
+            "name": "due",
+            "type": "double"
+        },
+        {
+            "name": "discount",
+            "type": "double"
+        },
+        {
+            "name": "comment",
+            "type": "text"
+        },
+        {
+            "name": "image",
+            "type": "file"
+        },
+        {
+            "name": "supplier_id",
+            "type": "integer#unsigned"
+        }
+    ],
+    "foreign_keys": [
+        {
+            "column": "supplier_id",
+            "references": "id",
+            "on": "suppliers",
+            "onDelete": "cascade"
+        }
+    ],
+    "relationships": [
+        {
+            "name": "Supplier",
+            "type": "belongsTo",
+            "class": "App\\Supplier"
+        }
+    ],
+    "validations": [
+        {
+            "field": "title",
+            "rules": "required|max:10"
+        }
+    ]
+}

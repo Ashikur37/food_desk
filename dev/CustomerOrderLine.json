@@ -1,0 +1,77 @@
+{
+    "fields": [
+        {
+            "name": "quantity",
+            "type": "integer"
+        },
+        {
+            "name": "price",
+            "type": "double"
+        },
+        {
+            "name": "discount",
+            "type": "double"
+        },
+        {
+            "name": "subtotal",
+            "type": "double"
+        },
+        {
+            "name": "customer_order_id",
+            "type": "integer#unsigned"
+        },
+        {
+            "name": "medicine_id",
+            "type": "integer#unsigned"
+        }
+        ,
+        {
+            "name": "medicine_unit_type_id",
+            "type": "integer#unsigned"
+        }
+    ],
+    "foreign_keys": [
+        {
+            "column": "customer_order_id",
+            "references": "id",
+            "on": "customers",
+            "onDelete": "cascade"
+        },
+        {
+            "column": "medicine_id",
+            "references": "id",
+            "on": "medicines",
+            "onDelete": "cascade"
+        },
+        {
+            "column": "medicine_unit_type_id",
+            "references": "id",
+            "on": "medicineunittypes",
+            "onDelete": "cascade"
+        }
+    ],
+    "relationships": [
+        {
+            "name": "CustomerOrder",
+            "type": "belongsTo",
+            "class": "App\\CustomerOrder"
+        },
+        {
+            "name": "Medicine",
+            "type": "belongsTo",
+            "class": "App\\Medicine"
+        },
+        
+        {
+            "name": "MedicineUnitType",
+            "type": "belongsTo",
+            "class": "App\\MedicineUnitType"
+        }
+    ],
+    "validations": [
+        {
+            "field": "quantity",
+            "rules": "required|min:1"
+        }
+    ]
+}

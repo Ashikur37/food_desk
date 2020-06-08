@@ -1,0 +1,34 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "details",
+            "type": "text"
+        },
+        {
+            "name": "type",
+            "type": "select",
+            "options": {
+                "Monthly": "Monthly",
+                "Daily": "Daily",
+                "Weekly": "Weekly",
+                "Other": "Other"
+            }
+        }
+    ],
+    "foreign_keys": [
+   
+    ],
+    "relationships": [
+
+    ],
+    "validations": [
+        {
+            "field": "name",
+            "rules": "required|max:100"
+        }
+    ]
+}
