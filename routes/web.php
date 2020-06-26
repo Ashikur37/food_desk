@@ -15,13 +15,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@home');
 
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/filter-category', 'HomeController@filterCategory')->name('filterCategory');
+Route::get('category/{category}', 'CategoriesController@category')->name('category');
+Route::get('/filter-sub-category', 'CategoriesController@filterSubCategory')->name('filterCategory');
+Route::get('/filter-product', 'SubCategoriesController@filterProduct')->name('filterProduct');
+Route::get('sync-category', 'CategoriesController@sync');
+Route::resource('settings', 'SettingsController');
+Route::resource('categories', 'CategoriesController');
+
+Route::resource('sub-categories', 'SubCategoriesController');
+Route::get('sub-category/{subcategory}', 'SubCategoriesController@subCategory')->name('subcategory');
+Route::resource('products', 'ProductsController');
+Route::get('sync-product', 'ProductsController@sync');
+Route::get('signup', 'CustomerController@signup');
 
 
+Route::resource('posts', 'PostsController');
