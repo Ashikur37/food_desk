@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\Setting;
 use App\SubCategory;
 use Illuminate\Http\Request;
 use DataTables;
@@ -95,11 +96,12 @@ class SubCategoriesController extends Controller
     }
     public function filterProduct(Request $request)
     {
-
+        $setting = Setting::firstOrFail();
+        $paginateLength = $setting->pagination_length;
         if ($request->subcat) {
-            $products = Product::where('subcategory_id', '=', $request->subcat)->whereStatus(1)->where($request->key, 'like', '%' . $request->val . '%')->paginate(6);
+            $products = Product::where('subcategory_id', '=', $request->subcat)->whereStatus(1)->where($request->key, 'like', '%' . $request->val . '%')->paginate($paginateLength);
         } else {
-            $products = Product::whereStatus(1)->where($request->key, 'like', '%' . $request->val . '%')->paginate(6);
+            $products = Product::whereStatus(1)->where($request->key, 'like', '%' . $request->val . '%')->paginate($paginateLength);
         }
         return view('includes.productFilter', compact('products'));
     }

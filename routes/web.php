@@ -15,25 +15,41 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'HomeController@home');
-
-
+Route::get('/', 'HomeController@home')->name('home');
+Route::get('/home', 'HomeController@index');
+//Auth Routes
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes(['verify' => true]);
+//FrontPage Routes
 Route::get('/filter-category', 'HomeController@filterCategory')->name('filterCategory');
 Route::get('category/{category}', 'CategoriesController@category')->name('category');
 Route::get('/filter-sub-category', 'CategoriesController@filterSubCategory')->name('filterCategory');
 Route::get('/filter-product', 'SubCategoriesController@filterProduct')->name('filterProduct');
+Route::get('sub-category/{subcategory}', 'SubCategoriesController@subCategory')->name('subcategory');
+Route::get('product/{name}', 'ProductsController@singleView');
+
+//User Routes
+Route::get('signup', 'CustomerController@signup');
+Route::post('signin', 'CustomerController@signin')->name('signin');
+Route::get('my-account', 'CustomerController@myAccount');
+//cart routes
+Route::get('cart', 'CartController@cart')->name('cart');
+Route::get('remove-cart', 'CartController@removeCart')->name('removeCart');
+Route::get('add-to-cart', 'CartController@addToCart');
+//wishlist routes
+Route::get('add-wishlist/{product}', 'CustomerController@addToWishList');
+Route::get('remove-wishlist/{product}', 'CustomerController@removeFromWishList');
+Route::get('wishlist', 'CustomerController@wishList')->name('wishlist');
+//checkout routes
+Route::get('checkout', 'CheckoutController@checkout')->name('checkout');
+Route::post('checkout', 'CheckoutController@checkoutSubmit')->name('checkoutSubmit');
+
+//Admin Routes
 Route::get('sync-category', 'CategoriesController@sync');
 Route::resource('settings', 'SettingsController');
 Route::resource('categories', 'CategoriesController');
-
 Route::resource('sub-categories', 'SubCategoriesController');
-Route::get('sub-category/{subcategory}', 'SubCategoriesController@subCategory')->name('subcategory');
 Route::resource('products', 'ProductsController');
 Route::get('sync-product', 'ProductsController@sync');
-Route::get('signup', 'CustomerController@signup');
-
-
-Route::resource('posts', 'PostsController');
+Route::get('orders', 'OrderController@orderList');
+Route::get('order-data', 'OrderController@orderDataTable');

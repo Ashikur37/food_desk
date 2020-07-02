@@ -30,7 +30,8 @@
 			<div class="row">
 				<div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30">
 					<!-- Login Form s-->
-					<form action="#" >
+					<form method="POST" action="{{ route('signin') }}">
+                        @csrf
 
 						<div class="login-form">
 							<h4 class="login-title">Login</h4>
@@ -38,11 +39,11 @@
 							<div class="row">
 								<div class="col-md-12 col-12 mb-20">
 									<label>Email Address*</label>
-									<input class="mb-0" type="email" placeholder="Email Address">
+									<input name="email" class="mb-0" type="email" placeholder="Email Address">
 								</div>
 								<div class="col-12 mb-20">
 									<label>Password</label>
-									<input class="mb-0" type="password" placeholder="Password">
+									<input name="password" class="mb-0" type="password" placeholder="Password">
 								</div>
 								<div class="col-md-8">
 
@@ -67,49 +68,49 @@
 					</form>
 				</div>
 				<div class="col-sm-12 col-md-12 col-xs-12 col-lg-6">
-					<form action="#">
-
+					<form action="{{ route('register') }}" method="post">
+                        @csrf
 						<div class="login-form">
 							<h4 class="login-title">Register</h4>
 
 							<div class="row">
 								<div class="col-md-6 col-12 mb-20">
 									<label>First Name</label>
-									<input class="mb-0" type="text" placeholder="First Name">
+									<input name="firstname" class="mb-0" type="text" placeholder="First Name">
 								</div>
 								<div class="col-md-6 col-12 mb-20">
 									<label>Last Name</label>
-									<input class="mb-0" type="text" placeholder="Last Name">
+									<input name="lastname" class="mb-0" type="text" placeholder="Last Name">
 								</div>
 								<div class="col-md-12 mb-20">
 									<label>Email Address*</label>
-									<input class="mb-0" type="email" placeholder="Email Address">
+									<input name="email" class="mb-0" type="email" placeholder="Email Address">
 								</div>
 
 								<div class="col-12 mb-20">
 									<label>Address*</label>
-									<input type="text" placeholder="Address line 1">
-									<input type="text" placeholder="Address line 2">
+									<input name="address1" type="text" placeholder="Address line 1">
+									<input name="address2" type="text" placeholder="Address line 2">
 								</div>
 
 
 								<div class="col-md-6 col-12 mb-20">
 									<label>Town/City*</label>
-									<input type="text" placeholder="Town/City">
+									<input name="town" type="text" placeholder="Town/City">
 								</div>
 
 								<div class="col-md-6 col-12 mb-20">
 									<label>Zip Code*</label>
-									<input type="text" placeholder="Zip Code">
+									<input name="zip" type="text" placeholder="Zip Code">
 								</div>
 
 								<div class="col-md-6 mb-20">
 									<label>Password</label>
-									<input class="mb-0" type="password" placeholder="Password">
+									<input name="password" class="mb-0" type="password" placeholder="Password">
 								</div>
 								<div class="col-md-6 mb-20">
 									<label>Confirm Password</label>
-									<input class="mb-0" type="password" placeholder="Confirm Password">
+									<input name="password_confirmation" class="mb-0" type="password" placeholder="Confirm Password">
 								</div>
 								<div class="col-12">
 									<button class="register-button mt-0">Register</button>

@@ -2,8 +2,9 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreatePostsTable extends Migration
+class CreateNotificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +13,10 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('notifications', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
-            $table->string('title')->nullable();
-            $table->string('image')->nullable();
-            $table->text('description')->nullable();
-            });
+        });
     }
 
     /**
@@ -28,6 +26,6 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('posts');
+        Schema::dropIfExists('notifications');
     }
 }

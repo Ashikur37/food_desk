@@ -9,6 +9,7 @@ use App\Product;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\URL;
+
 class ProductsController extends Controller
 {
     /**
@@ -16,104 +17,108 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\View\View
      */
+
+    public function singleView($name)
+    {
+        $product = Product::where('product_name_dch', '=', $name)->first();
+        $relatedProducts = $product->category->products->take(6);
+        return view('front.singleProduct', compact('product', 'relatedProducts'));
+    }
     public function index(Request $request)
     {
 
-            if ($request->ajax()) {
+        if ($request->ajax()) {
             $data = Product::latest()->get();
-                return Datatables::of($data)
-                        ->addIndexColumn()
-                        ->editColumn('image',function($d){
-                            return "<img src='https://www.fooddesk.net/obs/obs-api-new/timthumb.php?src=".$d->image."'>";
-                        })
-                        ->addColumn('action', function($row){
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->editColumn('image', function ($d) {
+                    return "<img src='https://www.fooddesk.net/obs/obs-api-new/timthumb.php?src=" . $d->image . "'>";
+                })
+                ->addColumn('action', function ($row) {
 
-                               $btn = '<div class="btn-group"><a href="'.URL::to('/').'/products/'.$row->id.'/edit" class="btn btn-sm btn-outline-primary">Edit</a>
-                               <button onclick="deleteData('.$row->id.')" class="btn btn-sm btn-outline-danger">Delete</button></div>';
+                    $btn = '<div class="btn-group"><a href="' . URL::to('/') . '/products/' . $row->id . '/edit" class="btn btn-sm btn-outline-primary">Edit</a>
+                               <button onclick="deleteData(' . $row->id . ')" class="btn btn-sm btn-outline-danger">Delete</button></div>';
 
-                                return $btn;
-                        })
+                    return $btn;
+                })
 
-                        ->rawColumns(['action'])
-                        ->escapeColumns([])
-                        ->make(true);
+                ->rawColumns(['action'])
+                ->escapeColumns([])
+                ->make(true);
+        }
 
-                   }
-
-                    return view('products.index');
-
-
+        return view('products.index');
     }
 
-    public function sync(){
+    public function sync()
+    {
 
-        $setting=Setting::firstOrFail();
-        $api_key=$setting->api_key;
-        $company_id=$setting->company_id;
+        $setting = Setting::firstOrFail();
+        $api_key = $setting->api_key;
+        $company_id = $setting->company_id;
         $curl = curl_init();
 
-        $ch = curl_init("http://www.fooddesk.net/obsapi/api/v1/product/company_id/".$company_id);
+        $ch = curl_init("http://www.fooddesk.net/obsapi/api/v1/product/company_id/" . $company_id);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-API-KEY:$api_key"));
         $output = curl_exec($ch);
 
         curl_close($ch);
-        $output=simplexml_load_string($output);
+        $output = simplexml_load_string($output);
         $json = json_encode($output);
 
-$array = json_decode($json,TRUE);
-        foreach($array["products"]["product"] as $prod){
+        $array = json_decode($json, TRUE);
+        foreach ($array["products"]["product"] as $prod) {
             Product::updateOrCreate([
-                "fid"=>$prod["id"],
-              ],[
+                "fid" => $prod["id"],
+            ], [
 
-                  "product_name_dch"=>$prod["product_name"],
-                  "product_description_dch"=>gettype($prod["product_description"])=="string"?$prod["product_description"]:"",
-                  "category_id"=>$prod["category_id"],
-                  "subcategory_id"=>$prod["subcategory_id"],
-                  "product_number"=>gettype($prod["product_number"])=="string"?$prod["product_number"]:"",
-                  "image"=>gettype($prod["image"])=="string"?$prod["image"]:"",
-                  "sell_product_option"=>$prod["sell_product_option"],
-                  "price_per_person"=>$prod["price_per_person"],
-                  "min_person"=>$prod["min_person"],
-                  "max_person"=>$prod["max_person"],
-                  "price_per_unit"=>$prod["price_per_unit"],
-                  "price_weight"=>$prod["price_weight"],
-                  "discount"=>$prod["discount"],
-                  "discount_person"=>gettype($prod["discount_person"])=="string"?$prod["discount_person"]:"0",
-                  "status"=>$prod["status"],
-                  "allday_availability"=>gettype($prod["allday_availability"])=="string"?$prod["allday_availability"]:"0",
-                  "availability"=>gettype($prod["availability"])=="string"?$prod["availability"]:"0",
-                  "advance_payment"=>$prod["advance_payment"],
-                  "available_after"=>gettype($prod["available_after"])=="string"?$prod["available_after"]:"0",
-                  "duedate"=>gettype($prod["labeler"]["duedate"])=="string"?$prod["labeler"]["duedate"]:"0",
-                  "conserve_min"=>gettype($prod["labeler"]["conserve_min"])=="string"?$prod["labeler"]["conserve_min"]:"0",
-                  "conserve_max"=>gettype($prod["labeler"]["conserve_max"])=="string"?$prod["labeler"]["conserve_max"]:"0",
-                  "weight"=>gettype($prod["labeler"]["weight"])=="string"?$prod["labeler"]["weight"]:"0",
-                  "weight_unit"=>gettype($prod["labeler"]["weight_unit"])=="string"?$prod["labeler"]["weight_unit"]:" ",
-                  "barcode_nbr"=>gettype($prod["labeler"]["barcode_nbr"])=="string"?$prod["labeler"]["barcode_nbr"]:" ",
-                  "format_label"=>gettype($prod["labeler"]["format_label"])=="string"?$prod["labeler"]["format_label"]:" ",
-                  "type"=>gettype($prod["labeler"]["type"])=="string"?$prod["labeler"]["type"]:"0",
-                  "type_label"=>gettype($prod["labeler"]["type_label"])=="string"?$prod["labeler"]["type_label"]:" ",
-                  "extra_notification_dch"=>" ",
-                  "ingredients_dch"=>gettype($prod["ingredients"])=="string"?$prod["ingredients"]:" ",
-                  "e_val_1"=>$prod["nutrition"]["e_val_1"],
-                  "e_val_2"=>$prod["nutrition"]["e_val_2"],
-                  "carbo"=>$prod["nutrition"]["carbo"],
-                  "sugar"=>$prod["nutrition"]["sugar"],
-                  "fats"=>$prod["nutrition"]["fats"],
-                  "sat_fats"=>$prod["nutrition"]["sat_fats"],
-                  "salt"=>$prod["nutrition"]["salt"],
-                  "fibers"=>$prod["nutrition"]["fibers"],
-                  "natrium"=>$prod["nutrition"]["natrium"],
-                  "allergence_dch"=>""
+                "product_name_dch" => $prod["product_name"],
+                "product_description_dch" => gettype($prod["product_description"]) == "string" ? $prod["product_description"] : "",
+                "category_id" => $prod["category_id"],
+                "subcategory_id" => $prod["subcategory_id"],
+                "product_number" => gettype($prod["product_number"]) == "string" ? $prod["product_number"] : "",
+                "image" => gettype($prod["image"]) == "string" ? $prod["image"] : "",
+                "sell_product_option" => $prod["sell_product_option"],
+                "price_per_person" => $prod["price_per_person"],
+                "min_person" => $prod["min_person"],
+                "max_person" => $prod["max_person"],
+                "price_per_unit" => $prod["price_per_unit"],
+                "price_weight" => $prod["price_weight"],
+                "discount" => $prod["discount"],
+                "discount_person" => gettype($prod["discount_person"]) == "string" ? $prod["discount_person"] : "0",
+                "status" => $prod["status"],
+                "allday_availability" => gettype($prod["allday_availability"]) == "string" ? $prod["allday_availability"] : "0",
+                "availability" => gettype($prod["availability"]) == "string" ? $prod["availability"] : "0",
+                "advance_payment" => $prod["advance_payment"],
+                "available_after" => gettype($prod["available_after"]) == "string" ? $prod["available_after"] : "0",
+                "duedate" => gettype($prod["labeler"]["duedate"]) == "string" ? $prod["labeler"]["duedate"] : "0",
+                "conserve_min" => gettype($prod["labeler"]["conserve_min"]) == "string" ? $prod["labeler"]["conserve_min"] : "0",
+                "conserve_max" => gettype($prod["labeler"]["conserve_max"]) == "string" ? $prod["labeler"]["conserve_max"] : "0",
+                "weight" => gettype($prod["labeler"]["weight"]) == "string" ? $prod["labeler"]["weight"] : "0",
+                "weight_unit" => gettype($prod["labeler"]["weight_unit"]) == "string" ? $prod["labeler"]["weight_unit"] : " ",
+                "barcode_nbr" => gettype($prod["labeler"]["barcode_nbr"]) == "string" ? $prod["labeler"]["barcode_nbr"] : " ",
+                "format_label" => gettype($prod["labeler"]["format_label"]) == "string" ? $prod["labeler"]["format_label"] : " ",
+                "type" => gettype($prod["labeler"]["type"]) == "string" ? $prod["labeler"]["type"] : "0",
+                "type_label" => gettype($prod["labeler"]["type_label"]) == "string" ? $prod["labeler"]["type_label"] : " ",
+                "extra_notification_dch" => " ",
+                "ingredients_dch" => gettype($prod["ingredients"]) == "string" ? $prod["ingredients"] : " ",
+                "e_val_1" => $prod["nutrition"]["e_val_1"],
+                "e_val_2" => $prod["nutrition"]["e_val_2"],
+                "carbo" => $prod["nutrition"]["carbo"],
+                "sugar" => $prod["nutrition"]["sugar"],
+                "fats" => $prod["nutrition"]["fats"],
+                "sat_fats" => $prod["nutrition"]["sat_fats"],
+                "salt" => $prod["nutrition"]["salt"],
+                "fibers" => $prod["nutrition"]["fibers"],
+                "natrium" => $prod["nutrition"]["natrium"],
+                "allergence_dch" => ""
 
 
-              ]);
-
+            ]);
         }
-       return redirect(URL::to('/products'));
+        return redirect(URL::to('/products'));
     }
 
     /**

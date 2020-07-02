@@ -89,10 +89,10 @@
 								<div class="sort-by-dropdown d-flex align-items-center mb-xs-10">
 									<p class="mr-10">Seach by: </p>
 									<select name="sort-by" id="sort-by" class="nice-select">
-										<option value="product_name_dch">Name</option>
-										<option value="fid">ID</option>
-									</select>
-									<input type="text" placeholder="" onkeyup="filterProduct(this.value)">
+                                    <option value="product_name_dch">Name</option>
+                                    <option value="fid">ID</option>
+                                </select>
+                                <input id="val" type="text" placeholder="" onkeyup="filterProduct(this.value)">
 								</div>
 
 
@@ -111,6 +111,7 @@
 
 
                     <div id="productContainer">
+
                     </div>
 
 
@@ -136,7 +137,14 @@
                 $("#productContainer").html(result);
               }});
         }
-
+    function paginate(val) {
+        $.ajax({
+            url: `{{URL::to('filter-product')}}?subcat={{$subcategory->fid}}&page=${val}&val=${$("#val").val()}&key=${$("#sort-by").val()}`,
+            success: function(result) {
+                $("#productContainer").html(result);
+            }
+        });
+    }
         $( document ).ready(function(){
             filterProduct("");
         })
