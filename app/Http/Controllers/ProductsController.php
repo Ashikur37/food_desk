@@ -31,6 +31,12 @@ class ProductsController extends Controller
             $data = Product::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('category', function ($row) {
+                    return $row->category->name;
+                })
+                // ->addColumn('order', function ($row) {
+                //     return $row->orderLines->count();
+                // })
                 ->editColumn('image', function ($d) {
                     return "<img src='https://www.fooddesk.net/obs/obs-api-new/timthumb.php?src=" . $d->image . "'>";
                 })
@@ -113,9 +119,7 @@ class ProductsController extends Controller
                 "salt" => $prod["nutrition"]["salt"],
                 "fibers" => $prod["nutrition"]["fibers"],
                 "natrium" => $prod["nutrition"]["natrium"],
-                "allergence_dch" => ""
-
-
+                "allergence_dch" => gettype($prod["allergence"]) == "string" ? $prod["allergence"] : " "
             ]);
         }
         return redirect(URL::to('/products'));

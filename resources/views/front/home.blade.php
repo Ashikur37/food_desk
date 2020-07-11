@@ -9,8 +9,8 @@
             <div class="col">
                 <div class="breadcrumb-container">
                     <ul>
-                        <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
-                        <li class="active">Shop</li>
+                        <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Home</a></li>
+
                     </ul>
                 </div>
             </div>
@@ -28,35 +28,7 @@
 <div class="shop-page-container mb-50">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 order-2 order-lg-1">
-                <!--=======  sidebar area  =======-->
-
-                <div class="sidebar-area">
-                    <!--=======  single sidebar  =======-->
-
-                    <div class="sidebar mb-35">
-                        <h3 class="sidebar-title">Exclude products</h3>
-                        <ul class="product-categories">
-                            <li><a class="active" href="shop-left-sidebar.html">Milk</a></li>
-                            <li><a class="active" href="shop-left-sidebar.html">Soja</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="sidebar mb-35">
-                        <h3 class="sidebar-title">PRODUCT CATEGORIES</h3>
-                        <ul class="product-categories">
-                            @foreach($categories as $category)
-                            <li><a href="{{route('category',$category->name)}}">{{$category->name}}({{$category->products->count()}})</a>
-                            </li>
-                            @endforeach
-
-                        </ul>
-                    </div>
-
-                </div>
-
-                <!--=======  End of sidebar area  =======-->
-            </div>
+            @include('includes.sidebar')
             <div class="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">
 
                 <!--=======  shop page banner  =======-->
@@ -171,8 +143,12 @@
 @endsection @section('script')
 <script>
     function filterCategory(val) {
+        let mode="grid";
+        if(viewMode){
+            mode=viewMode;
+        }
         $.ajax({
-            url: `{{URL::to('filter-product')}}?subcat=0&val=${val}&key=${$("#sort-by").val()}`,
+            url: `{{URL::to('filter-product')}}?mode=${mode}&subcat=0&val=${val}&key=${$("#sort-by").val()}`,
             success: function(result) {
                 $("#categoryContainer").html(result);
             }
@@ -180,8 +156,12 @@
     }
 
     function paginate(val) {
+        let mode="grid";
+        if(viewMode){
+            mode=viewMode;
+        }
         $.ajax({
-            url: `{{URL::to('filter-product')}}?subcat=0&page=${val}&val=${$("#val").val()}&key=${$("#sort-by").val()}`,
+            url: `{{URL::to('filter-product')}}?mode=${mode}&subcat=0&page=${val}&val=${$("#val").val()}&key=${$("#sort-by").val()}`,
             success: function(result) {
                 $("#categoryContainer").html(result);
             }

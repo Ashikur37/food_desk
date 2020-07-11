@@ -104,7 +104,9 @@ class CheckoutController extends Controller
         //if user new account
 
         //clear the cart
-
+        $cart = [];
+        $request->session()->put('cart', $cart);
+        return redirect()->route('myAccount')->with('success', 'Order placed successfully');
         //redirect to order success
     }
 }

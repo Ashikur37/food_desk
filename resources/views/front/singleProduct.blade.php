@@ -12,10 +12,10 @@
                 <div class="col">
                     <div class="breadcrumb-container">
                         <ul>
-                            <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fast Foods</a></li>
-                            <li class="active">Cillum dolore tortor nisl fermentum</li>
+                               <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Home</a></li>
+                        <li  class="active"><a href="{{route('category',$product->category->name)}}">{{$product->category->name}}</a></li>
+                        <li  class="active"><a href="{{route('subcategory',$product->subCategory->name)}}">{{$product->subCategory->name}}</a></li>
+                        <li  class="active"><a href="{{route('singleProduct',$product->product_name_dch)}}">{{$product->product_name_dch}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                         <div class="product-feature-details">
                             <h2 class="product-title mb-15">{{$product->product_name_dch}}</h2>
                             <h2 class="product-price mb-15">
-                                <span class="discounted-price"> $ @if($product->sell_product_option=="weight_wise")
+                                <span class="discounted-price">  @if($product->sell_product_option=="weight_wise")
                         ${{$product->price_weight}}/GRM
                         @elseif($product->sell_product_option=="per_unit")
                         ${{$product->price_per_unit}}/ Unit
@@ -106,8 +106,8 @@
                                     <a href="{{route('subcategory',$product->subCategory->name)}}">{{$product->subCategory->name}}</a>,
                                 @endif
                                  <a href="{{route('category',$product->category->name)}}">{{$product->category->name}}</a></span></h3>
-                                <h3>Allergens: <span>Milk, Soja</span></h3>
-                                <h3>Ingredients: <span>Salt, Water</span></h3>
+                                <h3>Allergens: <span>{{$product->allergence_dch}}</span></h3>
+                                <h3>Ingredients: <span>{{$product->ingredients_dch}}</span></h3>
                             </div>
                         </div>
                         <!-- end of product quick view description -->
@@ -186,7 +186,7 @@
         $.ajax({
             url: "{{URL::to('add-wishlist')}}/" + id,
             success: function(result) {
-
+            toastr.success('Successfully added to wishlist')
             }
         });
     }
@@ -197,6 +197,8 @@
         $.ajax({
             url: `{{URL::to('add-to-cart')}}?quantity=${quantity}&id=${id}&weight=${weight}&msg=${msg}`,
             success: function(result) {
+                updateCartHeader();
+                toastr.success('Successfully added to cart')
 
             }
         });

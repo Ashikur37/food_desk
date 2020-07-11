@@ -25,5 +25,5 @@ class Setting extends Model
      *
      * @var array
      */
-    protected $fillable = ['site_name', 'logo', 'api_key', 'from_email', 'fav_icon', 'them_color', 'company_id', 'sidebar', 'view', 'pagination_length', 'banner', 'sticky_logo', 'default_product'];
+    protected $fillable = ['site_name', 'logo', 'api_key', 'from_email', 'fav_icon', 'them_color', 'company_id', 'sidebar', 'view', 'pagination_length', 'banner', 'sticky_logo', 'default_product', 'address', 'phone', 'homepage_notice', 'show_notice'];
 }

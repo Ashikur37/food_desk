@@ -1,7 +1,7 @@
 <footer class="main-footer">
     <strong>Developed By &copy; 2020 <a href="http://www.takwasoft.com">Takwasoft</a>.</strong>
 
-    
+
   </footer>
 
   <!-- Control Sidebar -->
@@ -46,6 +46,30 @@
 <script src="{{asset('admin/dist/js/pages/dashboard.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('admin/dist/js/demo.js')}}"></script>
+<script src="{{asset('/')}}/admin/plugins/toastr/toastr.min.js"></script>
+    <script src="{{asset('/')}}/admin/plugins/sweetalert2/sweetalert2.min.js"></script>
 @yield('script')
+  <script>
+    viewMode=null;
+        $(function() {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            @foreach($errors->all() as $error)
+                                toastr.error("{{$error}}")
+                    @endforeach
+
+            @if(Session::has('success'))
+                toastr.success("{{ Session::get('success') }}")
+            @endif
+            @if(Session::has('error'))
+                toastr.error("{{ Session::get('error') }}")
+            @endif
+        })
+        </script>
+
 </body>
 </html>

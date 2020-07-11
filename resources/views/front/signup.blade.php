@@ -9,8 +9,8 @@
 				<div class="col">
 					<div class="breadcrumb-container">
 						<ul>
-							<li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
-							<li class="active">Shop</li>
+							<li><a href="{{route('home')}}"><i class="fa fa-home"></i> Home</a></li>
+                        <li class="active" ><a href="{{route('registerUser')}}">Signup</a></li>
 						</ul>
 					</div>
 				</div>
@@ -35,7 +35,7 @@
 
 						<div class="login-form">
 							<h4 class="login-title">Login</h4>
-
+                            <input type="hidden" name="ref" value="{{request()->ref?request()->ref:'/'}}">
 							<div class="row">
 								<div class="col-md-12 col-12 mb-20">
 									<label>Email Address*</label>
@@ -55,7 +55,7 @@
 								</div>
 
 								<div class="col-md-4 mt-10 mb-20 text-left text-md-right">
-									<a href="#"> Forgotten pasward?</a>
+									<a href="{{ route('password.request') }}"> Forgotten pasward?</a>
 								</div>
 
 								<div class="col-md-12">

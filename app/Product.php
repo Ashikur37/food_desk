@@ -34,4 +34,8 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class, 'category_id', 'fid');
     }
+    public function orderLines()
+    {
+        return $this->hasMany(OrderLine::class, 'product_id', 'fid');
+    }
 }

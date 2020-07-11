@@ -96,6 +96,7 @@ class SubCategoriesController extends Controller
     }
     public function filterProduct(Request $request)
     {
+        $mode = $request->mode;
         $setting = Setting::firstOrFail();
         $paginateLength = $setting->pagination_length;
         if ($request->subcat) {
@@ -103,7 +104,7 @@ class SubCategoriesController extends Controller
         } else {
             $products = Product::whereStatus(1)->where($request->key, 'like', '%' . $request->val . '%')->paginate($paginateLength);
         }
-        return view('includes.productFilter', compact('products'));
+        return view('includes.productFilter', compact('products', 'mode'));
     }
     /**
      * Show the form for editing the specified resource.

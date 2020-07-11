@@ -27,12 +27,10 @@
                         <div class="card card-primary">
                             <div class="card-header">
                                 <h3 class="card-title">
-                                    Edit Setting #{{ $setting->id }}
+                                    Edit Setting
                                 </h3>
                                 <div class="card-tools">
-                                    <a href="{{ url('/settings') }}" title="Back"><button
-                                            class="btn btn-warning btn-sm"><i class="fa fa-arrow-left"
-                                                aria-hidden="true"></i> Back</button></a>
+                                   
                                 </div>
                             </div>
                             <div class="card-body">

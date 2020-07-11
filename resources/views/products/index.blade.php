@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Dashboard</h1>
+                    <h1 class="m-0 text-dark">Product List</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard v1</li>
+                       <li class="breadcrumb-item"><a href="{{route('orderList')}}">Home</a></li>
+                        <li class="breadcrumb-item active">Product List</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -27,7 +27,7 @@
                        Products
                     </div>
                     <div class="card-tools">
-                        <a class="btn btn-warning" href="{{ url('/products/create') }}">Add New</a>
+                        <a class="btn btn-warning" href="{{ route('syncProduct') }}">Sync Now</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -35,8 +35,8 @@
                                 <table class="table table-bordered data-table">
                                         <thead>
                                              <tr>
-                                                 <th>#</th><th>Product Name</th><th>Product Description</th><th>Image</th><th>Category Id</th><th>Actions</th>
-                                          
+                                                 <th>#</th><th>Product Name</th><th>Product Description</th><th>Image</th><th>Category Name</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -53,24 +53,24 @@
 <script src="{{asset('admin/plugins/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
 <script type="text/javascript">
- 
+
     deleteData=(id)=>{
       url=`{{URL::to('/products/${id}')}}`;
         $('<form action="'+url+'" method="post">@csrf @method("delete")</form>').appendTo('body').submit();
     }
     $(function () {
-      
+
       var table = $('.data-table').DataTable({
           processing: true,
           serverSide: true,
           ajax: "{{ url('/products') }}",
           columns: [
               {data: 'id', name: 'id'},
-              {data: 'product_name_dch', name: 'product_name_dch'},{data: 'product_description_dch', name: 'product_description_dch'},{data: 'image', name: 'image'},{data: 'category_id', name: 'category_id'},
-              {data: 'action', name: 'action', orderable: false, searchable: false},
+              {data: 'product_name_dch', name: 'product_name_dch'},{data: 'product_description_dch', name: 'product_description_dch'},{data: 'image', name: 'image'},{data: 'category', name: 'category'},
+
           ]
       });
-      
+
     });
   </script>
   @endsection

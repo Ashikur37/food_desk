@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use DataTables;
 use Exception;
 use Illuminate\Support\Facades\URL;
+
 class CategoriesController extends Controller
 {
     /**
@@ -22,70 +23,68 @@ class CategoriesController extends Controller
     public function index(Request $request)
     {
 
-            if ($request->ajax()) {
+        if ($request->ajax()) {
             $data = Category::latest()->get();
-                return Datatables::of($data)
-                        ->addIndexColumn()
-                        ->editColumn('id',function($d){
-                            return $d->fid;
-                        })
-                        ->editColumn('image',function($d){
-                            return "<img src='https://www.fooddesk.net/obs/obs-api-new/timthumb.php?src=".$d->image."'>";
-                        })
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->editColumn('id', function ($d) {
+                    return $d->fid;
+                })
+                ->editColumn('image', function ($d) {
+                    return "<img src='https://www.fooddesk.net/obs/obs-api-new/timthumb.php?src=" . $d->image . "'>";
+                })
 
-                        ->rawColumns(['action'])
-                        ->escapeColumns([])
-                        ->make(true);
+                ->rawColumns(['action'])
+                ->escapeColumns([])
+                ->make(true);
+        }
 
-                   }
-
-                    return view('categories.index');
+        return view('categories.index');
     }
-    public function sync(){
+    public function sync()
+    {
 
-        $setting=Setting::firstOrFail();
-        $api_key=$setting->api_key;
-        $company_id=$setting->company_id;
+        $setting = Setting::firstOrFail();
+        $api_key = $setting->api_key;
+        $company_id = $setting->company_id;
         $curl = curl_init();
 
-        $ch = curl_init("http://www.fooddesk.net/obsapi/api/v1/category/company_id/".$company_id);
+        $ch = curl_init("http://www.fooddesk.net/obsapi/api/v1/category/company_id/" . $company_id);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array("X-API-KEY:$api_key"));
         $output = curl_exec($ch);
 
-        $output=simplexml_load_string($output);
+        $output = simplexml_load_string($output);
         curl_close($ch);
         $json = json_encode($output);
 
-$array = json_decode($json,TRUE);
-//return $array;
-       foreach($array["categories"]["category"] as $cat){
-        Category::updateOrCreate([
-            "fid"=>$cat["id"],
-          ],[
+        $array = json_decode($json, TRUE);
+        //return $array;
+        foreach ($array["categories"]["category"] as $cat) {
+            Category::updateOrCreate([
+                "fid" => $cat["id"],
+            ], [
 
-              "name"=>$cat["name"],
-              "image"=>$cat["image"],
-              "description"=>"d"
-          ]);
-           if(array_key_exists("subcategory",$cat["subcategories"])){
-               foreach($cat["subcategories"]["subcategory"] as $subcat){
-                SubCategory::updateOrCreate([
-                    "fid"=>$subcat["id"],
-                  ],[
+                "name" => $cat["name"],
+                "image" => $cat["image"],
+                "description" => "d"
+            ]);
+            if (array_key_exists("subcategory", $cat["subcategories"])) {
+                foreach ($cat["subcategories"]["subcategory"] as $subcat) {
+                    SubCategory::updateOrCreate([
+                        "fid" => $subcat["id"],
+                    ], [
 
-                      "category_id"=>$cat["id"],
-                      "name"=>$subcat["name"],
-                      "image"=>gettype($subcat["image"])=="string"?$subcat["image"]:"",
-                      "description"=>"d"
-                  ]);
-               }
-           }
-
-
-       }
-       return redirect(URL::to('/categories'));
+                        "category_id" => $cat["id"],
+                        "name" => $subcat["name"],
+                        "image" => gettype($subcat["image"]) == "string" ? $subcat["image"] : "",
+                        "description" => "d"
+                    ]);
+                }
+            }
+        }
+        return redirect(URL::to('/categories'));
     }
     /**
      * Show the form for creating a new resource.
@@ -105,16 +104,18 @@ $array = json_decode($json,TRUE);
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
 
-     public function category($name){
-         $category=Category::whereName($name)->first();
-         $categories=Category::all();
-         $subCategories= $category->subCategories;
-         return view('front.category',compact('category','categories','subCategories'));
-     }
+    public function category($name)
+    {
+        $category = Category::whereName($name)->first();
+        $categories = Category::all();
+        $subCategories = $category->subCategories;
+        return view('front.category', compact('category', 'categories', 'subCategories'));
+    }
 
-     public function filterSubCategory(Request $request){
-        $subCategories=SubCategory::where('category_id','=',$request->cat)->where($request->key,'like','%'.$request->val.'%')->get();
-        return view('includes.subCategoryFilter',compact('subCategories'));
+    public function filterSubCategory(Request $request)
+    {
+        $subCategories = SubCategory::where('category_id', '=', $request->cat)->where($request->key, 'like', '%' . $request->val . '%')->get();
+        return view('includes.subCategoryFilter', compact('subCategories'));
     }
     public function store(Request $request)
     {

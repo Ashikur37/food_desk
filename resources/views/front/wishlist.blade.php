@@ -5,8 +5,8 @@
                 <div class="col">
                     <div class="breadcrumb-container">
                         <ul>
-                            <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
-                            <li class="active">Wishlist</li>
+						<li><a href="{{route('home')}}"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="active" ><a href="{{route('wishlist')}}">Wishlist</a></li>
                         </ul>
                     </div>
                 </div>
@@ -64,7 +64,7 @@ removeFromWishList=(id,el)=>{
     $.ajax({
             url: "{{URL::to('remove-wishlist')}}/"+id,
             success: function(result) {
-
+                el.parentElement.parentElement.remove();
             }
         });
 }

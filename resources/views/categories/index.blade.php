@@ -27,7 +27,7 @@
                        Categories
                     </div>
                     <div class="card-tools">
-                        <a class="btn btn-warning" href="{{ url('/categories/create') }}">Add New</a>
+                        <a class="btn btn-warning" href="{{ route('syncCategory') }}">Sync Now</a>
                     </div>
                 </div>
                 <div class="card-body">

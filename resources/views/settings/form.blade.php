@@ -79,6 +79,38 @@
     {!! $errors->first('them_color', '<p class="help-block">:message</p>') !!}
 </div>
 
+<div class="form-group {{ $errors->has('phone') ? 'has-error' : ''}}">
+    <label for="phone" class="control-label">{{ 'Phone' }}</label>
+    <input type="text" class="form-control" name="phone" value="{{ isset($setting->phone) ? $setting->phone : ''}}">
+
+    {!! $errors->first('phone', '<p class="help-block">:message</p>') !!}
+</div>
+
+<div class="form-group {{ $errors->has('address') ? 'has-error' : ''}}">
+    <label for="address" class="control-label">{{ 'Address' }}</label>
+    <textarea class="form-control"  name="address">{{$setting->address}}</textarea>
+
+    {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
+</div>
+
+
+<div class="form-group {{ $errors->has('homepage_notice') ? 'has-error' : ''}}">
+    <label for="address" class="control-label">{{ 'Homepage Notice' }}</label>
+    <textarea class="form-control"  name="homepage_notice">{{$setting->homepage_notice}}</textarea>
+
+    {!! $errors->first('homepage_notice', '<p class="help-block">:message</p>') !!}
+</div>
+
+
+<div class="form-group {{ $errors->has('them_color') ? 'has-error' : ''}}">
+    <label for="them_color" class="control-label">{{ 'Show Notice' }}</label>
+    <select class="form-control" name="show_notice">
+        <option value="1" {{$setting->show_notice=="1"?"selected":""}}>Show</option>
+        <option value="0" {{$setting->show_notice=="0"?"selected":""}}>Hide</option>
+
+    </select>
+</div>
+
 
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">

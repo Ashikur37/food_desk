@@ -27,7 +27,7 @@
                        Subcategories
                     </div>
                     <div class="card-tools">
-                        <a class="btn btn-warning" href="{{ url('/sub-categories/create') }}">Add New</a>
+                        <a class="btn btn-warning" href="{{ route('syncCategory') }}">Sync Now</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -35,8 +35,8 @@
                                 <table class="table table-bordered data-table">
                                         <thead>
                                              <tr>
-                                                 <th>#</th><th>Fid</th><th>Category Id</th><th>Name</th><th>Image</th><th>Actions</th>
-                                          
+                                                 <th>#</th><th>Fid</th><th>Category Id</th><th>Name</th><th>Image</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -53,13 +53,13 @@
 <script src="{{asset('admin/plugins/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
 <script type="text/javascript">
- 
+
     deleteData=(id)=>{
       url=`{{URL::to('/sub-categories/${id}')}}`;
         $('<form action="'+url+'" method="post">@csrf @method("delete")</form>').appendTo('body').submit();
     }
     $(function () {
-      
+
       var table = $('.data-table').DataTable({
           processing: true,
           serverSide: true,
@@ -67,10 +67,10 @@
           columns: [
               {data: 'id', name: 'id'},
               {data: 'fid', name: 'fid'},{data: 'category_id', name: 'category_id'},{data: 'name', name: 'name'},{data: 'image', name: 'image'},
-              {data: 'action', name: 'action', orderable: false, searchable: false},
+              
           ]
       });
-      
+
     });
   </script>
   @endsection

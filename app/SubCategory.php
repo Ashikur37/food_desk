@@ -14,10 +14,10 @@ class SubCategory extends Model
     protected $table = 'sub_categories';
 
     /**
-    * The database primary key value.
-    *
-    * @var string
-    */
+     * The database primary key value.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id';
 
     /**
@@ -27,8 +27,8 @@ class SubCategory extends Model
      */
     protected $fillable = ['fid', 'category_id', 'name', 'image', 'description'];
 
-    public function Products(){
-        return $this->hasMany(Product::class,'subcategory_id','fid');
+    public function Products()
+    {
+        return $this->hasMany(Product::class, 'subcategory_id', 'fid');
     }
-
 }

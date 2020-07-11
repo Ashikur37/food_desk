@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
 
+    public function index()
+    {
+        $categories = Category::all();
+        return view('front.home', compact('categories'));
+    }
 
     public function Home()
     {

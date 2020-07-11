@@ -6,8 +6,8 @@
                 <div class="col">
                     <div class="breadcrumb-container">
                         <ul>
-                            <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
-                            <li class="active">Checkout</li>
+                         <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Home</a></li>
+                        <li class="active" ><a href="{{route('checkout')}}">Checkout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -41,53 +41,77 @@
 
 										<div class="col-md-6 col-12 mb-20">
 											<label>First Name*</label>
-											<input name="firstname" type="text" placeholder="First Name">
+											<input
+                                                value="{{auth()->check()?auth()->user()->firstname:""}}"
+                                             name="firstname" type="text" placeholder="First Name">
 										</div>
 
 										<div class="col-md-6 col-12 mb-20">
 											<label>Last Name*</label>
-											<input name="lastname" type="text" placeholder="Last Name">
+											<input value="{{auth()->check()?auth()->user()->lastname:""}}" name="lastname" type="text" placeholder="Last Name">
 										</div>
 
 										<div class="col-md-6 col-12 mb-20">
 											<label>Email Address*</label>
-											<input name="email" type="email" placeholder="Email Address">
+											<input value="{{auth()->check()?auth()->user()->email:""}}" name="email" type="email" placeholder="Email Address">
 										</div>
 
 										<div class="col-md-6 col-12 mb-20">
 											<label>Phone no*</label>
-											<input type="text" name="phone" placeholder="Phone number">
+											<input value="{{auth()->check()?auth()->user()->phone:""}}" type="text" name="phone" placeholder="Phone number">
 										</div>
 
 										<div class="col-12 mb-20">
 											<label>Company Name</label>
-											<input type="text" name="company" placeholder="Company Name">
+											<input  type="text" name="company" placeholder="Company Name">
 										</div>
 
 										<div class="col-12 mb-20">
 											<label>Address*</label>
-											<input name="address1" type="text" placeholder="Address line 1">
-											<input name="address2" type="text" placeholder="Address line 2">
+											<input
+                                            value="{{auth()->check()?auth()->user()->address1:""}}"
+                                             name="address1" type="text" placeholder="Address line 1">
+											<input
+                                            value="{{auth()->check()?auth()->user()->address2:""}}"
+                                             name="address2" type="text" placeholder="Address line 2">
 										</div>
 
 
 										<div class="col-md-6 col-12 mb-20">
 											<label>Town/City*</label>
-											<input name="town" type="text" placeholder="Town/City">
+											<input
+                                            value="{{auth()->check()?auth()->user()->town:""}}"
+                                             name="town" type="text" placeholder="Town/City">
 										</div>
 
 										<div class="col-md-6 col-12 mb-20">
 											<label>Zip Code*</label>
-											<input name="zip" type="text" placeholder="Zip Code">
+											<input
+                                            value="{{auth()->check()?auth()->user()->zip:""}}"
+                                             name="zip" type="text" placeholder="Zip Code">
 										</div>
 
 										<div class="col-12 mb-20">
+                                        @guest
 											<div class="check-box">
 												<input type="checkbox"
                                                 name="create_account"
-                                                id="create_account">
+                                                id="create_account" onclick="createAccount(this.checked)">
 												<label for="create_account">Create an Acount?</label>
+                                                <input style="display:none" id="accountPassword" placeholder="Enter the password" type="password" class="my-2 form-control">
 											</div>
+                                            <script>
+                                                let createAccount=(checked)=>{
+                                                    if(checked){
+                                                        document.getElementById("accountPassword").style.display="";
+                                                    }
+                                                    else{
+                                                        document.getElementById("accountPassword").style.display="none";
+                                                    }
+
+                                                }
+                                            </script>
+                                            @endguest
 											<div class="check-box">
 												<input type="checkbox"
                                                 name="shipping_different"
@@ -180,22 +204,22 @@
                                                 @endif
                                                  <span>@if($item["product"]->sell_product_option=="weight_wise")
                                             @php($total+=$item["product"]->price_weight*$item["quantity"])
-                                            ${{$item["product"]->price_weight*$item["quantity"]}}
+                                            €{{$item["product"]->price_weight*$item["quantity"]}}
                                             @elseif($item["product"]->sell_product_option=="per_unit")
                                             @php($total+=$item["product"]->price_per_unit*$item["quantity"])
-                                            ${{$item["product"]->price_per_unit*$item["quantity"]}}
+                                            €{{$item["product"]->price_per_unit*$item["quantity"]}}
                                             @else
                                             @php($total+=$item["product"]->price_per_person*$item["quantity"])
-                                            ${{$item["product"]->price_per_person*$item["quantity"]}}
+                                            €{{$item["product"]->price_per_person*$item["quantity"]}}
 
                                             @endif</span></li>
 											@endforeach
 											</ul>
 
-											<p>Sub Total <span>${{$total}}</span></p>
-											<p>Tax <span>$00.00</span></p>
+											<p>Sub Total <span>€{{$total}}</span></p>
+											{{--  <p>Tax <span>$00.00</span></p>  --}}
                                             <input type="hidden" value="{{$total}}" name="total">
-											<h4>Grand Total <span>${{$total}}</span></h4>
+											<h4>Grand Total <span>€{{$total}}</span></h4>
 
 										</div>
 
@@ -212,14 +236,14 @@
 
 												<div class="row">
 													<div class="col-md-12 col-12">
-														<input type="date"
+														<input onchange="dateChanged(this.value)" type="date"
                                                         name="date" placeholder="Date">
 													</div>
 												</div>
 
 												<div class="row">
 													<div class="col-md-12 col-12">
-														<input name="dayname" type="text" placeholder="Day Name">
+														<input id="dayname" readonly name="dayname" type="text" placeholder="Day Name">
 													</div>
 												</div>
 
@@ -263,5 +287,11 @@
 		</div>
 	</div>
 
+<script>
+let dateChanged=(val)=>{
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+    $("#dayname").val(days[new Date(val).getDay()])
+}
+</script>
 @endsection
