@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\OrderDayException;
+use App\OrderDayPickup;
+use App\PickupTime;
+use App\PickupTimeException;
 use App\Setting;
 use App\User;
 use Illuminate\Http\Request;
@@ -58,7 +61,80 @@ class SettingsController extends Controller
     {
         return view('settings.create');
     }
-
+    public function orderSetting()
+    {
+        $day0 = OrderDayPickup::where('day', '=', 0)->first();
+        $day1 = OrderDayPickup::where('day', '=', 1)->first();
+        $day2 = OrderDayPickup::where('day', '=', 2)->first();
+        $day3 = OrderDayPickup::where('day', '=', 3)->first();
+        $day4 = OrderDayPickup::where('day', '=', 4)->first();
+        $day5 = OrderDayPickup::where('day', '=', 5)->first();
+        $day6 = OrderDayPickup::where('day', '=', 6)->first();
+        $day7 = OrderDayPickup::where('day', '=', 7)->first();
+        $orderDayExceptions = OrderDayException::latest()->get();
+        $pickupTimes = PickupTime::orderBy('day')->get();
+        $pickupTimeExceptions = PickupTimeException::orderBy('date')->get();
+        return view('settings.order', compact('pickupTimeExceptions', 'pickupTimes', 'orderDayExceptions', 'day0', 'day1', 'day2', 'day3', 'day4', 'day5', 'day6'));
+    }
+    public function pickupTime(Request $request)
+    {
+        PickupTime::whereNotNull('id')->delete();
+        if ($request->day) {
+            for ($i = 0; $i < count($request->day); $i++) {
+                PickupTime::create(
+                    [
+                        "day" => $request->day[$i],
+                        "from" => $request->from[$i],
+                        "to" => $request->to[$i],
+                    ]
+                );
+            }
+        }
+        return redirect()->back()->with('success', 'Pickup Times updated successfully');
+    }
+    public function pickupTimeException(Request $request)
+    {
+        PickupTimeException::whereNotNull('id')->delete();
+        if ($request->date) {
+            for ($i = 0; $i < count($request->date); $i++) {
+                PickupTimeException::create(
+                    [
+                        "date" => $request->date[$i],
+                        "from" => $request->from[$i],
+                        "to" => $request->to[$i],
+                    ]
+                );
+            }
+        }
+        return redirect()->back()->with('success', 'Pickup Times updated successfully');
+    }
+    public function orderPickup(Request $request)
+    {
+        for ($i = 0; $i < 7; $i++) {
+            $day = OrderDayPickup::where('day', '=', $i)->first();
+            $day->update([
+                "min_time" => $request["min_time" . $i],
+                "pickup" => $request["pickup" . $i]
+            ]);
+        }
+        return redirect()->back()->with('success', 'Order Pickup time updated successfully');
+    }
+    public function orderPickupException(Request $request)
+    {
+        OrderDayException::whereNotNull('id')->delete();
+        if ($request->date) {
+            for ($i = 0; $i < count($request->date); $i++) {
+                OrderDayException::create(
+                    [
+                        "date" => $request->date[$i],
+                        "min_time" => $request->min_time[$i],
+                        "pickup" => $request->pickup[$i],
+                    ]
+                );
+            }
+        }
+        return redirect()->back()->with('success', 'Order Pickup Exception updated successfully');
+    }
     /**
      * Store a newly created resource in storage.
      *

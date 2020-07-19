@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Setting;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -17,7 +18,11 @@ class HomeController extends Controller
 
     public function Home()
     {
-        $categories = Category::all();
+        $setting = Setting::firstOrFail();
+        if ($setting->offline == 1) {
+            return view('front.offline');
+        }
+        $categories = Category::orderBy('name')->with('subCategories')->get();
         return view('front.home', compact('categories'));
     }
     public function filterCategory(Request $request)

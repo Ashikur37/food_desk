@@ -106,8 +106,13 @@ class CategoriesController extends Controller
 
     public function category($name)
     {
+        $setting = Setting::firstOrFail();
+        if ($setting->offline == 1) {
+            return view('front.offline');
+        }
         $category = Category::whereName($name)->first();
-        $categories = Category::all();
+        $categories = Category::orderBy('name')->with('subCategories')->get();
+
         $subCategories = $category->subCategories;
         return view('front.category', compact('category', 'categories', 'subCategories'));
     }

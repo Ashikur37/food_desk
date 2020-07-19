@@ -12,10 +12,10 @@
                 <div class="product-hover-icons">
                     <a href="javascript:void(0)"
                         onclick="addToCartQuick({{$product->fid}},{{$product->sell_product_option=="weight_wise"?100:1}},'{{$product->sell_product_option=="weight_wise "?"GR ":"UN "}}')"
-                        data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
+                        data-tooltip="{{ __('f.addToCart') }}"> <span class="icon_cart_alt"></span></a>
                     <a href="javascript:void(0)" onclick="addToWishList({{$product->fid}})"
-                        data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-                    <a href="#" data-tooltip="Quick view" data-toggle="modal"
+                        data-tooltip="{{ __('f.addToWishlist') }}"> <span class="icon_heart_alt"></span> </a>
+                    <a href="#" data-tooltip="{{ __('f.quickView') }}" data-toggle="modal"
                         data-target="#quick-view-modal-container{{$product->fid}}"> <span class="icon_search"></span>
                     </a>
                 </div>
@@ -25,16 +25,33 @@
                         href="{{URL::to('/product')}}/{{$product->product_name_dch}}">{{$product->product_name_dch}}</a>
                 </h3>
                 <div class="price-box">
-                    <span class="discounted-price">
+                @guest
+                        @if($setting->hide_rate==1&&$setting->hide_rate_guest==1)
+                        <span class="discounted-price">
                         @if($product->sell_product_option=="weight_wise")
-                        €{{$product->price_weight*1000}}/KG
+                        €{{$product->price_weight*1000}},00/kg
                         @elseif($product->sell_product_option=="per_unit")
-                        €{{$product->price_per_unit}}/ Unit
+                        €{{$product->price_per_unit}},00/ Unit
                         @else
-                        €{{$product->price_per_person}}/ Person
+                        €{{$product->price_per_person}},00/ Person
 
                         @endif
                     </span>
+                        @endif
+                    @else
+                        @if($setting->hide_rate==1)
+                        <span class="discounted-price">
+                        @if($product->sell_product_option=="weight_wise")
+                        €{{$product->price_weight*1000}},00/kg
+                        @elseif($product->sell_product_option=="per_unit")
+                        €{{$product->price_per_unit}},00/ Unit
+                        @else
+                        €{{$product->price_per_person}},00/ Person
+
+                        @endif
+                    </span>
+                        @endif
+                    @endguest
                 </div>
             </div>
         </div>
@@ -56,16 +73,36 @@
                             <td class="pro-title"><a
                                     href="{{URL::to('/product')}}/{{$product->product_name_dch}}">{{$product->product_name_dch}}</a>
                             </td>
-                            <td class="pro-subtotal"><span>@if($product->sell_product_option=="weight_wise")
-                                    €{{$product->price_weight*1000}}/KG
-                                    @elseif($product->sell_product_option=="per_unit")
-                                    €{{$product->price_per_unit}}/ Unit
-                                    @else
-                                    €{{$product->price_per_person}}/ Person
+                            <td class="pro-subtotal"> @guest
+                        @if($setting->hide_rate==1&&$setting->hide_rate_guest==1)
+                        <span >
+                        @if($product->sell_product_option=="weight_wise")
+                        €{{$product->price_weight*1000}},00/kg
+                        @elseif($product->sell_product_option=="per_unit")
+                        €{{$product->price_per_unit}},00/ Unit
+                        @else
+                        €{{$product->price_per_person}},00/ Person
 
-                                    @endif</span></td>
+                        @endif
+                    </span>
+                        @endif
+                    @else
+                        @if($setting->hide_rate==1)
+                        <span >
+                        @if($product->sell_product_option=="weight_wise")
+                        €{{$product->price_weight*1000}},00/kg
+                        @elseif($product->sell_product_option=="per_unit")
+                        €{{$product->price_per_unit}},00/ Unit
+                        @else
+                        €{{$product->price_per_person}},00/ Person
+
+                        @endif
+                    </span>
+                        @endif
+                    @endguest
+                    </td>
                             <td class="pro-quantity">
-                                <div class="pro-qty"><input type="text" value="1"></div>
+                                <div class="pro-qty"><input type="text" value="{{$product->sell_product_option=="weight_wise"?100:1}}"></div>
                                 @if($product->sell_product_option=="weight_wise")
                                 <select name="sort-by" class="nice-select">
                                     <option value="GR">GR</option>
@@ -83,7 +120,7 @@
 
                                 <div class="list-product-icons">
                                     <a href="javascript:void(0)" onclick="addToCart(this,{{$product->fid}})"
-                                        data-tooltip="Add to cart"> <span class="icon_cart_alt"></span></a>
+                                        data-tooltip="{{ __('f.addToCart') }}"> <span class="icon_cart_alt"></span></a>
                                 </div>
                             </td>
                         </tr>
@@ -135,14 +172,33 @@
 
                                 <h2 class="product-price mb-15">
 
-                                    <span class="discounted-price"> @if($product->sell_product_option=="weight_wise")
-                                        €{{$product->price_weight*1000}}/KG
-                                        @elseif($product->sell_product_option=="per_unit")
-                                        €{{$product->price_per_unit}}/ Unit
-                                        @else
-                                        €{{$product->price_per_person}}/ Person
+                                    @guest
+                        @if($setting->hide_rate==1&&$setting->hide_rate_guest==1)
+                        <span class="discounted-price">
+                        @if($product->sell_product_option=="weight_wise")
+                        €{{$product->price_weight*1000}},00/kg
+                        @elseif($product->sell_product_option=="per_unit")
+                        €{{$product->price_per_unit}},00/ Unit
+                        @else
+                        €{{$product->price_per_person}},00/ Person
 
-                                        @endif</span>
+                        @endif
+                    </span>
+                        @endif
+                    @else
+                        @if($setting->hide_rate==1)
+                        <span class="discounted-price">
+                        @if($product->sell_product_option=="weight_wise")
+                        €{{$product->price_weight*1000}},00/kg
+                        @elseif($product->sell_product_option=="per_unit")
+                        €{{$product->price_per_unit}},00/ Unit
+                        @else
+                        €{{$product->price_per_person}},00/ Person
+
+                        @endif
+                    </span>
+                        @endif
+                    @endguest
 
                                 </h2>
 
@@ -151,7 +207,7 @@
 
                                 <div class="cart-buttons mb-20">
                                     <div class="pro-qty mr-10">
-                                        <input type="text" value="1"> @if($product->sell_product_option=="weight_wise")
+                                        <input type="text" value="{{$product->sell_product_option=="weight_wise"?100:1}}"> @if($product->sell_product_option=="weight_wise")
                                         <select name="sort-by" class="nice-select">
                                             <option value="GR">GR</option>
                                             <option value="KG">KG</option>
@@ -166,7 +222,7 @@
                                     </div>
                                     <div class="add-to-cart-btn">
                                         <a href="javascript:void(0)" onclick="addToCartModal(this,{{$product->fid}})"><i
-                                                class="fa fa-shopping-cart"></i> Add to Cart</a>
+                                                class="fa fa-shopping-cart"></i> {{ __('f.addToCart') }}</a>
                                     </div>
                                 </div>
 
@@ -209,7 +265,7 @@ $link_limit = 7; // maximum number of links (a little bit inaccurate, but will b
                     @if ($products->lastPage() > 1)
                     <ul>
                         <li class="{{ ($products->currentPage() == 1) ? ' disabled' : '' }}">
-                            <a onclick="paginate(1)" href="#"><i class="fa fa-angle-left"></i></a>
+                            <a onclick="paginate(1)" href="#val"><i class="fa fa-angle-left"></i></a>
                         </li>
                         @for ($i = 1; $i
                         <=$products->lastPage(); $i++)
@@ -226,13 +282,13 @@ $link_limit = 7; // maximum number of links (a little bit inaccurate, but will b
             ?>
                             @if ($from
                             < $i && $i < $to) <li>
-                                <a class="{{ $products->currentPage() == $i ? ' active' : '' }}" href="#"
+                                <a class="{{ $products->currentPage() == $i ? ' active' : '' }}" href="#val"
                                     onclick="paginate({{$i}})">{{ $i }}</a>
                                 </li>
                                 @endif @endfor
                                 <li
                                     class="{{ ($products->currentPage() == $products->lastPage()) ? ' disabled' : '' }}">
-                                    <a onclick="paginate({{$products->lastPage()}})" href="#"><i
+                                    <a onclick="paginate({{$products->lastPage()}})" href="#val"><i
                                             class="fa fa-angle-right"></i></a>
                                 </li>
                     </ul>

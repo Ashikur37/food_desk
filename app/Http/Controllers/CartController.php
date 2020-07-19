@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,6 +14,10 @@ class CartController extends Controller
 
     public function cart(Request $request)
     {
+        $setting = Setting::firstOrFail();
+        if ($setting->offline == 1) {
+            return view('front.offline');
+        }
         $cart = [];
         if ($request->session()->has('cart')) {
             $cart = $request->session()->get('cart');
@@ -46,7 +51,8 @@ class CartController extends Controller
                     $cartTotal = $cartTotal + $item["product"]->price_per_unit * $item["quantity"];
                 } elseif ($item["product"]->sell_product_option == "weight_wise") {
                     $cartTotal = $cartTotal + $item["product"]->price_weight * $item["quantity"];
-                } else {
+                }
+                else {
                     $cartTotal = $cartTotal + $item["product"]->price_per_person * $item["quantity"];
                 }
             }

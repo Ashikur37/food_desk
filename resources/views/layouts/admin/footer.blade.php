@@ -48,6 +48,7 @@
 <script src="{{asset('admin/dist/js/demo.js')}}"></script>
 <script src="{{asset('/')}}/admin/plugins/toastr/toastr.min.js"></script>
     <script src="{{asset('/')}}/admin/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="{{asset('/')}}/admin/plugins/summernote/summernote-bs4.min.js"></script>
 @yield('script')
   <script>
     viewMode=null;

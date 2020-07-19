@@ -93,10 +93,17 @@
     {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
 </div>
 
+<div class="form-group {{ $errors->has('css') ? 'has-error' : ''}}">
+    <label for="css" class="control-label">{{ 'CSS' }}</label>
+    <textarea class="form-control"  name="css">{{$setting->css}}</textarea>
+
+    {!! $errors->first('css', '<p class="help-block">:message</p>') !!}
+</div>
+
 
 <div class="form-group {{ $errors->has('homepage_notice') ? 'has-error' : ''}}">
     <label for="address" class="control-label">{{ 'Homepage Notice' }}</label>
-    <textarea class="form-control"  name="homepage_notice">{{$setting->homepage_notice}}</textarea>
+    <textarea class="text-area homepage_notice form-control"  name="homepage_notice"></textarea>
 
     {!! $errors->first('homepage_notice', '<p class="help-block">:message</p>') !!}
 </div>
@@ -111,7 +118,122 @@
     </select>
 </div>
 
+<div class="form-group {{ $errors->has('hide_rate') ? 'has-error' : ''}}">
+    <label for="them_color" class="control-label">{{ 'Hide Rate' }}</label>
+    <select class="form-control" name="hide_rate">
+        <option value="1" {{$setting->hide_rate=="1"?"selected":""}}>Show</option>
+        <option value="0" {{$setting->hide_rate=="0"?"selected":""}}>Hide</option>
+
+    </select>
+</div>
+
+<div class="form-group {{ $errors->has('hide_rate_guest') ? 'has-error' : ''}}">
+    <label for="them_color" class="control-label">{{ 'Hide Rate Guest' }}</label>
+    <select class="form-control" name="hide_rate_guest">
+        <option value="1" {{$setting->hide_rate_guest=="1"?"selected":""}}>Show</option>
+        <option value="0" {{$setting->hide_rate_guest=="0"?"selected":""}}>Hide</option>
+
+    </select>
+</div>
+
+<div class="form-group {{ $errors->has('offline') ? 'has-error' : ''}}">
+    <label for="offline" class="control-label">{{ 'Put Offline' }}</label>
+    <select class="form-control" name="offline">
+        <option value="1" {{$setting->offline=="1"?"selected":""}}>Yes</option>
+        <option value="0" {{$setting->offline=="0"?"selected":""}}>No</option>
+
+    </select>
+</div>
+
+<div class="form-group {{ $errors->has('offline_message') ? 'has-error' : ''}}">
+    <label for="address" class="control-label">{{ 'Offline Message' }}</label>
+    <textarea class="offline_message textarea form-control"  name="offline_message"></textarea>
+
+    {!! $errors->first('offline_message', '<p class="help-block">:message</p>') !!}
+</div>
+
+<div class="form-group {{ $errors->has('ok_mail_subject') ? 'has-error' : ''}}">
+    <label for="address" class="control-label">{{ 'OK Mail Subject' }}</label>
+    <input type="text" class="form-control" name="ok_mail_subject" value="{{$setting->ok_mail_subject}}">
+    {!! $errors->first('ok_mail_subject', '<p class="help-block">:message</p>') !!}
+</div>
+<div class="form-group {{ $errors->has('ok_mail') ? 'has-error' : ''}}">
+    <label for="address" class="control-label">{{ 'OK Mail Body' }}</label>
+    <textarea class="ok_mail textarea form-control"  name="ok_mail"></textarea>
+
+    {!! $errors->first('ok_mail', '<p class="help-block">:message</p>') !!}
+</div>
+
+
+
+<div class="form-group {{ $errors->has('success_mail_subject') ? 'has-error' : ''}}">
+    <label for="address" class="control-label">{{ 'Success Mail Subject' }}</label>
+    <input type="text" class="form-control" name="success_mail_subject" value="{{$setting->success_mail_subject}}">
+    {!! $errors->first('success_mail_subject', '<p class="help-block">:message</p>') !!}
+</div>
+<div class="form-group {{ $errors->has('success_mail') ? 'has-error' : ''}}">
+    <label for="address" class="control-label">{{ 'Success Mail Body' }}</label>
+    <textarea class="textarea form-control success_mail"  name="success_mail"></textarea>
+
+    {!! $errors->first('success_mail', '<p class="help-block">:message</p>') !!}
+</div>
+
+
+<div class="form-group {{ $errors->has('hold_mail_subject') ? 'has-error' : ''}}">
+    <label for="address" class="control-label">{{ 'Hold Mail Subject' }}</label>
+    <input type="text" class="form-control" name="hold_mail_subject" value="{{$setting->hold_mail_subject}}">
+    {!! $errors->first('hold_mail_subject', '<p class="help-block">:message</p>') !!}
+</div>
+<div class="form-group {{ $errors->has('hold_mail') ? 'has-error' : ''}}">
+    <label for="address" class="control-label">{{ 'Hold Mail Body' }}</label>
+    <textarea class="textarea form-control hold_mail"  name="hold_mail"></textarea>
+
+    {!! $errors->first('hold_mail', '<p class="help-block">:message</p>') !!}
+</div>
+
+
+<div class="form-group {{ $errors->has('delivery_complete_subject') ? 'has-error' : ''}}">
+    <label for="address" class="control-label">{{ 'Delivery Complete Subject' }}</label>
+    <input type="text" class="form-control" name="delivery_complete_subject" value="{{$setting->delivery_complete_subject}}">
+    {!! $errors->first('delivery_complete_subject', '<p class="help-block">:message</p>') !!}
+</div>
+<div class="form-group {{ $errors->has('delivery_complete') ? 'has-error' : ''}}">
+    <label for="address" class="control-label">{{ 'Delivery Complete Body' }}</label>
+    <textarea class="textarea form-control delivery_complete"  name="delivery_complete"></textarea>
+
+    {!! $errors->first('delivery_complete', '<p class="help-block">:message</p>') !!}
+</div>
+
+
+<div class="form-group {{ $errors->has('collection_complete_subject') ? 'has-error' : ''}}">
+    <label for="address" class="control-label">{{ 'Collection Complete Subject' }}</label>
+    <input type="text" class="form-control" name="collection_complete_subject" value="{{$setting->collection_complete_subject}}">
+    {!! $errors->first('collection_complete_subject', '<p class="help-block">:message</p>') !!}
+</div>
+<div class="form-group {{ $errors->has('collection_complete') ? 'has-error' : ''}}">
+    <label for="address" class="control-label">{{ 'Collection Complete Body' }}</label>
+    <textarea class="textarea form-control collection_complete"  name="collection_complete"></textarea>
+
+    {!! $errors->first('collection_complete', '<p class="help-block">:message</p>') !!}
+</div>
+
 
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
 </div>
+@section('script')
+
+<script>
+$(function () {
+    // Summernote
+     $('.textarea').summernote()
+    $('.ok_mail').summernote('code', `{!! $setting->ok_mail !!}`);
+    $('.success_mail').summernote('code', `{!! $setting->success_mail !!}`);
+    $('.hold_mail').summernote('code', `{!! $setting->hold_mail !!}`);
+    $('.delivery_complete').summernote('code', `{!! $setting->delivery_complete !!}`);
+    $('.collection_complete').summernote('code', `{!! $setting->collection_complete !!}`);
+$('.offline_message').summernote('code', `{!! $setting->offline_message !!}`);
+$('.homepage_notice').summernote('code', `{!! $setting->homepage_notice !!}`);
+  })
+  </script>
+@endsection

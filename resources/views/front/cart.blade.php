@@ -7,7 +7,7 @@
             <div class="col">
                 <div class="breadcrumb-container">
                     <ul>
-                        <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Home</a></li>
+                        <li><a href="{{route('home')}}"><i class="fa fa-home"></i> {{ __('f.home') }}</a></li>
                         <li class="active" ><a href="{{route('cart')}}">Cart</a></li>
                     </ul>
                 </div>

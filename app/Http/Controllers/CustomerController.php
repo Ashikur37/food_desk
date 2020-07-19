@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\Product;
+use App\Setting;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,10 @@ class CustomerController extends Controller
     }
     public function myAccount()
     {
+        $setting = Setting::firstOrFail();
+        if ($setting->offline == 1) {
+            return view('front.offline');
+        }
         if (!auth()->check()) {
             return redirect('/signup?ref=my-account');
         }
@@ -111,6 +116,10 @@ class CustomerController extends Controller
     }
     public function wishlist(Request $request)
     {
+        $setting = Setting::firstOrFail();
+        if ($setting->offline == 1) {
+            return view('front.offline');
+        }
         $lists = [];
         if ($request->session()->has('wishlists')) {
             $lists = $request->session()->get('wishlists');
@@ -120,6 +129,10 @@ class CustomerController extends Controller
     }
     public function cart(Request $request)
     {
+        $setting = Setting::firstOrFail();
+        if ($setting->offline == 1) {
+            return view('front.offline');
+        }
         $cart = [];
         if ($request->session()->has('cart')) {
             $cart = $request->session()->get('cart');

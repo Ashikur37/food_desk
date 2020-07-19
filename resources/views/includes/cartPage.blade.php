@@ -32,8 +32,8 @@
 
                                             @endif
                                         </span></td>
-                                    <td class="pro-quantity">
-                                        <div class="pro-qty"><input data-id="{{$item["id"]}}" onchange="updateCart({{$item["id"]}},this.value,this.parentElement.parentElement.children[1].value)" type="text" @if($item[ "product" ]->sell_product_option=="weight_wise") value="{{$item["quantity"]>999?$item["quantity"]/1000:$item["quantity"]}}" @else value="{{$item["quantity"]}}" @endif >
+                                    <td class="pro-quantity" style="padding:0">
+                                        <div  class="pro-qty"><input data-id="{{$item["id"]}}" onchange="updateCart({{$item["id"]}},this.value,this.parentElement.parentElement.children[1].value)" type="text" @if($item[ "product" ]->sell_product_option=="weight_wise") value="{{$item["quantity"]>999?$item["quantity"]/1000:$item["quantity"]}}" @else value="{{$item["quantity"]}}" @endif >
                                         </div>
                                         @if($item["product"]->sell_product_option=="weight_wise")
                                         <select onchange="updateCart({{$item["id"]}},this.parentElement.children[0].children[0].value,this.value)" name="sort-by" class="nice-select">

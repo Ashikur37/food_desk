@@ -14,10 +14,10 @@ class Category extends Model
     protected $table = 'categories';
 
     /**
-    * The database primary key value.
-    *
-    * @var string
-    */
+     * The database primary key value.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id';
 
     /**
@@ -25,12 +25,13 @@ class Category extends Model
      *
      * @var array
      */
-    protected $fillable = ['fid','name', 'image', 'description'];
-    public function subCategories(){
-        return $this->hasMany(SubCategory::class,'category_id','fid');
+    protected $fillable = ['fid', 'name', 'image', 'description'];
+    public function subCategories()
+    {
+        return $this->hasMany(SubCategory::class, 'category_id', 'fid')->orderBy('name');
     }
-    public function Products(){
-        return $this->hasMany(Product::class,'category_id','fid');
+    public function Products()
+    {
+        return $this->hasMany(Product::class, 'category_id', 'fid');
     }
-
 }

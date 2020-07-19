@@ -11,7 +11,7 @@ display:none
             <div class="col">
                 <div class="breadcrumb-container">
                     <ul>
-                        <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
+                        <li><a href="index.html"><i class="fa fa-home"></i> {{ __('f.home') }}</a></li>
                         <li class="active">Cart</li>
                     </ul>
                 </div>

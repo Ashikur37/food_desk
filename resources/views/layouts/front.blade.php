@@ -28,12 +28,15 @@
 
     <!-- Main CSS -->
     <link href="{{URL::to('/')}}/assets/css/main.css" rel="stylesheet">
-
+<link rel="stylesheet" href="{{asset('/')}}admin/plugins/select2/css/select2.min.css">
     <!-- Modernizer JS -->
     <script src="{{URL::to('/')}}/assets/js/vendor/modernizr-2.8.3.min.js"></script>
     <link rel="stylesheet" href="{{asset('/')}}admin/plugins/toastr/toastr.min.css">
 
+    <style>
 
+    {!!$setting->css!!}
+    </style>
 </head>
 
 <body>
@@ -50,7 +53,7 @@
                     <div class="col-md-4 col-sm-12 col-xs-12 text-lg-left text-md-center text-sm-center">
                         <!-- logo -->
                         <div class="logo mt-15 mb-15">
-                            <a href="index.html">
+                            <a href="{{URL::to('/')}}">
                                 <img src="{{URL::to('/')}}/images/{{$setting->logo}}" class="img-fluid" alt="">
                             </a>
                         </div>
@@ -95,7 +98,11 @@
     </header>
 
     <!--=====  End of Header  ======-->
-
+    @if($setting->show_notice==1)
+        <p style="text-align:center">
+        {!!$setting->homepage_notice!!}
+        </p>
+    @endif
     @yield('content')
 
 
@@ -316,7 +323,7 @@
                 showConfirmButton: false,
                 timer: 3000
             });
-            
+
             @if(Session::has('error'))
 
             toastr.error("{{Session::get('error')}}");

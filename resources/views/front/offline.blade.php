@@ -1,0 +1,1 @@
+{!!$setting->offline_message!!}

@@ -7,8 +7,8 @@
             <div class="col">
                 <div class="breadcrumb-container">
                     <ul>
-                        <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Home</a></li>
-                        <li class="active" ><a href="{{route('myAccount')}}">My Account</a></li>
+                        <li><a href="{{route('home')}}"><i class="fa fa-home"></i> {{ __('f.home') }}</a></li>
+                        <li class="active" ><a href="{{route('myAccount')}}">{{ __('f.myAccount') }}</a></li>
                     </ul>
                 </div>
             </div>
@@ -33,11 +33,11 @@
                     <div class="col-lg-3 col-12">
                         <div class="myaccount-tab-menu nav" role="tablist">
                             <a href="#dashboad" class="active" data-toggle="tab"><i class="fa fa-dashboard"></i>
-                                Dashboard</a>
+                                {{ __('f.dashboard') }}</a>
 
-                            <a href="#orders" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Orders</a>
+                            <a href="#orders" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> {{ __('f.orders') }}</a>
 
-                            <a href="#address-edit" data-toggle="tab"><i class="fa fa-map-marker"></i> address</a>
+                            <a href="#address-edit" data-toggle="tab"><i class="fa fa-map-marker"></i> {{ __('f.address') }}</a>
 
                             <a href="#account-info" data-toggle="tab"><i class="fa fa-user"></i> Account Details</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -45,7 +45,7 @@
                                     </form>
                             <a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i> Logout</a>
+                                                     document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i> {{ __('m.logout') }}</a>
                         </div>
                     </div>
                     <!-- My Account Tab Menu End -->
@@ -56,7 +56,7 @@
                             <!-- Single Tab Content Start -->
                             <div class="tab-pane fade show active" id="dashboad" role="tabpanel">
                                 <div class="myaccount-content">
-                                    <h3>Dashboard</h3>
+                                    <h3>{{ __('f.dashboard') }}</h3>
 
                                     <div class="welcome">
                                         <p>Hello, <strong>{{$user->firstname." ".$user->lastname}}</strong> (If Not
@@ -74,17 +74,17 @@
                             <!-- Single Tab Content Start -->
                             <div class="tab-pane fade" id="orders" role="tabpanel">
                                 <div class="myaccount-content">
-                                    <h3>Orders</h3>
+                                    <h3>{{ __('f.orders') }}</h3>
 
                                     <div class="myaccount-table table-responsive text-center">
                                         <table class="table table-bordered">
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <th>Order ID</th>
-                                                    <th>Date</th>
-                                                    <th>Status</th>
-                                                    <th>Total</th>
-                                                    <th>Action</th>
+                                                    <th>{{ __('f.orderId') }}</th>
+                                                    <th>{{ __('f.date') }}</th>
+                                                    <th>{{ __('f.status') }}</th>
+                                                    <th>{{ __('f.total') }}</th>
+                                                    <th>{{ __('f.action') }}</th>
                                                 </tr>
                                             </thead>
 
@@ -95,7 +95,7 @@
                                                     <td>{{$order->created_at->format('M d/y')}}</td>
                                                     <td>Pending</td>
                                                     <td>${{$order->total}}</td>
-                                                    <td><a href="{{route('myOrder',$order->id)}}" class="btn">View</a></td>
+                                                    <td><a href="{{route('myOrder',$order->id)}}" class="btn">{{ __('f.view') }}</a></td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -108,7 +108,7 @@
                             <!-- Single Tab Content Start -->
                             <div class="tab-pane fade" id="address-edit" role="tabpanel">
                                 <div class="myaccount-content">
-                                    <h3>Billing Address</h3>
+                                    <h3>{{ __('f.billingAddress') }}</h3>
                     <form autocomplete="on" action="{{route('updateAddress')}}" method="POST">
                                             @csrf
                                     <address>
@@ -124,7 +124,7 @@
 
                                         </p>
                                     </address>
-                                    <button  class="btn btn-primary"><i class="fa fa-edit"></i>Update Address</button>
+                                    <button  class="btn btn-primary"><i class="fa fa-edit"></i>{{ __('f.updateAddress') }}</button>
                                     </form>
 
                                 </div>
@@ -134,7 +134,7 @@
                             <!-- Single Tab Content Start -->
                             <div class="tab-pane fade" id="account-info" role="tabpanel">
                                 <div class="myaccount-content">
-                                    <h3>Account Details</h3>
+                                    <h3>{{ __('f.accountDetails') }}</h3>
 
                                     <div class="account-details-form">
                                         <form autocomplete="on" action="{{route('updateProfile')}}" method="POST">
@@ -161,7 +161,7 @@
 
                                                 <div class="col-12 mb-30">
 
-                                                    <h4> Password change
+                                                    <h4> {{ __('f.passwordChange') }}
                                                     </h4>
                                                 </div>
 
@@ -181,7 +181,7 @@
                                                 </div>
 
                                                 <div class="col-12">
-                                                    <button class="save-change-btn">Save Changes</button>
+                                                    <button class="save-change-btn">{{ __('f.saveChanges') }}</button>
                                                 </div>
 
                                             </div>

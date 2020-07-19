@@ -88,7 +88,7 @@ class SubCategoriesController extends Controller
 
     public function subCategory($name)
     {
-        $categories = Category::all();
+        $categories = Category::orderBy('name')->with('subCategories')->get();
         $subcategory = SubCategory::whereName($name)->first();
 
         $products = Product::where('subcategory_id', '=', $subcategory->fid)->paginate(5);
@@ -100,7 +100,8 @@ class SubCategoriesController extends Controller
         $setting = Setting::firstOrFail();
         $paginateLength = $setting->pagination_length;
         if ($request->subcat) {
-            $products = Product::where('subcategory_id', '=', $request->subcat)->whereStatus(1)->where($request->key, 'like', '%' . $request->val . '%')->paginate($paginateLength);
+            //where('subcategory_id', '=', $request->subcat)->
+            $products = Product::whereStatus(1)->where($request->key, 'like', '%' . $request->val . '%')->paginate($paginateLength);
         } else {
             $products = Product::whereStatus(1)->where($request->key, 'like', '%' . $request->val . '%')->paginate($paginateLength);
         }

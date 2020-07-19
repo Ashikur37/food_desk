@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\OrderLine;
+use App\Setting;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 
 class OrderController extends Controller
@@ -30,11 +32,67 @@ class OrderController extends Controller
     public function updateOrder(Order $order)
     {
     }
+    public function okMail(Order $order)
+    {
+
+        $subject = Setting::firstOrFail()->ok_mail_subject;
+        $body = Setting::firstOrFail()->ok_mail;
+        $from_email = Setting::firstOrFail()->from_email;
+
+
+        $email = $order->user->email;
+        $data = array("body" => $body);
+        Mail::send('mail', $data, function ($message) use ($subject, $email, $from_email) {
+            $message->to($email)
+                ->from($from_email)
+                ->subject($subject);
+        });
+        return redirect()->route('orderList')->with('success', 'OK mail sent');
+    }
     public function updateOrderStatus(Order $order, $status)
     {
+        if ($status == -1) {
+            $subject = Setting::firstOrFail()->ok_mail_subject;
+            $body = Setting::firstOrFail()->ok_mail;
+            $from_email = Setting::firstOrFail()->from_email;
+
+
+            $email = $order->user->email;
+            $data = array("body" => $body);
+            Mail::send('mail', $data, function ($message) use ($subject, $email, $from_email) {
+                $message->to($email)
+                    ->from($from_email)
+                    ->subject($subject);
+            });
+            return redirect()->route('orderList')->with('success', 'OK mail sent');
+        }
         $order->update([
             "status" => $status
         ]);
+        if ($status == 1) {
+            $subject = Setting::firstOrFail()->success_mail_subject;
+            $body = Setting::firstOrFail()->success_mail;
+        } else if ($status == 2) {
+            $subject = Setting::firstOrFail()->hold_mail_subject;
+            $body = Setting::firstOrFail()->hold_mail;
+        } else if ($status == 3) {
+            $subject = Setting::firstOrFail()->delivery_complete_subject;
+            $body = Setting::firstOrFail()->delivery_complete;
+        } else if ($status == 4) {
+            $subject = Setting::firstOrFail()->collection_complete_subject;
+            $body = Setting::firstOrFail()->collection_complete;
+        }
+
+
+        $from_email = Setting::firstOrFail()->from_email;
+
+        $email = $order->user->email;
+        $data = array("body" => $body);
+        Mail::send('mail', $data, function ($message) use ($subject, $email, $from_email) {
+            $message->to($email)
+                ->from($from_email)
+                ->subject($subject);
+        });
         return redirect()->route('orderList')->with('success', 'Order status updated successfully');
     }
     public function updateOrderPickup(Order $order, Request $request)
@@ -43,7 +101,16 @@ class OrderController extends Controller
         $order->hour = $request->hour;
         $order->minute = $request->minute;
         $order->save();
-
+        $from_email = Setting::firstOrFail()->from_email;
+        $subject = "Pickup time updated";
+        $body = "Pickup time updated";
+        $email = $order->user->email;
+        $data = array("body" => $body);
+        Mail::send('mail', $data, function ($message) use ($subject, $email, $from_email) {
+            $message->to($email)
+                ->from($from_email)
+                ->subject($subject);
+        });
         return redirect()->route('editOrder', $order->id)->with('success', 'Order Pickup time updated successfully');
     }
     public function editOrder(Order $order)
@@ -83,18 +150,28 @@ class OrderController extends Controller
                 return $row->created_at->format('d/m/Y');
             })
             ->addColumn('action', function ($row) {
-                return "<div class='btn btn-group'><a href='" . route('printOrder', $row->id) . "' class='btn btn-sm btn-primary'><i class='fas fa-print'></i></a><a href='" . route('editOrder', $row->id) . "' class='btn btn-sm btn-warning'><i class='fas fa-edit'></i></a><a onclick='return confirm(" . '"Are you sure to delete?"' . ")' href='" . route('deleteOrder', $row->id) . "' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i></a></div>";
+                $invoice = $row->give_invoice == 1 ? "<br><span class='text text-success ml-20'>Invoice</span>" : "";
+                return "<div class='btn btn-group'>
+
+                <a href='" . route('printOrder', $row->id) . "' class='btn btn-sm btn-primary'><i class='fas fa-print'></i></a><a href='" . route('editOrder', $row->id) . "' class='btn btn-sm btn-warning'><i class='fas fa-edit'></i></a><a onclick='return confirm(" . '"Are you sure to delete?"' . ")' href='" . route('deleteOrder', $row->id) . "' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i></a></div>" . $invoice;
             })
             ->editColumn('total', function ($row) {
-                return "$" . $row->total . "";
+                return "€" . $row->total . "";
             })
             ->editColumn('status', function ($row) {
                 $pending = $row->status == 0 ? "selected" : "";
-                $confirm = $row->status == 1 ? "selected" : "";
+                $success = $row->status == 1 ? "selected" : "";
+                $hold = $row->status == 2 ? "selected" : "";
+                $delivery = $row->status == 3 ? "selected" : "";
+                $collection = $row->status == 4 ? "selected" : "";
 
                 $option = '<select  class="form-control">
-                    <option value="0" ' . $pending . '  >Pending</option>
-                    <option value="1" ' . $confirm . ' >Confirm</option>
+                <option value="-1"  >OK Mail</option>
+                <option value="0" ' . $pending . '  >Success</option>
+                    <option value="1" ' . $success . '  >Success</option>
+                    <option value="2" ' . $hold . ' >Hold</option>
+                    <option value="3" ' . $delivery . ' >Delivery Complete</option>
+                    <option value="4" ' . $collection . ' >Collection Complete</option>
                 </select><button onclick="changeStatus(' . $row->id . ',this.parentElement.children[0].value)" class="btn btn-block my-2 btn-sm btn-primary">Update</button>';
                 return $option;
             })

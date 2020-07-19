@@ -3,7 +3,7 @@
         <span class="icon_bag_alt"></span>
     </div>
     <div class="cart-info d-inline-block">
-        <p>Shopping Cart
+        <p>{{ __('f.shoppingCart') }}
             <span>
                 {{count($cart)}} items - €{{$cartTotal}}
             </span>
@@ -27,7 +27,7 @@
                 <p class="product-title"> <a href="{{URL::to('/product')}}/{{$item["product"]->product_name_dch}}">{{$item["product"]->product_name_dch}} </a></p>
                 <p class="price"><span class="count">
                 @if($item[ "product" ]->sell_product_option=="weight_wise")
-                                                {{$item["quantity"]>999?($item["quantity"]/1000)." KG":$item["quantity"]." GRM"}}
+                                                {{$item["quantity"]>999?($item["quantity"]/1000)." KG":$item["quantity"]." GR"}}
                                                 @elseif($item["product"]->sell_product_option=="per_unit")
                                                 {{$item["quantity"]}} Unit
                                                 @else
@@ -51,11 +51,11 @@
     </div>
     <div class="cart-calculation">
         <div class="calculation-details">
-            <p class="total">Subtotal <span>€{{$cartTotal}}</span></p>
+            <p class="total">{{ __('f.subTotal') }} <span>€{{$cartTotal}}</span></p>
         </div>
         <div class="floating-cart-btn text-center">
-            <a href="{{route('checkout')}}">Checkout</a>
-            <a href="{{route('cart')}}">View Cart</a>
+            <a href="{{route('checkout')}}">{{ __('f.checkout') }} </a>
+            <a href="{{route('cart')}}">{{ __('f.viewCart') }} </a>
         </div>
     </div>
 </div>

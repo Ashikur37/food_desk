@@ -12,7 +12,7 @@
                 <div class="col">
                     <div class="breadcrumb-container">
                         <ul>
-                               <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Home</a></li>
+                               <li><a href="{{route('home')}}"><i class="fa fa-home"></i> {{ __('f.home') }}</a></li>
                         <li  class="active"><a href="{{route('category',$product->category->name)}}">{{$product->category->name}}</a></li>
                         <li  class="active"><a href="{{route('subcategory',$product->subCategory->name)}}">{{$product->subCategory->name}}</a></li>
                         <li  class="active"><a href="{{route('singleProduct',$product->product_name_dch)}}">{{$product->product_name_dch}}</a></li>
@@ -55,11 +55,11 @@
                             <h2 class="product-title mb-15">{{$product->product_name_dch}}</h2>
                             <h2 class="product-price mb-15">
                                 <span class="discounted-price">  @if($product->sell_product_option=="weight_wise")
-                        ${{$product->price_weight}}/GRM
+                        €{{$product->price_weight*1000}},00/kg
                         @elseif($product->sell_product_option=="per_unit")
-                        ${{$product->price_per_unit}}/ Unit
+                        €{{$product->price_per_unit}},00/ Unit
                         @else
-                        ${{$product->price_per_person}}/ Person
+                        €{{$product->price_per_person}},00/ Person
 
                         @endif</span>
                             </h2>
@@ -68,13 +68,18 @@
 
                             <div class="size mb-20">
                                 <div class="pro-qty mr-20 mb-xs-20">
+                                @if($product->sell_product_option=="weight_wise")
+                                    <input type="text" value="100">
+
+                                @else
                                     <input type="text" value="1">
+                                @endif
                                 </div>
 
                                 @if($product->sell_product_option=="weight_wise")
                                 <select name="sort-by"  class="nice-select">
-                                    <option value="GR">GR</option>
-                                    <option value="KG">KG</option>
+                                    <option value="GR">gr</option>
+                                    <option value="KG">kg</option>
                                 </select>
                                  @elseif($product->sell_product_option=="per_unit")
                                    <select name="sort-by"  class="nice-select">
@@ -95,7 +100,7 @@
                                 <div class="add-to-cart-btn">
                                    <a href="javascript:void(0)" onclick="addToWishList({{$product->fid}})" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span></a>
                                     <a href="javascript:void(0)" onclick="addToCart(this,{{$product->fid}})"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
-                                    <a href="#">Checkout</a>
+                                    <a href="{{route("checkout")}}">Checkout</a>
                                 </div>
                             </div>
 
@@ -157,11 +162,11 @@
                                 <h3 class="product-title"><a href="{{URL::to('/product')}}/{{$prd->product_name_dch}}">{{$prd->product_name_dch}}</a></h3>
                                 <div class="price-box">
                                     <span class="discounted-price">@if($prd->sell_product_option=="weight_wise")
-                        ${{$prd->price_weight}}/GRM
+                        €{{$prd->price_weight*1000}},00/kg
                         @elseif($prd->sell_product_option=="per_unit")
-                        ${{$prd->price_per_unit}}/ Unit
+                        €{{$prd->price_per_unit}},00/ Unit
                         @else
-                        ${{$prd->price_per_person}}/ Person
+                        €{{$prd->price_per_person}},00/ Person
 
                         @endif</span>
                                 </div>
@@ -199,6 +204,7 @@
             success: function(result) {
                 updateCartHeader();
                 toastr.success('Successfully added to cart')
+                $("#commentMessage").val("");
 
             }
         });

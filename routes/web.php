@@ -48,11 +48,17 @@ Route::get('remove-wishlist/{product}', 'CustomerController@removeFromWishList')
 Route::get('wishlist', 'CustomerController@wishList')->name('wishlist');
 //checkout routes
 Route::get('checkout', 'CheckoutController@checkout')->name('checkout');
+Route::get('check-date', 'CheckoutController@checkDate')->name('checkDate');
 Route::post('checkout', 'CheckoutController@checkoutSubmit')->name('checkoutSubmit');
 
 //Admin Routes
 Route::get('sync-category', 'CategoriesController@sync')->name('syncCategory')->middleware('is_admin');
 Route::resource('settings', 'SettingsController')->middleware('is_admin');
+Route::get('order-setting', 'SettingsController@orderSetting')->middleware('is_admin');
+Route::post('order-pickup', 'SettingsController@orderPickup')->name('orderPickup')->middleware('is_admin');
+Route::post('order-pickup-exception', 'SettingsController@orderPickupException')->name('orderPickupException')->middleware('is_admin');
+Route::post('pickup-time', 'SettingsController@pickupTime')->name('pickupTime')->middleware('is_admin');
+Route::post('pickup-time-exception', 'SettingsController@pickupTimeException')->name('pickupTimeException')->middleware('is_admin');
 Route::get('change-password', 'SettingsController@changePassword')->name('changePassword')->middleware('is_admin');
 Route::get('add-admin', 'SettingsController@addAdmin')->name('addAdmin')->middleware('is_admin');
 Route::post('add-admin', 'SettingsController@insertAdmin')->name('insertAdmin')->middleware('is_admin');
@@ -68,9 +74,11 @@ Route::resource('sub-categories', 'SubCategoriesController')->middleware('is_adm
 Route::resource('products', 'ProductsController')->middleware('is_admin');
 Route::get('sync-product', 'ProductsController@sync')->name('syncProduct')->middleware('is_admin');
 Route::get('orders', 'OrderController@orderList')->name('orderList')->middleware('is_admin');
+Route::get('update-billing', 'CheckoutController@updateBilling')->name('updateBilling')->middleware('is_admin');
 Route::get('order-data', 'OrderController@orderDataTable')->middleware('is_admin');
 Route::get('edit-order/{order}', 'OrderController@editOrder')->name('editOrder')->middleware('is_admin');
 Route::get('print-order/{order}', 'OrderController@printOrder')->name('printOrder')->middleware('is_admin');
+Route::get('ok-mail/{order}', 'OrderController@okMail')->name('okMail')->middleware('is_admin');
 Route::post('update-order/{order}', 'OrderController@updateOrder')->name('updateOrder')->middleware('is_admin');
 Route::get('update-order-status/{order}/{status}', 'OrderController@updateOrderStatus')->name('updateOrderStatus')->middleware('is_admin');
 //updateOrderPickup

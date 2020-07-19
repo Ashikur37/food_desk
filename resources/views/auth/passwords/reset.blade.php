@@ -2,6 +2,20 @@
 
 @section('content')
 <div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="breadcrumb-container">
+						<ul>
+							<li><a href="{{route('home')}}"><i class="fa fa-home"></i> Home</a></li>
+                        <li class="active" ><a href="{{route('registerUser')}}">Reset Password</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div class="page-content mb-50">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -61,5 +75,6 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 @endsection

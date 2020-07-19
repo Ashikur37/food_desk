@@ -5,8 +5,8 @@
                 <div class="col">
                     <div class="breadcrumb-container">
                         <ul>
-						<li><a href="{{route('home')}}"><i class="fa fa-home"></i> Home</a></li>
-                            <li class="active" ><a href="{{route('wishlist')}}">Wishlist</a></li>
+						<li><a href="{{route('home')}}"><i class="fa fa-home"></i> {{ __('f.home') }}</a></li>
+                            <li class="active" ><a href="{{route('wishlist')}}">{{ __('f.wishlist') }}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -32,19 +32,20 @@
 								<table class="table">
 									<thead>
 										<tr>
-											<th class="pro-thumbnail">Image</th>
-											<th class="pro-title">Product</th>
+											<th class="pro-thumbnail">
+                                            {{ __('f.product') }}</th>
 
-											<th class="pro-remove">Remove</th>
+											<th class="pro-remove">{{ __('f.remove') }}</th>
 										</tr>
 									</thead>
 									<tbody>
                                     @foreach($products as $product)
 										<tr>
-											<td class="pro-thumbnail"><a href="#"><img src="https://www.fooddesk.net/obs/obs-api-new/timthumb.php?src={{$product->image}}&h=350&w=350" class="img-fluid" class="img-fluid" alt="Product"></a></td>
-											<td class="pro-title"><a href="#">{{$product->product_name_dch}}</a></td>
+											<td class="pro-thumbnail"><a href="{{URL::to('/product')}}/{{$product->product_name_dch}}"><img src="https://www.fooddesk.net/obs/obs-api-new/timthumb.php?src={{$product->image}}&h=350&w=350" class="img-fluid" class="img-fluid" alt="Product"></a>
+                                            <a href="{{URL::to('/product')}}/{{$product->product_name_dch}}">{{$product->product_name_dch}}</a>
+                                            </td>
 
-											<td class="pro-remove"><a href="javascript:void(0)" onclick="removeFromWishList({{$product->fid}},this)"><i class="fa fa-trash-o"></i></a></td>
+											<td class="pro-remove"><a style="display:inline-block" class="btn btn-danger "href="javascript:void(0)" onclick="removeFromWishList({{$product->fid}},this)"><i style="color:#fff" class="fa fa-trash-o"></i></a></td>
 										</tr>
                                     @endforeach
 									</tbody>

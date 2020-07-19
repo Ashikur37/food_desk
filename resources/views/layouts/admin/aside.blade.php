@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-        <img src="{{URL::to('/')}}/images/{{$setting->logo}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="{{URL::to('/')}}/images/admin.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">{{$setting->site_name}}</span>
     </a>
 
@@ -77,12 +77,7 @@
                                 <p>{{__('Orders')}}</p>
                             </a>
                         </li>
-                <li class=" nav-item ">
-                            <a href="{{ url('/settings') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>{{__('Website Setting')}}</p>
-                            </a>
-                </li>
+
                 <li class=" nav-item ">
                             <a href="{{ url('/users') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
@@ -97,13 +92,25 @@
                                 <p>{{__('Admin List')}}</p>
                             </a>
                 </li>
-                 <li class=" nav-item ">
+               <li class=" nav-item ">
+                            <a href="{{ url('/settings') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{__('Website Setting')}}</p>
+                            </a>
+                </li>
+                <li class=" nav-item ">
+                            <a href="{{ url('/order-setting') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{__('Order Setting')}}</p>
+                            </a>
+                </li>
+                @endif
+                  <li class=" nav-item ">
                             <a href="{{ url('/change-password') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>{{__('Change Password')}}</p>
                             </a>
                 </li>
-                @endif
 
             </ul>
         </nav>

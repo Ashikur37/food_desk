@@ -9,7 +9,7 @@
 				<div class="col">
 					<div class="breadcrumb-container">
 						<ul>
-							<li><a href="{{route('home')}}"><i class="fa fa-home"></i> Home</a></li>
+							<li><a href="{{route('home')}}"><i class="fa fa-home"></i> {{ __('f.home') }}</a></li>
                         <li  class="active"><a href="{{route('category',$subcategory->name)}}">{{$subcategory->name}}</a></li>
 						</ul>
 					</div>
@@ -110,6 +110,15 @@
         if(viewMode){
             mode=viewMode;
         }
+         $("#productContainer").html(` <div class="spinner-grow text-muted"></div>
+  <div class="spinner-grow text-primary"></div>
+  <div class="spinner-grow text-success"></div>
+  <div class="spinner-grow text-info"></div>
+  <div class="spinner-grow text-warning"></div>
+  <div class="spinner-grow text-danger"></div>
+  <div class="spinner-grow text-secondary"></div>
+  <div class="spinner-grow text-dark"></div>
+  <div class="spinner-grow text-light"></div>`)
               $.ajax({url: `{{URL::to('filter-product')}}?mode=${mode}&subcat={{$subcategory->fid}}&val=${val}&key=${$("#sort-by").val()}`, success: function(result){
                 $("#productContainer").html(result);
               }});
@@ -119,6 +128,15 @@ let mode="grid";
         if(viewMode){
             mode=viewMode;
         }
+          $("#productContainer").html(` <div class="spinner-grow text-muted"></div>
+  <div class="spinner-grow text-primary"></div>
+  <div class="spinner-grow text-success"></div>
+  <div class="spinner-grow text-info"></div>
+  <div class="spinner-grow text-warning"></div>
+  <div class="spinner-grow text-danger"></div>
+  <div class="spinner-grow text-secondary"></div>
+  <div class="spinner-grow text-dark"></div>
+  <div class="spinner-grow text-light"></div>`)
         $.ajax({
             url: `{{URL::to('filter-product')}}?mode=${mode}&subcat={{$subcategory->fid}}&page=${val}&val=${$("#val").val()}&key=${$("#sort-by").val()}`,
             success: function(result) {

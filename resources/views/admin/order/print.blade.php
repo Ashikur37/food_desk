@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Invoice Print</title>
+    <title>{{$setting->site_name}}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -23,23 +23,23 @@
 
                 <div class="col-sm-4 invoice-col">
 
-                    <b>Order ID:</b> {{$order->id}}<br>
-                    <b>Order Date:</b> {{$order->created_at->format('d-m-Y')}}<br>
+                    <b>{{ __('m.orderId') }}:</b> {{$order->id}}<br>
+                    <b>{{ __('m.orderDate') }}:</b> {{$order->created_at->format('d-m-Y')}}<br>
                     <br>
-                    <b>Customer:</b><br> <br><b>{{$order->firstname." ".$order->lastname}}</b>
+                    <b>{{ __('m.customer') }}:</b><br> <br><b>{{$order->firstname." ".$order->lastname}}</b>
                     <br><b>{{$order->address1." ".$order->address2}}</b>
                     <br><b>{{$order->town." ".$order->zip}}</b>
                     <br>
                     <p>
-                    Phone: {{$order->phone}}
+                    {{ __('m.phone') }}: {{$order->phone}}
                     <br>
-Email: {{$order->email}}
+{{ __('m.email') }}: {{$order->email}}
 <br></p>
-Pick up date:: {{$order->date->format('D m/d') . " on " . $order->hour . ":" . $order->minute}}
+{{ __('m.customer') }}:: {{$order->date->format('D m/d') . " on " . $order->hour . ":" . $order->minute}}
 <br>
-            Remark:{{$order->message}}
+           {{ __('m.message') }} :{{$order->message}}
             <br>
-            Shop: Brebels-Truyen
+            {{ __('m.shop') }}: {{$setting->site_name}}
                 </div>
                 <!-- /.col -->
             </div>
@@ -51,11 +51,11 @@ Pick up date:: {{$order->date->format('D m/d') . " on " . $order->hour . ":" . $
                     <table class="table table-striped ">
                         <thead>
                             <tr>
-                                <th>Qty</th>
-                                <th>Product</th>
-                                <th>Price</th>
-                                <th>Message</th>
-                                <th>Subtotal</th>
+                                <th>{{ __('m.quantity') }}</th>
+                                <th>{{ __('m.product') }}</th>
+                                <th>{{ __('m.price') }}</th>
+                                <th>{{ __('m.message') }}</th>
+                                <th>{{ __('m.subTotal') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -82,26 +82,26 @@ Pick up date:: {{$order->date->format('D m/d') . " on " . $order->hour . ":" . $
                 </div>
                 <!-- /.col -->
             </div>
-            <!-- /.row --> 
+            <!-- /.row -->
 
             <div class="row">
 
                 <div class="col-6">
-                   
+
 
                     <div class="table-responsive">
                         <table class="table">
                             <tr>
-                                <th style="width:50%">Subtotal:</th>
+                                <th style="width:50%">{{ __('m.subTotal') }}:</th>
                                 <td>€{{$order->total}}</td>
                             </tr>
-                            <tr>
+                            {{--  <tr>
                                 <th>Tax (0%)</th>
                                 <td>€0</td>
-                            </tr>
+                            </tr>  --}}
 
                             <tr>
-                                <th>Total:</th>
+                                <th>{{ __('m.total') }}:</th>
                                 <td>€{{$order->total}}</td>
                             </tr>
                         </table>

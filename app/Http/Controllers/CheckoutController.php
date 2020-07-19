@@ -5,22 +5,92 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Order;
+use App\OrderDayException;
+use App\OrderDayPickup;
 use App\OrderLine;
+use App\PickupTime;
+use App\PickupTimeException;
 use App\Product;
+use App\Setting;
+use App\User;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class CheckoutController extends Controller
 {
     public function checkout(Request $request)
     {
+        $setting = Setting::firstOrFail();
+        if ($setting->offline == 1) {
+            return view('front.offline');
+        }
         $cart = [];
         if ($request->session()->has('cart')) {
             $cart = $request->session()->get('cart');
         }
-        return view('front.checkout', compact('cart'));
+        $users = User::whereType(0)->get();
+        return view('front.checkout', compact('cart', 'users'));
+    }
+    public function updateBilling()
+    {
+        $user = User::find(request()->id);
+        return view('front.dynamicBilling', compact('user'));
     }
 
+    public function checkDate(Request $request)
+    {
+        // return $request->date;
+        //check next delivery date
+        $dt = new DateTime();
+        $day = date('N', strtotime($dt->format('D'))) % 7;
+        $pickup_date = date_create($request->date);
+        $diff = date_diff($dt, $pickup_date);
+
+
+        if ($diff->format("%R") == '-') {
+            return [
+                "err" => "Choose different day"
+            ];
+        }
+        $pickup = OrderDayPickup::where('day', '=', $day)->first();
+        $pickupException = OrderDayException::where('date', '=', $dt->format('y-m-d'))->get();
+        if ($pickupException->count() > 0) {
+            $pickup = $pickupException[0];
+        }
+
+        if ($diff->format("%a") < ($pickup->pickup - 1)) {
+            return [
+                "err" => "Choose greater day"
+            ];
+        }
+        $times = PickupTimeException::where('date', '=', $request->date)->get();
+        if ($times->count() > 0) {
+            foreach ($times as $time) {
+                if ($time->from == "-1") {
+                    return [
+                        "err" => "Choose greater day"
+                    ];
+                }
+            }
+            return [
+                "success" => $times
+            ];
+        }
+        $times = PickupTime::where('day', '=', date('N', strtotime($pickup_date->format('D'))) % 7)->get();
+        if ($times->count() < 1) {
+            return [
+                "err" => "Choose different day"
+            ];
+        }
+        return [
+            "success" => $times
+        ];
+        //check holiday
+
+
+    }
     public function checkoutSubmit(Request $request)
     {
         $user_id = 0;
@@ -28,7 +98,11 @@ class CheckoutController extends Controller
         if (auth()->check()) {
             $user_id = auth()->id();
         }
+        if ($request->user_id) {
+            $user_id = $request->user_id;
+        }
         //validate
+
         if ($request->shipping_different) {
             $shipping_different = 1;
             $s_firstname = $request->s_firstname;
@@ -90,7 +164,8 @@ class CheckoutController extends Controller
                 $price = $item["product"]->price_per_unit;
             } elseif ($item["product"]->sell_product_option == "weight_wise") {
                 $price = $item["product"]->price_weight;
-            } else {
+            }
+            else {
                 $price = $item["product"]->price_per_person;
             }
             OrderLine::create([
@@ -102,11 +177,24 @@ class CheckoutController extends Controller
             ]);
         }
         //if user new account
-
+        if ($request->create_account) {
+            $user = User::create([
+                'firstname' => $request['firstname'],
+                'lastname' => $request['lastname'],
+                'address1' => $request['address1'],
+                'address2' => $request['address2'],
+                'zip' => $request['zip'],
+                'town' => $request['town'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password']),
+                'type' => 0
+            ]);
+            //  $user->
+        }
         //clear the cart
         $cart = [];
         $request->session()->put('cart', $cart);
-        return redirect()->route('myAccount')->with('success', 'Order placed successfully');
+        return redirect()->back()->with('success', 'Order placed successfully');
         //redirect to order success
     }
 }

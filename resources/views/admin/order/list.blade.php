@@ -37,7 +37,7 @@
                         <div class="col-md-5">
                             <input id="end" class="form-control" type="date">
                         </div>
-                        <button onclick="filter()" class="btn btn-success">Search</button>
+                        <button onclick="filter()" class="btn btn-success">{{ __('m.search') }}</button>
                     </div>
 
 
@@ -49,13 +49,13 @@
                             <thead>
                                 <tr>
                                     <th><input onclick="checkAll(this)" type="checkbox"></th>
-                                    <th>Order At</th>
-                                    <th>User</th>
-                                    <th>Total</th>
-                                    <th>Delivery Time</th>
-                                    <th>Phone</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th>{{ __('m.orderAt') }}</th>
+                                    <th>{{ __('m.user') }}</th>
+                                    <th>{{ __('m.total') }}</th>
+                                    <th>{{ __('m.deliveryTime') }}</th>
+                                    <th>{{ __('m.phone') }}</th>
+                                    <th>{{ __('m.status') }}</th>
+                                    <th>{{ __('m.action') }}</th>
 
                                 </tr>
                             </thead>

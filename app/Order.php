@@ -12,4 +12,8 @@ class Order extends Model
     {
         return $this->hasMany(OrderLine::class);
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
