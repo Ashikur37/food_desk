@@ -28,6 +28,9 @@ class SubCategoriesController extends Controller
                 ->addIndexColumn()
                 ->editColumn('image', function ($d) {
                     return "<img src='https://www.fooddesk.net/obs/obs-api-new/timthumb.php?src=" . implode('obs', explode('sandbox', $d->image)) . "'>";
+                })->editColumn('status', function ($d) {
+                    $checked=$d->status==1? "checked":"";
+                    return "<input onclick='updateCategory(".$d->fid.",this)' type='checkbox'".$checked." >";
                 })
                 ->addColumn('action', function ($row) {
 
@@ -44,7 +47,13 @@ class SubCategoriesController extends Controller
 
         return view('sub-categories.index');
     }
-
+    #update category status
+    public function update_status(Request $request){
+        $category = SubCategory::where(["fid"=>$request->input('fid')])->first();
+        $category->status=!$category->status;
+        $category->save();
+        return response()->json(['message'=>"Category status update success"]);
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -39,10 +39,17 @@
                         <div class="comment-text" style="margin-left: 0px;">
                             <span class="username">
                                 {{ __('m.orderDate') }}
-
                             </span> {{$order->created_at->formatLocalized('%A %d/%b/%y ')}}
                         </div>
 
+
+                    </div>
+                    <div class="card-comment">
+                        <div class="comment-text" style="margin-left: 0px;">
+                            <span class="username">
+                                {{ __('m.message') }}
+                            </span> {{$order->message}}
+                        </div>
                     </div>
                     <div class="card-comment">
 
@@ -59,10 +66,10 @@
                     </div>
                     <div class="card-comment">
                         <span class="username">
-                        {{ __('m.pickupTime')}} 
+                        {{ __('m.pickupTime')}}
                             <button onclick="document.getElementById('pickTimeForm').style.display='block'" class="ml-2 btn btn-sm btn-info"><i class="fas fa-edit"></i></button>
-                        </span> 
-                        
+                        </span>
+
                         {{$order->date->formatLocalized('%A %d/%b/%y ')}} at {{$order->hour.":".$order->minute}}
                         <form action="{{route('updateOrderPickup',$order->id)}}" id="pickTimeForm" method="post" style="display:none">
                         @csrf

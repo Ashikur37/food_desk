@@ -88,8 +88,10 @@ Route::post('update-user', 'SettingsController@updateUser')->name('updateUser')-
 Route::get('user-data', 'SettingsController@userData')->name('userData')->middleware('is_admin');
 
 Route::post('update-password-admin', 'SettingsController@updatePassword')->name('updatePasswordAdmin')->middleware('is_admin');
+Route::post('category/status', 'CategoriesController@update_status')->name('update_category_status');
 Route::resource('categories', 'CategoriesController')->middleware('is_admin');
 Route::resource('sub-categories', 'SubCategoriesController')->middleware('is_admin');
+Route::post('sub-categories/status', 'SubCategoriesController@update_status')->name('update_subcate_status')->middleware('is_admin');
 Route::resource('products', 'ProductsController')->middleware('is_admin');
 Route::get('sync-product', 'ProductsController@sync')->name('syncProduct')->middleware('is_admin');
 Route::get('sync-all', 'ProductsController@syncAll')->name('syncAll')->middleware('is_admin');

@@ -49,6 +49,10 @@ return [
     "passwordChange" => "Password Change",
     "shipToDifferentAddress" => "Ship To Different Address",
     "saveChanges" => "Save Changes",
+    "my_account" => "My Account",
+    "contact" => "contact",
+    "seach_by" => "search by",
+    "name" => "name",
 
 
 

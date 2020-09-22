@@ -26,7 +26,7 @@
                                 <table class="table table-bordered data-table">
                                         <thead>
                                              <tr>
-                                                 <th>{{__('m.category_id')}}</th><th>{{__('m.sub_category_id')}}</th><th>{{__('m.name')}}</th><th>{{__('m.image')}}</th>
+                                                 <th>{{__('m.category_id')}}</th><th>{{__('m.sub_category_id')}}</th><th>{{__('m.name')}}</th><th>{{__('m.image')}}</th><th>{{__('m.status')}}</th>
 
                                             </tr>
                                         </thead>
@@ -62,11 +62,26 @@
               {data: 'category_id', name: 'category_id'},
               {data: 'fid', name: 'fid'},
               {data: 'name', name: 'name'},
-              {data: 'image', name: 'image'},
-              
+              {data: 'image', name: 'image','orderable':false},
+              {data: 'status', name: 'status','orderable':false}
           ]
       });
 
     });
+    function updateCategory(id, el) {
+        console.log(id)
+        jQuery.ajax({
+            method: 'post',
+            url: "{{ route('update_subcate_status') }}",
+            data: {
+                _token: '{{csrf_token()}}',
+                fid: id,
+            },
+            success: function (result) {
+                toastr.success("Category status update success");
+            }
+        });
+
+    }
   </script>
   @endsection

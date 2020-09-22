@@ -25,11 +25,11 @@ class SubCategory extends Model
      *
      * @var array
      */
-    protected $fillable = ['fid', 'category_id', 'name', 'image', 'description'];
+    protected $fillable = ['fid', 'category_id', 'name', 'image', 'description',"status"];
 
     public function Products()
     {
         return $this->hasMany(Product::class, 'subcategory_id', 'fid');
     }
-  
+
 }

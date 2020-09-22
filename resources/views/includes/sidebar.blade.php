@@ -20,7 +20,7 @@
                     <div class="sidebar mb-35">
                         <h3 class="sidebar-title">{{ __('f.productCategories') }}</h3>
                         <ul class="product-categories">
-                            @foreach($categories as $ctg)
+                            @foreach($categories->where('status','=',true) as $ctg)
                             @if($ctg->subCategories->count() != 0&&$ctg->products->where('status','=',1)->count()!=0)
                             <li
                             @if(isset($category))
@@ -28,7 +28,7 @@
                                     class="active" style="color:#a2a20c"
                                 @endif
                             @endif
-                            
+
                              @if(isset($subcategory))
                                 @if($subcategory->category_id==$ctg->fid)
                                     class="active" style="color:#a2a20c"
@@ -38,15 +38,15 @@
 
                             @if($ctg->subCategories->count()>0)
                                 <a href="javascript::void()" style="width:10px"   data-toggle="collapse" data-target="#collapse{{$ctg->id}}" aria-expanded="true" aria-controls="collapse{{$ctg->id}}"  >
-                                <i class="fa fa-arrow-right 
+                                <i class="fa fa-arrow-right
                                  @if(isset($subcategory))
                                 @if($subcategory->category_id==$ctg->fid)
-                                    fa-arrow-down 
+                                    fa-arrow-down
                                 @endif
                             @endif
                                 " onclick="collapse(this)"></i>
                                 </a>
-                                <div id="collapse{{$ctg->id}}" class="collapse 
+                                <div id="collapse{{$ctg->id}}" class="collapse
                                 @if(isset($subcategory))
                                 @if($subcategory->category_id==$ctg->fid)
                                     show

@@ -27,7 +27,7 @@ class HomeController extends Controller
         if ($setting->offline == 1) {
             return view('front.offline');
         }
-        $categories = Category::orderBy('name')->with('subCategories')->get();
+        $categories = Category::where(["status"=>true])->orderBy('name')->with('subCategories')->get();
 
         return view('front.home', compact('categories'));
     }

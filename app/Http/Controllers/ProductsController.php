@@ -44,7 +44,7 @@ class ProductsController extends Controller
                 })
                 ->addColumn('subCategory', function ($row) {
                     if($row->subCategory){
-                        
+
                     return $row->subCategory->name;
                     }
                     return "";

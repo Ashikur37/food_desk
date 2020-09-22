@@ -39,51 +39,49 @@
                 <div class="slider-container">
                 <div class="hero-slider-two">
                             <!--=======  hero slider item  =======-->
-                                
+
                             @if($setting->banner)
                             <div class="hero-slider-item">
-                               
+
                                 <img src="{{URL::to('/')}}/images/{{$setting->banner}}" class="img-fluid" alt="">
-                            
+
                         </div>
                             @endif
                             @if($setting->banner2)
                             <!--=======  End of hero slider item  =======-->
                                 <div class="hero-slider-item">
-                                
+
                                     <img src="{{URL::to('/')}}/images/{{$setting->banner2}}" class="img-fluid" alt="">
-                                
+
                                 </div>
                                 @endif
                                 @if($setting->banner3)
                                 <div class="hero-slider-item">
-                                
+
                                     <img src="{{URL::to('/')}}/images/{{$setting->banner3}}" class="img-fluid" alt="">
-                                
+
                             </div>
                             @endif
                             @if($setting->banner4)
                             <div class="hero-slider-item">
-                                
+
                                 <img src="{{URL::to('/')}}/images/{{$setting->banner4}}" class="img-fluid" alt="">
-                            
+
                         </div>
                         @endif
                          @if($setting->banner5)
                             <div class="hero-slider-item">
-                                
                                 <img src="{{URL::to('/')}}/images/{{$setting->banner5}}" class="img-fluid" alt="">
-                            
                         </div>
                         @endif
                             <!--=======  Hero slider item  =======-->
-                            
-                            
-                            
+
+
+
                             <!--=======  End of Hero slider item  =======-->
-                            
+
                         </div>
-                        
+
                         <!--=======  End of Slider area  =======-->
                         </div>
                 </div>

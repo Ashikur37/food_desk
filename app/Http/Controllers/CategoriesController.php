@@ -29,17 +29,26 @@ class CategoriesController extends Controller
                 ->addIndexColumn()
                 ->editColumn('id', function ($d) {
                     return $d->fid;
+                })->editColumn('status', function ($d) {
+                    $checked=$d->status==1? "checked":"";
+                    return "<input onclick='updateCategory(".$d->fid.",this)' type='checkbox'".$checked." >";
                 })
                 ->editColumn('image', function ($d) {
                     return "<img src='https://www.fooddesk.net/obs/obs-api-new/timthumb.php?src=" . $d->image . "'>";
                 })
-
                 ->rawColumns(['action'])
                 ->escapeColumns([])
                 ->make(true);
         }
 
         return view('categories.index');
+    }
+    #update category status
+    public function update_status(Request $request){
+        $category = Category::where(["fid"=>$request->input('fid')])->first();
+        $category->status=!$category->status;
+        $category->save();
+        return response()->json(['message'=>"Category status update success"]);
     }
     public function sync()
     {
@@ -58,7 +67,7 @@ class CategoriesController extends Controller
         $output = simplexml_load_string($output);
         curl_close($ch);
         $json = json_encode($output);
-
+        dd($output);
         $array = json_decode($json, TRUE);
         //return $array;
         foreach ($array["categories"]["category"] as $cat) {
@@ -113,7 +122,7 @@ class CategoriesController extends Controller
         $category = Category::whereName($name)->first();
         $categories = Category::orderBy('name')->with('subCategories')->get();
 
-        $subCategories = $category->subCategories;
+        $subCategories = SubCategory::where(["category_id"=>$category->fid,'status'=>true])->get();;
         return view('front.category', compact('category', 'categories', 'subCategories'));
     }
 

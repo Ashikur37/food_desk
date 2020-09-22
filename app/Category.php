@@ -25,7 +25,7 @@ class Category extends Model
      *
      * @var array
      */
-    protected $fillable = ['fid', 'name', 'image', 'description'];
+    protected $fillable = ['fid', 'name', 'image', 'description','status'];
     public function subCategories()
     {
         return $this->hasMany(SubCategory::class, 'category_id', 'fid')->orderBy('name');
