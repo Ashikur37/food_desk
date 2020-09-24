@@ -79,7 +79,7 @@ class OrderController extends Controller
     }
     public function updateOrderStatus(Order $order, $status)
     {
-      
+
         setlocale(LC_TIME, 'Dutch');
         if ($status == -1) {
             $subject = Setting::firstOrFail()->ok_mail_subject;
@@ -96,8 +96,8 @@ class OrderController extends Controller
                 if($item[ "product" ]->sell_product_option=="weight_wise"){
                     $detail.=$item["quantity"]>999?($item["quantity"]/1000)."kg":$item["quantity"]."gr";
                 }
-                 
-                 elseif($item["product"]->sell_product_option=="per_unit") 
+
+                 elseif($item["product"]->sell_product_option=="per_unit")
                  {
                     $detail.=$item["quantity"]."stuk" ;
                  }
@@ -110,26 +110,26 @@ class OrderController extends Controller
             $detail.='<td style="padding:3px;border:1px solid black">';
             if($item["product"]->sell_product_option=="weight_wise")
             {
-                $detail.='€'.number_format((float)$item["product"]->price_weight*1000, 2, ',', '').'/kg'; 
+                $detail.='€'.number_format((float)$item["product"]->price_weight*1000, 2, ',', '').'/kg';
             }
              elseif($item["product"]->sell_product_option=="per_unit")
              {
                 $detail.='€'.number_format((float)$item["product"]->price_per_unit,
-                2, ',', '').'/ stuk'; 
+                2, ',', '').'/ stuk';
              }
                 else {
-                    $detail.='€'.number_format((float)$item["product"]->price_per_person, 2, ',', '').'/person'; 
+                    $detail.='€'.number_format((float)$item["product"]->price_per_person, 2, ',', '').'/person';
                 }
                 $detail.='</td>
                 <td style="border:1px solid black;padding:3px;">';
                 if($item["product"]->sell_product_option=="weight_wise")
                  {
-                    $detail.='€'.number_format((float)$item["product"]->price_weight*$item["quantity"], 2, ',', ''); 
+                    $detail.='€'.number_format((float)$item["product"]->price_weight*$item["quantity"], 2, ',', '');
                  }
                  elseif($item["product"]->sell_product_option=="per_unit"){
                     $detail.='€'.number_format((float)$item["product"]->price_per_unit*$item["quantity"],
                         2, ',', '');
-                 } 
+                 }
                 else {
                     $detail.='€'.number_format((float)$item["product"]->price_per_person*$item["quantity"], 2, ',', '');
                 }
@@ -137,8 +137,8 @@ class OrderController extends Controller
         </tr>';
            }
            $detail.='<tr>
-           
-           
+
+
            <td colspan="3" style="text-align:center;border:1px solid black;padding:3px;" >Totaal</td>
            <td style="border:1px solid black;padding:3px;">€'.$order->total.'</td>
            </tr></table>';
@@ -146,7 +146,7 @@ class OrderController extends Controller
            $body=implode('€'.$order->total,explode('#total',$body));
             $from_email = Setting::firstOrFail()->from_email;
 
-            
+
             $email = $order->email;
             $data = array("body" => $body);
             Mail::send('mail', $data, function ($message) use ($subject, $email, $from_email) {
@@ -176,6 +176,9 @@ class OrderController extends Controller
         } else if ($status == 4) {
             $subject = Setting::firstOrFail()->collection_complete_subject;
             $body = Setting::firstOrFail()->collection_complete;
+        }else if ($status == 6) {
+            $subject = Setting::firstOrFail()->home_delivery_subject;
+            $body = Setting::firstOrFail()->home_delivery_body;
         }
 
 
@@ -195,8 +198,8 @@ class OrderController extends Controller
             if($item[ "product" ]->sell_product_option=="weight_wise"){
                 $detail.=$item["quantity"]>999?($item["quantity"]/1000)."kg":$item["quantity"]."gr";
             }
-             
-             elseif($item["product"]->sell_product_option=="per_unit") 
+
+             elseif($item["product"]->sell_product_option=="per_unit")
              {
                 $detail.=$item["quantity"]."stuk" ;
              }
@@ -209,26 +212,26 @@ class OrderController extends Controller
         $detail.='<td style="padding:3px;border:1px solid black">';
         if($item["product"]->sell_product_option=="weight_wise")
         {
-            $detail.='€'.number_format((float)$item["product"]->price_weight*1000, 2, ',', '').'/kg'; 
+            $detail.='€'.number_format((float)$item["product"]->price_weight*1000, 2, ',', '').'/kg';
         }
          elseif($item["product"]->sell_product_option=="per_unit")
          {
             $detail.='€'.number_format((float)$item["product"]->price_per_unit,
-            2, ',', '').'/ stuk'; 
+            2, ',', '').'/ stuk';
          }
             else {
-                $detail.='€'.number_format((float)$item["product"]->price_per_person, 2, ',', '').'/person'; 
+                $detail.='€'.number_format((float)$item["product"]->price_per_person, 2, ',', '').'/person';
             }
             $detail.='</td>
             <td style="border:1px solid black;padding:3px;">';
             if($item["product"]->sell_product_option=="weight_wise")
              {
-                $detail.='€'.number_format((float)$item["product"]->price_weight*$item["quantity"], 2, ',', ''); 
+                $detail.='€'.number_format((float)$item["product"]->price_weight*$item["quantity"], 2, ',', '');
              }
              elseif($item["product"]->sell_product_option=="per_unit"){
                 $detail.='€'.number_format((float)$item["product"]->price_per_unit*$item["quantity"],
                     2, ',', '');
-             } 
+             }
             else {
                 $detail.='€'.number_format((float)$item["product"]->price_per_person*$item["quantity"], 2, ',', '');
             }
@@ -236,8 +239,8 @@ class OrderController extends Controller
     </tr>';
        }
        $detail.='<tr>
-       
-       
+
+
        <td colspan="3" style="text-align:center;border:1px solid black;padding:3px;" >Totaal</td>
        <td style="border:1px solid black;padding:3px;">€'.$order->total.'</td>
        </tr></table>';
@@ -396,8 +399,6 @@ class OrderController extends Controller
     }
     public function orderDataTable(Request $request)
     {
-
-        $data = Order::latest()->get();
         if ($request->from && $request->to) {
             $data = Order::whereDate('date', '>=', $request->from)->whereDate('date', '<=', $request->to)->get();
         }
@@ -407,7 +408,7 @@ class OrderController extends Controller
         }
         elseif($request->to){
             $data = Order::whereDate('date', '<=', $request->to)->get();
-            
+
         }
         else {
             $data = Order::latest()->get();
@@ -443,6 +444,7 @@ class OrderController extends Controller
                 $hold = $row->status == 2 ? "selected" : "";
                 $collection = $row->status == 4 ? "selected" : "";
                 $cancelled = $row->status == 5 ? "selected" : "";
+                $home_delivery = $row->status == 6 ? "selected" : "";
 
                 $option = '<select  class="form-control">
                     <option value="0" ' . $pending . '  >In afwachting</option>
@@ -451,6 +453,7 @@ class OrderController extends Controller
                     <option value="2" ' . $hold . ' >On hold</option>
                     <option value="4" ' . $collection . ' >Afgerond</option>
                     <option value="5" ' . $cancelled . ' >Geannuleerd</option>
+                    <option value="6" ' . $home_delivery . ' >Home Delivery</option>
                 </select><button onclick="changeStatus(' . $row->id . ',this.parentElement.children[0].value)" class="btn btn-block my-2 btn-sm btn-primary">Update</button>';
                 return $option;
             })

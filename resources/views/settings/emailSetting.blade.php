@@ -75,7 +75,7 @@ a.btn.btn-emailsetting {
             <p class="help-block">:message</p>') !!}
         </div>
     </div>
-    
+
 
     <a href="#success_mail" class="btn btn-emailsetting" data-toggle="collapse">{{ __('m.successMail') }}</a>
     <br>
@@ -122,6 +122,22 @@ a.btn.btn-emailsetting {
         <div class="form-group {{ $errors->has('delivery_complete') ? 'has-error' : ''}}">
             <label for="address" class="control-label">{{ __('m.deliveryCompleteBody') }}</label>
             <textarea class="textarea form-control delivery_complete" name="delivery_complete"></textarea> {!! $errors->first('delivery_complete', '
+            <p class="help-block">:message</p>') !!}
+        </div>
+    </div>
+
+<a href="#home_delivery_mail" class="btn btn-emailsetting" data-toggle="collapse">{{ __('m.homeDeliveryMail') }}</a>
+    <br>
+    <br>
+    <div id="home_delivery_mail" class="collapse">
+        <div class="form-group {{ $errors->has('home_delivery_subject') ? 'has-error' : ''}}">
+            <label for="address" class="control-label">{{ __('m.homeDeliverySubject') }}</label>
+            <input type="text" class="form-control" name="home_delivery_subject" value="{{$setting->home_delivery_subject}}"> {!! $errors->first('home_delivery_subject', '
+            <p class="help-block">:message</p>') !!}
+        </div>
+        <div class="form-group {{ $errors->has('home_delivery_body') ? 'has-error' : ''}}">
+            <label for="address" class="control-label">{{ __('m.homeDeliveryBody') }}</label>
+            <textarea class="textarea form-control home_delivery" name="home_delivery_body"></textarea> {!! $errors->first('home_delivery_body', '
             <p class="help-block">:message</p>') !!}
         </div>
     </div>
@@ -196,7 +212,7 @@ a.btn.btn-emailsetting {
         </div>
     </div>
 
-   
+
 
 
 
@@ -216,6 +232,7 @@ a.btn.btn-emailsetting {
         $('.success_mail').summernote('code', `{!! $setting->success_mail !!}`);
         $('.hold_mail').summernote('code', `{!! $setting->hold_mail !!}`);
         $('.delivery_complete').summernote('code', `{!! $setting->delivery_complete !!}`);
+        $('.home_delivery').summernote('code', `{!! $setting->home_delivery_body !!}`);
         $('.collection_complete').summernote('code', `{!! $setting->collection_complete !!}`);
         $('.offline_message').summernote('code', `{!! $setting->offline_message !!}`);
         $('.homepage_notice').summernote('code', `{!! $setting->homepage_notice !!}`);
@@ -225,7 +242,7 @@ a.btn.btn-emailsetting {
         $('.copyright').summernote('code', `{!! $setting->copyright !!}`);
         $('.signup_message').summernote('code', `{!! $setting->signup_message !!}`);
         $('.order_admin_body').summernote('code', `{!! $setting->order_admin_body !!}`);
-        
+
         $('.order_place_body').summernote('code', `{!! $setting->order_place_body !!}`);
         $('.follow_us').summernote('code', `{!! $setting->follow_us !!}`);
     })

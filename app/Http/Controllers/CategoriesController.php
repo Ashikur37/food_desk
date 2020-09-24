@@ -67,7 +67,7 @@ class CategoriesController extends Controller
         $output = simplexml_load_string($output);
         curl_close($ch);
         $json = json_encode($output);
-        dd($output);
+
         $array = json_decode($json, TRUE);
         //return $array;
         foreach ($array["categories"]["category"] as $cat) {
@@ -110,7 +110,7 @@ class CategoriesController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
 
     public function category($name)

@@ -46,4 +46,9 @@ return [
     'sub_category' => 'Sub Category',
     'sub_category_id' => 'Sub Category Id',
     'edit_order' => 'Edit Order',
+    'orderDetail' => 'Order Details',
+    'okMail' => 'Ok Mail',
+    'email_settings' => 'Email Settings',
+    'okMailSubject' => 'Ok Mail Subject',
+    'okMailBody' => 'Ok Mail Body',
 ];

@@ -27,10 +27,8 @@
                                     @endforeach
                                 </ul>
                                 @endif
-                            
-                                <form class="my-2" method="POST"
-                                    action="{{ url('/settings/' . $setting->id) }}"
-                                    accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+
+                                <form class="my-2 form-horizontal" method="POST" action="{{ url('/settings/' . $setting->id) }}" accept-charset="UTF-8" enctype="multipart/form-data">
                                     {{ method_field('PATCH') }}
                                     {{ csrf_field() }}
 
