@@ -32,7 +32,6 @@ return [
     'user' => 'Gebruiker',
     'total' => 'Totaal',
     'deliveryTime' => 'Levertijd',
-    'action' => 'Actie',
     'phone' => 'Telefoon',
     'status' => 'Status',
     'logout' => 'Uitloggen',
@@ -67,7 +66,7 @@ return [
     'sub_category_id' => 'Subcategorie ID',
     'product_name' => 'Productnaam',
     'productList'=>'Producten',
-    'categoryList'=>'Categorieën', 
+    'categoryList'=>'Categorieën',
     'subCategoryList'=>'Subcategorieën',
     'orders'=>'Bestellingen',
     'userList'=>'Overzicht klanten',
@@ -96,7 +95,7 @@ return [
     'apiKey'=>'API sleutel',
     'logo'=>'Logo',
     'favIcon'=>'Favicon',
-    'banner'=>'Banner',
+    'banner'=>'Banner1',
     'stickyLogo'=>'Sticky logo',
     'defaultProductImage'=>'Productafbeelding',
     'themeColor'=>'Thema kleur',
@@ -199,6 +198,8 @@ return [
     'email_settings'=>'E-mail instellingen',
     'orderDetail'=>'orderDetails',
     'editUser'=>'Edit User',
-
-
+    'homeDeliverySubject'=>"Onderwerp",
+    'homeDeliveryBody'=>"Bericht",
+    'homeDeliveryMail'=>'E-mail aan klant: "Levering aan huis"',
+    'continueShopping'=>'Verder Winkelen',
 ];

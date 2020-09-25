@@ -39,7 +39,7 @@
                                     @foreach($users as $user)
                                     <option value="{{$user->id}}">{{$user->firstname." ".$user->lastname}}</option>
                                     @endforeach
-                                </select> 
+                                </select>
                             </div>
                             @endif @endguest
                             <!-- Billing Address -->
@@ -81,15 +81,13 @@
 
 
                                     <div class="col-md-6 col-12 mb-20">
-                                        <label>{{ __('f.town') }}/{{ __('f.city') }}*</label>
-                                        <input required value="{{auth()->check()?auth()->user()->town:""}}" name="town" type="text" placeholder="{{ __('f.town') }}/{{ __('f.city') }}">
-                                    </div>
-
-                                    <div class="col-md-6 col-12 mb-20">
                                         <label>{{ __('f.zip_code') }}*</label>
                                         <input required value="{{auth()->check()?auth()->user()->zip:""}}" name="zip" type="text" placeholder="{{ __('f.zip_code') }}">
                                     </div>
-
+                                    <div class="col-md-6 col-12 mb-20">
+                                        <label>{{ __('f.town') }}/{{ __('f.city') }}*</label>
+                                        <input required value="{{auth()->check()?auth()->user()->town:""}}" name="town" type="text" placeholder="{{ __('f.town') }}/{{ __('f.city') }}">
+                                    </div>
                                     <div class="col-12 mb-20">
                                         @guest
                                         <div class="check-box">
@@ -105,12 +103,12 @@
                                                     return;
                                                 }
                                                 if(document.getElementById("accountPassword").value!=document.getElementById("cPassword").value){
-                                                    
+
                                                     document.getElementById("placeOrder").setAttribute('disabled', true)
-                                           document.getElementById("pass_match").style.display = "";         
+                                           document.getElementById("pass_match").style.display = "";
                                                 }
                                                 else{
-                                                    document.getElementById("placeOrder").removeAttribute('disabled')      
+                                                    document.getElementById("placeOrder").removeAttribute('disabled')
                                                     document.getElementById("pass_match").style.display = "none";
                                                 }
                                             }
@@ -127,7 +125,7 @@
                                                     $("#accountPassword").prop('required', false);
                                                     document.getElementById("cPassword").style.display = "none";
                                                     $("#cPassword").prop('required', false);
-                                                    
+
                                                 }
 
                                             }
@@ -204,7 +202,7 @@
                                 <!-- Cart Total -->
                                 <div class="col-12 mb-60">
 
-                                    <h4 class="checkout-title">{{__('f.overzicht')}}</h4> 
+                                    <h4 class="checkout-title">{{__('f.overzicht')}}</h4>
 
                                     <div class="checkout-cart-total">
 
@@ -212,18 +210,18 @@
 
                                         <ul>
                                             @php($total=0) @foreach($cart as $item)
-                                            <li>{{$item["product"]->product_name_dch}} 
+                                            <li>{{$item["product"]->product_name_dch}}
                                             (
-                                            
-                                            
+
+
                                             @if($item[ "product" ]->sell_product_option=="weight_wise") {{$item["quantity"]>999?($item["quantity"]/1000)." kg":$item["quantity"]." gr"}} @elseif($item["product"]->sell_product_option=="per_unit")
                                                 {{$item["quantity"]}} stuk @else {{$item["quantity"]}} Person @endif
-                                            x 
-                                            
+                                            x
+
                                             @if($item["product"]->sell_product_option=="weight_wise")
 
                                             €{{number_format((float)$item["product"]->price_weight*1000, 2, ',', '')}}kg
-                                            
+
                                             @elseif($item["product"]->sell_product_option=="per_unit")
 
                                             €{{number_format((float)$item["product"]->price_per_unit, 2, ',', '')}}
@@ -232,11 +230,11 @@
                                             €{{number_format((float)$item["product"]->price_per_person, 2, ',', '')}}
 
                                             @endif
-                                            
-                                                
-                                                
-                                                
-                                                
+
+
+
+
+
                                                 )
                                                 <span>@if($item["product"]->sell_product_option=="weight_wise")
                                                     @php($total+=$item["product"]->price_weight*$item["quantity"])
@@ -287,7 +285,7 @@
                                             <div class="row">
                                                 <div class="col-md-6 col-12">
                                                     <select onchange="hourChange(this.value)" id="hour" required name="hour" class="form-control">
-                                            
+
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6 col-12">
@@ -304,7 +302,7 @@
                                             </div>
 
                                         </div>
-<!-- 
+<!--
                                         <div class="single-method">
                                             <input type="checkbox" name="give_invoice" id="accept_terms">
                                             <label for="accept_terms">{{ __('f.giveMeInvoice') }}</label>
@@ -338,7 +336,7 @@
             }
 
         }
-     
+
         document.getElementById("minute").innerHTML = "<option value='' disabled >{{__('f.select_minute')}}</option>";
         startHour = time.from.split(":")[0];
         endHour = time.to.split(":")[0];

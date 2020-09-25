@@ -51,4 +51,5 @@ return [
     'email_settings' => 'Email Settings',
     'okMailSubject' => 'Ok Mail Subject',
     'okMailBody' => 'Ok Mail Body',
+    'continueShopping'=>'Continue Shopping'
 ];

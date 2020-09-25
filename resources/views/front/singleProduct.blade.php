@@ -102,13 +102,14 @@
                             </div>
 
                             <div class="tdmessage mb-20">
-                                <textarea name="commentMessage" id="commentMessage" placeholder="{{__('f.messages')}}" style="width: 100%;padding: 10px 20px;"></textarea>
+                                <textarea name="commentMessage" id="commentMessage"
+                                          placeholder="{{__('f.messages')}}" style="width: 100%;padding: 10px 20px;"></textarea>
                             </div>
 
                             <div class="cart-buttons mb-20 text-right">
                                 <div class="add-to-cart-btn">
                                    <a href="{{url('/')}}" data-tooltip="Continue Shopping" style="min-width: 10px;padding: 0px 15px;">
-                                       Continue Shopping
+                                    {{__("m.continueShopping")}}
                                    </a>
                                    <a href="javascript:void(0)" onclick="addToWishList({{$product->fid}})" data-tooltip="Add to wishlist" style="min-width: 10px;padding: 0px 15px;"> <span class="icon_heart_alt"></span></a>
                                     <a href="javascript:void(0)" onclick="addToCart(this,{{$product->fid}})"><i class="fa fa-shopping-cart"></i>{{ __('f.add_to_cart') }}</a>
