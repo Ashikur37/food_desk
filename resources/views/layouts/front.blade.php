@@ -120,7 +120,9 @@ div#productContainer {
                                 <ul>
                                     <li><a href="{{URL::to('/')}}">{{__('f.home')}}</a></li>
                                     <li><a href="{{route('myAccount')}}">{{ __('f.my_account') }}</a></li>
+                                    @if($setting->wishList)
                                     <li><a href="{{route('wishlist')}}">{{ __('f.wishlist') }}</a></li>
+                                    @endif
                                     <li><a href="{{route('checkout')}}">{{ __('f.checkout') }}</a></li>
                                     <li><a href="#">{{ __('f.contact') }}</a></li>
                                 </ul>

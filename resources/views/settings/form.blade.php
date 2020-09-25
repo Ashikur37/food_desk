@@ -98,7 +98,7 @@
             }
         </script>
 
-      
+
         <div class="form-group {{ $errors->has('default_product') ? 'has-error' : ''}}">
             <label for="default_product" class="control-label">{{ __('m.defaultProductImage') }}</label>
             <input type="file" class="" name="default_product_img">
@@ -108,6 +108,11 @@
         <div class="form-group {{ $errors->has('them_color') ? 'has-error' : ''}}">
             <label for="them_color" class="control-label">{{ __('m.themeColor') }}</label>
             <input type="color" class="form-control" name="them_color" value="{{ isset($setting->them_color) ? $setting->them_color : ''}}"> {!! $errors->first('them_color', '
+            <p class="help-block">:message</p>') !!}
+        </div>
+        <div class="form-group {{ $errors->has('wishList') ? 'has-error' : ''}}">
+            <label for="wishList" class="control-label">{{ __('m.wishList') }}</label>
+            <input @if($setting->wishList) checked @endif type="checkbox" class="form-check-inline" name="wishList"> {!! $errors->first('wishList', '
             <p class="help-block">:message</p>') !!}
         </div>
     </div>
@@ -258,7 +263,7 @@
             <input type="text" name="password" value="{{ isset($setting->password) ? $setting->password : ''}}" class="form-control"> {!! $errors->first('company_id', '
             <p class="help-block">:message</p>') !!}
         </div>
-        
+
 
     </div>
     <div class="tab-pane fade " id="footer" role="tabpanel" aria-labelledby="footer-tab">
@@ -267,7 +272,7 @@
             <input type="text" name="contact_address" value="{{ isset($setting->contact_address) ? $setting->contact_address : ''}}" class="form-control"> {!! $errors->first('company_id', '
             <p class="help-block">:message</p>') !!}
         </div>
-        
+
         <div class="form-group {{ $errors->has('contact_phone') ? 'has-error' : ''}}">
             <label for="contact_phone" class="control-label">{{ __('m.phone') }}</label>
             <input type="text" name="contact_phone" value="{{ isset($setting->contact_phone) ? $setting->contact_phone : ''}}" class="form-control"> {!! $errors->first('company_id', '
@@ -286,7 +291,7 @@
 
 
 
-        
+
 
         <div class="form-group {{ $errors->has('copyright') ? 'has-error' : ''}}">
             <label for="copyright" class="control-label">{{ __('m.footerBottom') }}</label>
@@ -298,7 +303,7 @@
     <div class="tab-pane fade " id="sync" role="tabpanel" aria-labelledby="sync-tab">
         <a class="btn btn-primary btn-block" href="{{ route('syncProduct') }}">{{ __('m.syncProduct') }}</a>
         <a class="btn btn-warning btn-block" href="{{ route('syncCategory') }}">{{ __('m.syncCategory') }}</a>
-        <a class="btn btn-info btn-block" href="{{ route('syncAll') }}">{{ __('m.syncAll') }}</a> 
+        <a class="btn btn-info btn-block" href="{{ route('syncAll') }}">{{ __('m.syncAll') }}</a>
         <br>
         <div class="row">
             <div class="col-md-6 form-group {{ $errors->has('cron_hour') ? 'has-error' : ''}}">
@@ -327,7 +332,7 @@
             </div>
         </div>
     </div>
-    
+
 </div>
 
 
@@ -355,7 +360,7 @@
         $('.copyright').summernote('code', `{!! $setting->copyright !!}`);
         $('.signup_message').summernote('code', `{!! $setting->signup_message !!}`);
         $('.order_admin_body').summernote('code', `{!! $setting->order_admin_body !!}`);
-        
+
         $('.order_place_body').summernote('code', `{!! $setting->order_place_body !!}`);
         $('.follow_us').summernote('code', `{!! $setting->follow_us !!}`);
     })

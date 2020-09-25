@@ -29,38 +29,37 @@ class SettingsController extends Controller
 
         $setting = Setting::firstOrFail();
         if(auth()->user()->type==1){
-
-            return view('settings.edit', compact('setting'));  
+            return view('settings.edit', compact('setting'));
         }
         else{
-            return view('settings.editManager', compact('setting'));  
+            return view('settings.editManager', compact('setting'));
 
         }
     }
     public function userList()
     {
-        return view('admin.user.list'); 
+        return view('admin.user.list');
     }
     public function emailSetting()
     {
         $setting = Setting::firstOrFail();
 
-        return view('settings.email', compact('setting')); 
+        return view('settings.email', compact('setting'));
     }
     public function viewUser(User $user )
     {
-        return view('admin.user.details',compact('user')); 
+        return view('admin.user.details',compact('user'));
     }
     public function editUser(User $user )
     {
-        return view('admin.user.edit',compact('user')); 
+        return view('admin.user.edit',compact('user'));
     }
     public function updateUser( Request $request)
     {
         $user=User::find($request->id);
         $user->update($request->all());
         return redirect()->back()->with('success','User updated');
-        
+
     }
     public function userData()
     {
@@ -229,7 +228,7 @@ class SettingsController extends Controller
     {
         return view('admin.changeEmail');
     }
-    public function updatePassword(Request $request) 
+    public function updatePassword(Request $request)
     {
         $user_id = Auth::User()->id;
         $obj_user = User::find($user_id);
@@ -245,7 +244,7 @@ class SettingsController extends Controller
             }
             $obj_user->email=$request->new_email;
         }
-        if($request->old_password){ 
+        if($request->old_password){
             if (!(Hash::check($request->get('old_password'), Auth::user()->password))) {
                 return redirect()->back()->withError("Your current password does not matches with the password you provided. Please try again.");
             }
@@ -314,7 +313,7 @@ class SettingsController extends Controller
             $request->fav_icon_img->move(public_path('images'), $path);
             $request["fav_icon"] = $path;
         }
-       
+
         if ($request->banner_img) {
             $path = 'b1pda' . time() . '.' . $request->banner_img->getClientOriginalExtension();
             $request->banner_img->move(public_path('images'), $path);
@@ -352,6 +351,11 @@ class SettingsController extends Controller
             $request->default_product_img->move(public_path('images'), $path);
             $request["default_product"] = $path;
         }
+        if($request->input('wishList',false)){
+            $request['wishList']= true;
+        }else{
+            $request['wishList']= false;
+        }
 
         $requestData = $request->all();
 
@@ -364,7 +368,7 @@ class SettingsController extends Controller
                 exec('php artisan schedule:run');
             }
         }
-        
+
         return redirect()->back()->with('flash_message', 'Setting updated!');
     }
     public function removeBanner(){

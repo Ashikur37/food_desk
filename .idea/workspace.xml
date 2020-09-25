@@ -3,11 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="fd7d801a-db8f-4056-b39d-2b5602eb6372" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SettingsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SettingsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Setting.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Setting.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/en/m.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/m.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/nl/m.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/nl/m.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/front/checkout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/checkout.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/front/singleProduct.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/singleProduct.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/front.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/front.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/settings/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/settings/form.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +178,7 @@
       <workItem from="1600778205443" duration="10859000" />
       <workItem from="1600863664617" duration="4564000" />
       <workItem from="1600930538735" duration="2449000" />
-      <workItem from="1601050652754" duration="1689000" />
+      <workItem from="1601050652754" duration="4098000" />
     </task>
     <servers />
   </component>
@@ -185,10 +186,18 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="346" y="47" width="672" height="678" key="search.everywhere.popup" timestamp="1601051916955">
+    <state x="293" y="27" width="770" height="699" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1601056628223">
       <screen x="0" y="27" width="1366" height="699" />
     </state>
-    <state x="346" y="47" width="672" height="678" key="search.everywhere.popup/0.27.1366.699@0.27.1366.699" timestamp="1601051916955" />
+    <state x="293" y="27" width="770" height="699" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1366.699@0.27.1366.699" timestamp="1601056628223" />
+    <state x="347" y="163" key="run.anything.popup" timestamp="1601056409929">
+      <screen x="0" y="27" width="1366" height="699" />
+    </state>
+    <state x="347" y="163" key="run.anything.popup/0.27.1366.699@0.27.1366.699" timestamp="1601056409929" />
+    <state x="346" y="47" width="672" height="678" key="search.everywhere.popup" timestamp="1601056576187">
+      <screen x="0" y="27" width="1366" height="699" />
+    </state>
+    <state x="346" y="47" width="672" height="678" key="search.everywhere.popup/0.27.1366.699@0.27.1366.699" timestamp="1601056576187" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
