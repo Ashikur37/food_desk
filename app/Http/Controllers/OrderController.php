@@ -453,7 +453,7 @@ class OrderController extends Controller
                     <option value="2" ' . $hold . ' >On hold</option>
                     <option value="4" ' . $collection . ' >Afgerond</option>
                     <option value="5" ' . $cancelled . ' >Geannuleerd</option>
-                    <option value="6" ' . $home_delivery . ' >Home Delivery</option>
+                    <option value="6" ' . $home_delivery . ' >Levering aan huls</option>
                 </select><button onclick="changeStatus(' . $row->id . ',this.parentElement.children[0].value)" class="btn btn-block my-2 btn-sm btn-primary">Update</button>';
                 return $option;
             })

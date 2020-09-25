@@ -91,9 +91,5 @@ return [
     "successfully_added_to_cart" => "Succesvol toegevoegd",
     "select_minute" => "Selecteer min.",
     "overzicht" => "Overzicht bestelling",
- 
-
- 
-
-
+    'homeDelivery'=>'Levering aan huls',
 ];

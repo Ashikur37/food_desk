@@ -38,7 +38,7 @@
       color: #fff;
       position: relative;
     }
-    
+
     input[type="date"]::-webkit-datetime-edit-year-field{
       position: absolute !important;
       border-left:1px solid #8c8c8c;
@@ -46,7 +46,7 @@
       color:#000;
       left: 56px;
     }
-    
+
     input[type="date"]::-webkit-datetime-edit-month-field{
       position: absolute !important;
       border-left:1px solid #8c8c8c;
@@ -54,14 +54,14 @@
       color:#000;
       left: 26px;
     }
-    
-    
+
+
     input[type="date"]::-webkit-datetime-edit-day-field{
       position: absolute !important;
       color:#000;
       padding: 2px;
       left: 4px;
-      
+
     }
     </style>
     <style>
@@ -118,7 +118,7 @@ div#productContainer {
                         <div class="main-menu">
                             <nav>
                                 <ul>
-                                    <li class="active"><a href="{{URL::to('/')}}">{{__('f.home')}}</a></li>
+                                    <li><a href="{{URL::to('/')}}">{{__('f.home')}}</a></li>
                                     <li><a href="{{route('myAccount')}}">{{ __('f.my_account') }}</a></li>
                                     <li><a href="{{route('wishlist')}}">{{ __('f.wishlist') }}</a></li>
                                     <li><a href="{{route('checkout')}}">{{ __('f.checkout') }}</a></li>

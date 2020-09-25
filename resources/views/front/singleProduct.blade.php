@@ -107,6 +107,9 @@
 
                             <div class="cart-buttons mb-20 text-right">
                                 <div class="add-to-cart-btn">
+                                   <a href="{{url('/')}}" data-tooltip="Continue Shopping" style="min-width: 10px;padding: 0px 15px;">
+                                       Continue Shopping
+                                   </a>
                                    <a href="javascript:void(0)" onclick="addToWishList({{$product->fid}})" data-tooltip="Add to wishlist" style="min-width: 10px;padding: 0px 15px;"> <span class="icon_heart_alt"></span></a>
                                     <a href="javascript:void(0)" onclick="addToCart(this,{{$product->fid}})"><i class="fa fa-shopping-cart"></i>{{ __('f.add_to_cart') }}</a>
                                     <a href="{{route('checkout')}}">{{ __('f.checkout') }}</a>

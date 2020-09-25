@@ -53,7 +53,5 @@ return [
     "contact" => "contact",
     "seach_by" => "search by",
     "name" => "name",
-
-
-
+    'homeDelivery'=>'Home Delivery',
 ];
