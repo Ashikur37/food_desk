@@ -88,7 +88,7 @@ class OrderController extends Controller
             $body=implode($order->id,explode('#id',$body));
             $body=implode($order->created_at->formatLocalized('%A %d/%b/%y '),explode('#date',$body));
             $body=implode($order->date->formatLocalized('%A %d/%b/%y ') . " on " . $order->hour . ":" . $order->minute,explode('#pickup',$body));
-            $detail="<table style='border:1px solid black;border-collapse: collapse;'>";
+            $detail="<table style='border:1px solid black;width: 100%;border-collapse: collapse;'>";
             foreach($order->orderLines as $item)
            {
             $detail.='<tr>
@@ -190,7 +190,7 @@ class OrderController extends Controller
         $body=implode($order->id,explode('#id',$body));
         $body=implode($order->created_at->formatLocalized('%A %d/%b/%y '),explode('#date',$body));
         $body=implode($order->date->formatLocalized('%A %d/%b/%y ') . " on " . $order->hour . ":" . $order->minute,explode('#pickup',$body));
-        $detail="<table style='border:1px solid black;border-collapse: collapse;'>";
+        $detail="<table style='border:1px solid black;width: 100%;border-collapse: collapse;'>";
         foreach($order->orderLines as $item)
        {
         $detail.='<tr>

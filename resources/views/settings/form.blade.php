@@ -34,7 +34,7 @@
 
 
         <div class="form-group {{ $errors->has('banner') ? 'has-error' : ''}}">
-            <label for="banner" class="control-label">{{ __('m.banner') }}</label>
+            <label for="banner" class="control-label">{{ __('m.banner') }}1</label>
             <input id="banner" type="file" class="" name="banner_img">
             @if($setting->banner)
             <img id="banner_img1" style="max-width:200px" src="{{URL::to('/')}}/images/{{$setting->banner}}"> <button type="button" onclick="removeBanner(1,this)" class="btn btn-danger">&times

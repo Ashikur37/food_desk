@@ -241,8 +241,8 @@ class CheckoutController extends Controller
         //if user new account
 
         //clear the cart
-      //  $cart = [];
-        //$request->session()->put('cart', $cart);
+        $cart = [];
+        $request->session()->put('cart', $cart);
 
         //to user
         $subject = Setting::firstOrFail()->order_place_title;
@@ -251,7 +251,7 @@ class CheckoutController extends Controller
             $body=implode($order->id,explode('#id',$body));
             $body=implode($order->created_at->format('d-m-Y'),explode('#date',$body));
             $body=implode($order->date->format('D m/d') . " on " . $order->hour . ":" . $order->minute,explode('#pickup',$body));
-        $detail="<table style='border:1px solid black;border-collapse: collapse;'>";
+        $detail="<table style='border:1px solid black;width: 100%;border-collapse: collapse;'>";
         foreach($order->orderLines as $item)
         {
             $detail.='<tr>

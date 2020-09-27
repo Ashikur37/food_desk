@@ -95,7 +95,7 @@ return [
     'apiKey'=>'API sleutel',
     'logo'=>'Logo',
     'favIcon'=>'Favicon',
-    'banner'=>'Banner1',
+    'banner'=>'Banner',
     'stickyLogo'=>'Sticky logo',
     'defaultProductImage'=>'Productafbeelding',
     'themeColor'=>'Thema kleur',
