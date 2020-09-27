@@ -70,9 +70,7 @@
 <script src="{{asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
 <script type="text/javascript">
     let changeStatus = (id, status) => {
-        var url = "{{URL::to('/update-order-status')}}/" + id + "/" + status;
-        alert(url);
-//        window.location.href = "{{URL::to('/update-order-status')}}/" + id + "/" + status
+        window.location.href = "{{URL::to('/update-order-status')}}/" + id + "/" + status
     }
     let checkAll = (el) => {
         console.log(el)

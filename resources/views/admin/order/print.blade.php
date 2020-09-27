@@ -32,8 +32,8 @@
                 </div>
                 <div class="col-sm-12 invoice-col">
 
-                    
-                   
+
+
                     <b>{{ __('m.customer') }}:</b><br>{{$order->firstname." ".$order->lastname}}
                     <br>{{$order->address1." ".$order->address2}}
                     <br>{{$order->town." ".$order->zip}}
@@ -43,11 +43,11 @@
                     <br>
                     {{ __('m.email') }}: {{$order->email}}
                     <br></p>
-                    <b>{{ __('m.pickupTime') }}</b>: {{$order->date->formatLocalized('%A %d/%m/%Y ') . " on " . $order->hour . ":" . $order->minute}}
+                    <b>{{ __('m.pickupTime') }}</b>: {{$order->date->formatLocalized('%A %d/%m/%Y ') . " om " . $order->hour . ":" . $order->minute}}
                     <br>
-           {{ __('m.message') }} :{{$order->message}}
+           {{ __('m.message') }} : {{$order->message}}
             <br>
-            {{ __('m.shop') }}: {{$setting->site_name}}
+            {{--{{ __('m.shop') }}: {{$setting->site_name}}--}}
                 </div>
                 <!-- /.col -->
             </div>
