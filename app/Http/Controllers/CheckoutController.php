@@ -69,7 +69,7 @@ class CheckoutController extends Controller
             return [
                 "err" => "Choose greater day"
             ];
-        } 
+        }
         $setting=Setting::first();
         if($request->date>=$setting->from_exception&&$request->date<=$setting->to_exception){
             return [
@@ -156,7 +156,7 @@ class CheckoutController extends Controller
             $user->sendEmailVerificationNotification();
             //  $user->
         }
-        
+
         $shipping_different = 0;
         if (auth()->check()) {
             $user_id = auth()->id();
@@ -241,8 +241,8 @@ class CheckoutController extends Controller
         //if user new account
 
         //clear the cart
-        $cart = [];
-        $request->session()->put('cart', $cart);
+      //  $cart = [];
+        //$request->session()->put('cart', $cart);
 
         //to user
         $subject = Setting::firstOrFail()->order_place_title;
@@ -251,6 +251,62 @@ class CheckoutController extends Controller
             $body=implode($order->id,explode('#id',$body));
             $body=implode($order->created_at->format('d-m-Y'),explode('#date',$body));
             $body=implode($order->date->format('D m/d') . " on " . $order->hour . ":" . $order->minute,explode('#pickup',$body));
+        $detail="<table style='border:1px solid black;border-collapse: collapse;'>";
+        foreach($order->orderLines as $item)
+        {
+            $detail.='<tr>
+            <td style="padding:3px;border:1px solid black">';
+            if($item[ "product" ]->sell_product_option=="weight_wise"){
+                $detail.=$item["quantity"]>999?($item["quantity"]/1000)."kg":$item["quantity"]."gr";
+            }
+
+            elseif($item["product"]->sell_product_option=="per_unit")
+            {
+                $detail.=$item["quantity"]."stuk" ;
+            }
+            else {
+                $detail.=$item["quantity"]."person";
+            }
+
+            $detail.='</td>';
+            $detail.='<td style="padding:3px;border:1px solid black">'.$item->product->product_name_dch.'</td>';
+            $detail.='<td style="padding:3px;border:1px solid black">';
+            if($item["product"]->sell_product_option=="weight_wise")
+            {
+                $detail.='€'.number_format((float)$item["product"]->price_weight*1000, 2, ',', '').'/kg';
+            }
+            elseif($item["product"]->sell_product_option=="per_unit")
+            {
+                $detail.='€'.number_format((float)$item["product"]->price_per_unit,
+                        2, ',', '').'/ stuk';
+            }
+            else {
+                $detail.='€'.number_format((float)$item["product"]->price_per_person, 2, ',', '').'/person';
+            }
+            $detail.='</td>
+                <td style="border:1px solid black;padding:3px;">';
+            if($item["product"]->sell_product_option=="weight_wise")
+            {
+                $detail.='€'.number_format((float)$item["product"]->price_weight*$item["quantity"], 2, ',', '');
+            }
+            elseif($item["product"]->sell_product_option=="per_unit"){
+                $detail.='€'.number_format((float)$item["product"]->price_per_unit*$item["quantity"],
+                        2, ',', '');
+            }
+            else {
+                $detail.='€'.number_format((float)$item["product"]->price_per_person*$item["quantity"], 2, ',', '');
+            }
+            $detail.='</td>
+        </tr>';
+        }
+        $detail.='<tr>
+
+
+           <td colspan="3" style="text-align:center;border:1px solid black;padding:3px;" >Totaal</td>
+           <td style="border:1px solid black;padding:3px;">€'.$order->total.'</td>
+           </tr></table>';
+            $body=implode($detail,explode('#detail',$body));
+            $body=implode('€'.$order->total,explode('#total',$body));
             $from_email = Setting::firstOrFail()->from_email;
 
 
@@ -270,8 +326,6 @@ class CheckoutController extends Controller
             $body=implode($order->id,explode('#id',$body));
             $body=implode($order->created_at->format('d-m-Y'),explode('#date',$body));
             $body=implode($order->date->format('D m/d') . " on " . $order->hour . ":" . $order->minute,explode('#pickup',$body));
-
-
             $email = Setting::firstOrFail()->order_email;
             $data = array("body" => $body);
             Mail::send('mail', $data, function ($message) use ($subject, $email, $from_email) {

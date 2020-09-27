@@ -99,8 +99,7 @@ class SubCategoriesController extends Controller
     {
         $categories = Category::orderBy('name')->with('subCategories')->get();
         $subcategory = SubCategory::whereName($name)->first();
-
-        $products = Product::where('subcategory_id', '=', $subcategory->fid)->paginate(5);
+        $products = Product::where(['subcategory_id'=> $subcategory->fid,'status'=>true])->paginate(5);
         return view('front.subCategory', compact('subcategory', 'categories', 'products'));
     }
     public function filterProduct(Request $request)
