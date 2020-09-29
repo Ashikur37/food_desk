@@ -38,11 +38,9 @@
                             <input type="hidden" name="ref" value="{{request()->ref?request()->ref:'/'}}">
 							<div class="row">
 								<div class="col-md-12 col-12 mb-20">
-									<label>{{ __('f.email_address') }}*</label>
 									<input required name="email" class="mb-0" type="email" placeholder="{{ __('f.email_address') }}">
 								</div>
 								<div class="col-12 mb-20">
-									<label>{{__('f.password')}}</label>
 									<input required name="password" class="mb-0" type="password" placeholder="{{__('f.password')}}">
 								</div>
 								<div class="col-md-6">
@@ -75,58 +73,51 @@
 
 							<div class="row">
 								<div class="col-md-6 col-12 mb-20">
-									<label>{{__('f.first_name')}}</label>
 									<input value="{{ old('firstname') }}" required name="firstname" class="mb-0" type="text" placeholder="{{__('f.first_name')}}">
 								</div>
 								<div class="col-md-6 col-12 mb-20">
-									<label>{{__('f.last_name')}}</label>
 									<input value="{{ old('lastname') }}" required name="lastname" class="mb-0" type="text" placeholder="{{__('f.last_name')}}">
 								</div>
 								<div class="col-md-12 mb-20">
-									<label>{{__('f.email_address')}}*</label>
 									<input value="{{ old('email') }}"  required name="email" class="mb-0" type="email" placeholder="{{__('f.email_address')}}">
 								</div>
 
 								<div class="col-12 mb-20">
-									<label>{{__('f.address')}}*</label>
+                                    <input value="{{ old('telephone') }}"  name="telephone" type="text" placeholder="{{__('m.phone')}}">
 									<input value="{{ old('address1') }}" required name="address1" type="text" placeholder="{{__('f.address')}}">
-									<input value="{{ old('telephone') }}"  name="telephone" type="text" placeholder="{{__('m.phone')}}">
+
 								</div>
 
 
 								<div class="col-md-6 col-12 mb-20">
-									<label>{{__('f.town_city')}}*</label>
 									<input value="{{ old('town') }}" required name="town" type="text" placeholder="{{__('f.town_city')}}">
 								</div>
 
 								<div class="col-md-6 col-12 mb-20">
-									<label>{{__('f.zip_code')}}*</label>
 									<input value="{{ old('zip') }}" required name="zip" type="text" placeholder="{{__('f.zip_code')}}">
 								</div>
 
 								<div class="col-md-6 mb-20">
-									<label>{{__('f.password')}}</label>
 									<input required name="password" class="mb-0" type="password" placeholder="{{__('f.password')}}" onkeyup="confirmCheck()" id="accountPassword">
 								</div>
 								<div class="col-md-6 mb-20">
-									<label>{{__('f.confirm_password')}}</label>
 									<input id="cPassword" required name="password_confirmation" class="mb-0" type="password" placeholder="{{__('f.confirm_password')}}" onkeyup="confirmCheck()">
 								</div>
                                 <span style="display:none" id="pass_match" class="text text-danger">Password Doesn't Match</span>
-                                
+
                                 <script>
                                     let confirmCheck=()=>{
-                                     
+
                                                 if(!document.getElementById("cPassword").value){
                                                     return;
                                                 }
                                                 if(document.getElementById("accountPassword").value!=document.getElementById("cPassword").value){
-                                                    
+
                                                     document.getElementById("snp").setAttribute('disabled', true)
-                                           document.getElementById("pass_match").style.display = "";         
+                                           document.getElementById("pass_match").style.display = "";
                                                 }
                                                 else{
-                                                    document.getElementById("snp").removeAttribute('disabled')      
+                                                    document.getElementById("snp").removeAttribute('disabled')
                                                     document.getElementById("pass_match").style.display = "none";
                                                 }
                                             }

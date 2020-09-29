@@ -49,43 +49,35 @@
                                 <div class="row">
 
                                     <div class="col-md-6 col-12 mb-20">
-                                        <label>{{ __('f.firstName') }}*</label>
                                         <input required value="{{auth()->check()?auth()->user()->firstname:""}}" name="firstname" type="text" placeholder="{{ __('f.firstName') }}">
                                     </div>
 
                                     <div class="col-md-6 col-12 mb-20">
-                                        <label>{{ __('f.lastName') }}*</label>
                                         <input required value="{{auth()->check()?auth()->user()->lastname:""}}" name="lastname" type="text" placeholder="{{ __('f.lastName') }}">
                                     </div>
 
                                     <div class="col-md-6 col-12 mb-20">
-                                        <label>{{ __('f.emailAddress') }}*</label>
                                         <input required value="{{auth()->check()?auth()->user()->email:" "}}" name="email" type="email" placeholder="{{ __('f.emailAddress') }}">
                                     </div>
 
                                     <div class="col-md-6 col-12 mb-20">
-                                        <label>{{ __('f.phoneNumber') }}*</label>
                                         <input required value="{{auth()->check()?auth()->user()->telephone:""}}" type="text" name="phone" placeholder="{{ __('f.phoneNumber') }}">
                                     </div>
 
                                     <div class="col-12 mb-20">
-                                        <label>{{ __('f.companyName') }}</label>
                                         <input type="text" name="company" placeholder="{{ __('f.companyName') }}">
                                     </div>
 
                                     <div class="col-12 mb-20">
-                                        <label>{{ __('f.address') }}*</label>
                                         <input required value="{{auth()->check()?auth()->user()->address1:""}}" name="address1" type="text" placeholder="{{ __('f.addressLine') }} ">
                                         {{-- <input  value="{{auth()->check()?auth()->user()->address2:""}}" name="address2" type="text" placeholder="{{ __('f.addressLine') }} 2"> --}}
                                     </div>
 
 
                                     <div class="col-md-6 col-12 mb-20">
-                                        <label>{{ __('f.zip_code') }}*</label>
                                         <input required value="{{auth()->check()?auth()->user()->zip:""}}" name="zip" type="text" placeholder="{{ __('f.zip_code') }}">
                                     </div>
                                     <div class="col-md-6 col-12 mb-20">
-                                        <label>{{ __('f.town') }}/{{ __('f.city') }}*</label>
                                         <input required value="{{auth()->check()?auth()->user()->town:""}}" name="town" type="text" placeholder="{{ __('f.town') }}/{{ __('f.city') }}">
                                     </div>
                                     <div class="col-12 mb-20">

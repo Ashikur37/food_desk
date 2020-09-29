@@ -20,7 +20,6 @@ Route::get('/', 'HomeController@home')->name('home');
 
 Route::get('/home', 'HomeController@index');
 //Auth Routes
-Auth::routes();
 Auth::routes(['verify' => true]);
 //FrontPage Routes
 Route::get('/filter-category', 'HomeController@filterCategory')->name('filterCategory');

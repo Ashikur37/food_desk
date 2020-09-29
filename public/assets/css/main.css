@@ -6,10 +6,10 @@
     Version: 1.0
 
 -----------------------------------------------------------------------------------
-    
+
     CSS INDEX
     ===================
-	
+
     01. Theme default CSS
     02. Header
         02.1 Header top
@@ -1026,12 +1026,12 @@ div#shopping-cart {
     text-transform: uppercase;
     font-size: 15px;
     font-weight: 500;
-    color: #e4e4ad;
+    color: #ffffff;
     line-height: 60px;
 }
 
 .main-menu nav>ul>li.menu-item-has-children>a::after {
-    font-family: Fontawesome;
+    font-family: Fontawesome, serif;
     content: "\f107";
     margin-left: 5px;
     float: right;
@@ -1333,7 +1333,7 @@ div#shopping-cart {
     display: block;
     font-weight: 500;
     color: #777777;
-     
+
 }
 
 .mega-menu>li.active>a,
@@ -6970,7 +6970,7 @@ p.result-show-message {
     font-size: 20px;
     line-height: 23px;
     text-decoration: underline;
-    
+
     font-weight: 700;
     margin-bottom: 30px;
 }
