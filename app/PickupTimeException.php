@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class PickupTimeException extends Model
 {
-    protected $guarded = [];
+    protected $fillable = ['date','from','to'];
 }

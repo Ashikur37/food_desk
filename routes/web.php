@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +57,7 @@ Route::get('terms-condition', function(){
 } )->name('terms');
 //checkout routes
 Route::get('checkout', 'CheckoutController@checkout')->name('checkout');
+Route::get('checkout/disable/dates/{timestamp?}', 'CheckoutController@getMonthHoliday')->name('disableDates');
 Route::get('check-date', 'CheckoutController@checkDate')->name('checkDate');
 Route::post('checkout', 'CheckoutController@checkoutSubmit')->name('checkoutSubmit');
 

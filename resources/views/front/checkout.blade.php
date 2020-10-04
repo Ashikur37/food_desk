@@ -1,4 +1,14 @@
-@extends('layouts.front') @section('content')
+@extends('layouts.front')
+@section('style')
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />
+    <style>
+        .datepicker table tr td.disabled, .datepicker table tr td.disabled:hover {
+            color: #d50909;
+        }
+    </style>
+@endsection
+@section('content')
 <div class="breadcrumb-area ">
     <div class="container">
         <div class="row">
@@ -264,7 +274,7 @@
 
                                             <div class="row">
                                                 <div class="col-md-12 col-12">
-                                                    <input id="pickupDate" onchange="dateChanged(this.value)" type="date" name="date" placeholder="{{ __('f.date') }}">
+                                                    <input id="pickupDate" autocomplete="false" onchange="dateChanged(this.value)" type="text" name="date" placeholder="{{ __('f.date') }}">
                                                 </div>
                                             </div>
 
@@ -332,12 +342,12 @@
         document.getElementById("minute").innerHTML = "<option value='' disabled >{{__('f.select_minute')}}</option>";
         startHour = time.from.split(":")[0];
         endHour = time.to.split(":")[0];
-        if (startHour == val) {
+        if (startHour === val) {
             for (i = parseInt(time.from.split(":")[1]); i < 60; i += 5) {
                 document.getElementById("minute").innerHTML += `
                         <option value="${i<10?('0'+i):i}">${i<10?('0'+i):i}</option>`
             }
-        } else if (endHour == val) {
+        } else if (endHour === val) {
 
             for (i = 0; i <= time.to.split(":")[1]; i += 5) {
                 document.getElementById("minute").innerHTML += `
@@ -385,8 +395,35 @@
     }
 </script>
 @endsection @section('script')
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
 <script src="{{asset('/')}}/admin/plugins/select2/js/select2.full.min.js"></script>
+<script>
+    $("#pickupDate").datepicker({
+        format: 'yyyy-mm-dd',
+        todayHighlight:true,
+        language:'nl',
+        startDate: '+1d',
+        autoclose:false,
+        updateViewDate: false,
+        viewMode: "months",
+        datesDisabled:["{!! implode('","',$exceptions_dates) !!}"]
+    }).on('changeMonth', function(e){
+        var timestamp = Date.parse(e.date)/ 1000;
+        $.ajax({
+            url: `{{route('disableDates')}}/${timestamp}`,
+            success: function(result) {
+                if (result.weekends){
+                    console.log(result.weekends);
+                    $('#pickupDate').datepicker('setDatesDisabled', result.weekends);
+                }
+                //alert(result);
+               // $('#pickupDate').datepicker('setDatesDisabled', disabled);
+            }
+        });
+        /*var disabled = ['2020-11-03'];
+        $('#pickupDate').datepicker('setDatesDisabled', disabled);*/
+    });
+</script>
 <script>
     shippingDifferent = (val) => {
         if (val) {

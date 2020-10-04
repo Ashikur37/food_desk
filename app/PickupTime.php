@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class PickupTime extends Model
 {
-    protected $guarded = [];
+    protected $fillable = ['day','from','to'];
 }

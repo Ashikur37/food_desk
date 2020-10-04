@@ -13,9 +13,12 @@ use App\PickupTimeException;
 use App\Product;
 use App\Setting;
 use App\User;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -24,6 +27,7 @@ class CheckoutController extends Controller
 {
     public function checkout(Request $request)
     {
+
         $setting = Setting::firstOrFail();
         if ($setting->offline == 1) {
             return view('front.offline');
@@ -35,14 +39,67 @@ class CheckoutController extends Controller
         // if (count($cart) == 0) {
         //     return redirect()->back()->with('error', 'Cart is empty');
         // }
+        $exceptions = PickupTimeException::where(['from'=>'-1'])->whereDate('date','>=',now())
+            ->get();
+        $exceptions_dates  = $exceptions->pluck('date')->toArray();
         $users = User::whereType(0)->get();
-        return view('front.checkout', compact('cart', 'users'));
+        $exception_range = Setting::where('from_exception','!=',null)->select(['from_exception','to_exception'])->first();
+        if ($exception_range){
+            $period = CarbonPeriod::create($exception_range->from_exception,$exception_range->to_exception);
+            foreach ($period as $date) {
+                $exceptions_dates[] = $date->format('Y-m-d');
+            }
+        }
+        $holidays= $this->getMonthHoliday(now()->timestamp);
+        $exceptions_dates = array_merge($exceptions_dates,$holidays);
+        //
+        return view('front.checkout', compact('cart', 'users'))->with(['exceptions_dates'=>$exceptions_dates]);
     }
     public function updateBilling()
     {
         $user = User::find(request()->id);
         return view('front.dynamicBilling', compact('user'));
     }
+
+    public function getMonthHoliday($timestamp){
+
+        $date = date('Y-m-d',$timestamp);
+        $pickupTime = PickupTime::groupBy('day')->get();
+        $pickUpDays = $pickupTime->pluck('day')->toArray();
+        $days = [0,1,2,3,4,5,6];
+        $holidays= array_diff($days,$pickUpDays);
+        if (count($holidays)>0){
+            Carbon::setWeekendDays($holidays);
+            $weekEnds = [];
+            $weekDate = Carbon::parse($date)->subMonth();
+
+            for ($i=0;$i<=30;$i++){
+                $weekEnds[$i] = $weekDate->nextWeekendDay()->format('Y-m-d');
+                $weekDate = Carbon::parse($weekEnds[$i]);
+            }
+            $exception_range = Setting::where('from_exception','!=',null)->select(['from_exception','to_exception'])->first();
+            $exceptions_dates=[];
+            if ($exception_range){
+                $period = CarbonPeriod::create($exception_range->from_exception,$exception_range->to_exception);
+                foreach ($period as $date) {
+                    $exceptions_dates[] = $date->format('Y-m-d');
+                }
+            }
+            if (request()->ajax()){
+                return response()->json(['weekends'=>array_merge($weekEnds,$exceptions_dates)]);
+            }else{
+                return $weekEnds;
+            }
+        }else{
+            if (request()->ajax()){
+                return response()->json(['weekends'=>false]);
+            }else{
+                return [];
+            }
+        }
+
+    }
+
 
     public function checkDate(Request $request)
     {

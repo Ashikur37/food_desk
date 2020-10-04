@@ -79,6 +79,7 @@ div#productContainer {
 
     {!!$setting->css!!}
     </style>
+    @yield("style")
 </head>
 
 <body>
