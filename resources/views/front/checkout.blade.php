@@ -40,7 +40,7 @@
                     @csrf
                     <div class="row row-40 mt-15">
 
-                        <div class="col-lg-7 mb-20">
+                        <div class="col-lg-7">
                         @guest @else @if(auth()->user()->type!=0)
                             <div class="form-group">
                                 <label>User</label>
@@ -58,39 +58,39 @@
 
                                 <div class="row">
 
-                                    <div class="col-md-6 col-12 mb-20">
+                                    <div class="col-md-6 col-12">
                                         <input required value="{{auth()->check()?auth()->user()->firstname:""}}" name="firstname" type="text" placeholder="{{ __('f.firstName') }}">
                                     </div>
 
-                                    <div class="col-md-6 col-12 mb-20">
+                                    <div class="col-md-6 col-12">
                                         <input required value="{{auth()->check()?auth()->user()->lastname:""}}" name="lastname" type="text" placeholder="{{ __('f.lastName') }}">
                                     </div>
 
-                                    <div class="col-md-6 col-12 mb-20">
+                                    <div class="col-md-6 col-12">
                                         <input required value="{{auth()->check()?auth()->user()->email:" "}}" name="email" type="email" placeholder="{{ __('f.emailAddress') }}">
                                     </div>
 
-                                    <div class="col-md-6 col-12 mb-20">
+                                    <div class="col-md-6 col-12">
                                         <input required value="{{auth()->check()?auth()->user()->telephone:""}}" type="text" name="phone" placeholder="{{ __('f.phoneNumber') }}">
                                     </div>
 
-                                    <div class="col-12 mb-20">
+                                    <div class="col-12">
                                         <input type="text" name="company" placeholder="{{ __('f.companyName') }}">
                                     </div>
 
-                                    <div class="col-12 mb-20">
+                                    <div class="col-12">
                                         <input required value="{{auth()->check()?auth()->user()->address1:""}}" name="address1" type="text" placeholder="{{ __('f.addressLine') }} ">
                                         {{-- <input  value="{{auth()->check()?auth()->user()->address2:""}}" name="address2" type="text" placeholder="{{ __('f.addressLine') }} 2"> --}}
                                     </div>
 
 
-                                    <div class="col-md-6 col-12 mb-20">
+                                    <div class="col-md-6 col-12">
                                         <input required value="{{auth()->check()?auth()->user()->zip:""}}" name="zip" type="text" placeholder="{{ __('f.zip_code') }}">
                                     </div>
-                                    <div class="col-md-6 col-12 mb-20">
+                                    <div class="col-md-6 col-12">
                                         <input required value="{{auth()->check()?auth()->user()->town:""}}" name="town" type="text" placeholder="{{ __('f.town') }}/{{ __('f.city') }}">
                                     </div>
-                                    <div class="col-12 mb-20">
+                                    <div class="col-12">
                                         @guest
                                         <div class="check-box">
                                             <input type="checkbox" name="create_account" id="create_account" onclick="createAccount(this.checked)">
@@ -149,32 +149,32 @@
 
                                 <div class="row">
 
-                                    <div class="col-md-6 col-12 mb-20">
+                                    <div class="col-md-6 col-12">
                                         <label>{{ __('f.firstName') }}*</label>
                                         <input class="s_required" name="s_firstname" type="text" placeholder="{{ __('f.firstName') }}">
                                     </div>
 
-                                    <div class="col-md-6 col-12 mb-20">
+                                    <div class="col-md-6 col-12">
                                         <label>{{ __('f.lastName') }}*</label>
                                         <input class="s_required" name="s_lastname" type="text" placeholder="{{ __('f.lastName') }}">
                                     </div>
 
-                                    <div class="col-md-6 col-12 mb-20">
+                                    <div class="col-md-6 col-12">
                                         <label>{{ __('f.emailAddress') }}*</label>
                                         <input class="s_required" name="s_email" type="email" placeholder="{{ __('f.emailAddress') }}">
                                     </div>
 
-                                    <div class="col-md-6 col-12 mb-20">
+                                    <div class="col-md-6 col-12">
                                         <label>{{ __('f.phoneNumber') }}*</label>
                                         <input class="s_required" name="s_phone" type="text" placeholder="{{ __('f.phoneNumber') }}">
                                     </div>
 
-                                    <div class="col-12 mb-20">
+                                    <div class="col-12">
                                         <label>{{ __('f.companyName') }}</label>
                                         <input  name="s_company" type="text" placeholder="{{ __('f.companyName') }}">
                                     </div>
 
-                                    <div class="col-12 mb-20">
+                                    <div class="col-12">
                                         <label>{{ __('f.address') }}*</label>
                                         <input class="s_required" name="s_address1" type="text" placeholder="{{ __('f.addressLine') }} 1">
                                         <input name="s_address2" type="text" placeholder="{{ __('f.addressLine') }} 2">
@@ -182,12 +182,12 @@
 
 
 
-                                    <div class="col-md-6 col-12 mb-20">
+                                    <div class="col-md-6 col-12">
                                         <label>{{ __('f.town') }}/{{ __('f.city') }}*</label>
                                         <input class="s_required" name="s_town" type="text" placeholder="{{ __('f.town') }}/{{ __('f.city') }}">
                                     </div>
 
-                                    <div class="col-md-6 col-12 mb-20">
+                                    <div class="col-md-6 col-12">
                                         <label>{{ __('f.zipCode') }}*</label>
                                         <input class="s_required" name="s_zip" type="text" placeholder="{{ __('f.zipCode') }}">
                                     </div>
@@ -396,13 +396,15 @@
 </script>
 @endsection @section('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/bootstrap.datepicker-fork/1.3.0/js/locales/bootstrap-datepicker.nl.js"></script>
 <script src="{{asset('/')}}/admin/plugins/select2/js/select2.full.min.js"></script>
+
 <script>
     $("#pickupDate").datepicker({
         format: 'yyyy-mm-dd',
         todayHighlight:true,
-        language:'nl',
         startDate: '+1d',
+        language:'nl',
         autoclose:false,
         updateViewDate: false,
         viewMode: "months",

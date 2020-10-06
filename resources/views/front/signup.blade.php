@@ -82,18 +82,18 @@
 									<input value="{{ old('email') }}"  required name="email" class="mb-0" type="email" placeholder="{{__('f.email_address')}}">
 								</div>
 
-								<div class="col-12 mb-20">
+								<div class="col-12">
                                     <input value="{{ old('telephone') }}"  name="telephone" type="text" placeholder="{{__('m.phone')}}">
 									<input value="{{ old('address1') }}" required name="address1" type="text" placeholder="{{__('f.address')}}">
 
 								</div>
 
 
-								<div class="col-md-6 col-12 mb-20">
+								<div class="col-md-6 col-12">
 									<input value="{{ old('town') }}" required name="town" type="text" placeholder="{{__('f.town_city')}}">
 								</div>
 
-								<div class="col-md-6 col-12 mb-20">
+								<div class="col-md-6 col-12">
 									<input value="{{ old('zip') }}" required name="zip" type="text" placeholder="{{__('f.zip_code')}}">
 								</div>
 
