@@ -82,6 +82,7 @@ Route::get('admins', 'SettingsController@adminList')->name('adminList')->middlew
 Route::get('users', 'SettingsController@userList')->name('userList')->middleware('is_admin');
 Route::get('users/{user}', 'SettingsController@viewUser')->name('viewUser')->middleware('is_admin');
 Route::get('edit-user/{user}', 'SettingsController@editUser')->name('editUser')->middleware('is_admin');
+Route::get('delete-user/{user}', 'SettingsController@deleteUser')->name('deleteUser')->middleware('is_admin');
 Route::post('update-user', 'SettingsController@updateUser')->name('updateUser')->middleware('is_admin');
 //user-data
 Route::get('user-data', 'SettingsController@userData')->name('userData')->middleware('is_admin');

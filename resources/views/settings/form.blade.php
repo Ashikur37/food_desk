@@ -139,6 +139,14 @@
             </select> {!! $errors->first('view', '
             <p class="help-block">:message</p>') !!}
         </div>
+        <div class="form-group {{ $errors->has('ingredient') ? 'has-error' : ''}}">
+            <label for="ingredient" class="control-label">{{ __('m.ingredient') }}</label>
+            <select id="ingredient" name="ingredient" class="form-control">
+                <option {{$setting->ingredient?"selected":""}} value="1">{{ __('m.yes') }}</option>
+                <option {{!$setting->ingredient?"selected":""}} value="0">{{ __('m.no') }}</option>
+            </select> {!! $errors->first('ingredient', '
+            <p class="help-block">:message</p>') !!}
+        </div>
 
 
         <div class="form-group {{ $errors->has('from_email') ? 'has-error' : ''}}">

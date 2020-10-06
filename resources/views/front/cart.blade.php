@@ -1,4 +1,20 @@
-@extends('layouts.front') @section('content')
+@extends('layouts.front')
+@section('style')
+    <style>
+        .cart-table .table thead {
+            background-color: #a2a20c;
+        }
+        .cart-table .table thead tr th {
+            color: #fff;
+        }
+        .cart-summary .cart-summary-wrap {
+            background-color: #ffffff;
+            -webkit-box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+@endsection
+@section('content')
 
 
 <div class="breadcrumb-area">
@@ -8,7 +24,7 @@
                 <div class="breadcrumb-container">
                     <ul>
                         <li><a href="{{route('home')}}"><i class="fa fa-home"></i> {{ __('f.home') }}</a></li>
-                        <li class="active" ><a href="{{route('cart')}}">Cart</a></li>
+                        <li class="active" ><a href="{{route('cart')}}">{{__('f.shoppingCart')}}</a></li>
                     </ul>
                 </div>
             </div>
@@ -34,7 +50,7 @@
 <script>
 removeCart = (id) => {
             $.ajax({
-                url: `{{URL::to('remove-cart')}}?id=${id}`, 
+                url: `{{URL::to('remove-cart')}}?id=${id}`,
                 success: function(result) {
                     $("#cart-container").html(result)
                     toastr.warning('Item removed from cart')
@@ -63,7 +79,7 @@ removeCart = (id) => {
             });
         }
 updateCart=(id,quantity,weight,el)=>{
-   
+
     if(weight=="GR"&&quantity<10){
         quantity=10;
         }

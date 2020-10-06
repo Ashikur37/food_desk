@@ -203,4 +203,5 @@ return [
     'homeDeliveryMail'=>'E-mail aan klant: "Levering aan huis"',
     'continueShopping'=>'Verder Winkelen',
     'wishList'=>'Wish List',
+    'ingredient'=>"Ingrediënten"
 ];

@@ -120,7 +120,9 @@
                             </div>
 
                             <div class="single-product-category mb-20">
+                                @if($setting->ingredient)
                                 <h3>{{__('f.ingredients_dch')}} : <span>{{$product->ingredients_dch}}</span></h3>
+                                @endif
                                 <h3>{{__('f.allergence_dch')}} : <span>{{$product->allergence_dch}}</span></h3>
                                 <h3>{{__('f.product_id')}} : <span>{{$product->fid}}</span></h3>
                                 <h3>{{__('f.category_list')}} : <span>

@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->string('email');
             $table->string('phone');
             $table->string('company');
+            $table->string('company_number');
             $table->string('address1');
             $table->string('address2');
             $table->string('town');

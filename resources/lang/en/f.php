@@ -31,6 +31,7 @@ return [
     "emailAddress" => "Email Address",
     "phoneNumber" => "Phone Number",
     "companyName" => "Company Name",
+    "companyNumber" => "Company Number",
     "address" => "Address",
     "message" => "Message",
     "placeOrder" => "Place Order",
@@ -44,6 +45,7 @@ return [
     "minute" => "Minute",
     "city" => "City",
     "zipCode" => "Zip Code",
+    "zip_code" => "Zip Code",
     "createAnAccount" => "Create An Account",
     "enterThePassword" => "Enter The Password",
     "passwordChange" => "Password Change",
@@ -54,4 +56,5 @@ return [
     "seach_by" => "search by",
     "name" => "name",
     'homeDelivery'=>'Home Delivery',
+    "logout" => "Logout",
 ];

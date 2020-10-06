@@ -45,7 +45,7 @@
                             <div class="form-group">
                                 <label>User</label>
                                 <select onchange="userChange(this.value)" name="user_id" class="form-control select2" style="width: 100%;">
-                                    <option value="0">Gast</option>
+                                    <option value="0">Zoek uw klant</option>
                                     @foreach($users as $user)
                                     <option value="{{$user->id}}">{{$user->firstname." ".$user->lastname}}</option>
                                     @endforeach
@@ -74,8 +74,11 @@
                                         <input required value="{{auth()->check()?auth()->user()->telephone:""}}" type="text" name="phone" placeholder="{{ __('f.phoneNumber') }}">
                                     </div>
 
-                                    <div class="col-12">
+                                    <div class="col-md-6 col-12">
                                         <input type="text" name="company" placeholder="{{ __('f.companyName') }}">
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <input type="text" name="company_number" placeholder="{{ __('f.companyNumber') }}">
                                     </div>
 
                                     <div class="col-12">
@@ -150,32 +153,29 @@
                                 <div class="row">
 
                                     <div class="col-md-6 col-12">
-                                        <label>{{ __('f.firstName') }}*</label>
                                         <input class="s_required" name="s_firstname" type="text" placeholder="{{ __('f.firstName') }}">
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label>{{ __('f.lastName') }}*</label>
                                         <input class="s_required" name="s_lastname" type="text" placeholder="{{ __('f.lastName') }}">
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label>{{ __('f.emailAddress') }}*</label>
                                         <input class="s_required" name="s_email" type="email" placeholder="{{ __('f.emailAddress') }}">
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label>{{ __('f.phoneNumber') }}*</label>
                                         <input class="s_required" name="s_phone" type="text" placeholder="{{ __('f.phoneNumber') }}">
                                     </div>
 
                                     <div class="col-12">
-                                        <label>{{ __('f.companyName') }}</label>
                                         <input  name="s_company" type="text" placeholder="{{ __('f.companyName') }}">
+                                    </div>
+                                    <div class="col-12">
+                                        <input  name="s_company_number" type="text" placeholder="{{ __('f.companyNumber') }}">
                                     </div>
 
                                     <div class="col-12">
-                                        <label>{{ __('f.address') }}*</label>
                                         <input class="s_required" name="s_address1" type="text" placeholder="{{ __('f.addressLine') }} 1">
                                         <input name="s_address2" type="text" placeholder="{{ __('f.addressLine') }} 2">
                                     </div>
@@ -183,12 +183,10 @@
 
 
                                     <div class="col-md-6 col-12">
-                                        <label>{{ __('f.town') }}/{{ __('f.city') }}*</label>
                                         <input class="s_required" name="s_town" type="text" placeholder="{{ __('f.town') }}/{{ __('f.city') }}">
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label>{{ __('f.zipCode') }}*</label>
                                         <input class="s_required" name="s_zip" type="text" placeholder="{{ __('f.zipCode') }}">
                                     </div>
 

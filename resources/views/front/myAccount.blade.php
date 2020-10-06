@@ -156,8 +156,10 @@
                                                 </div> --}}
 
                                                 <div class="col-12 mb-30">
-                                                    <input disabled value="{{$user->email}}" id="email"
-                                                        placeholder="Email Address" type="email">
+                                                    <input name="email" value="{{$user->email}}" id="email" placeholder="Email Address" type="email">
+                                                </div>
+                                                <div class="col-12 mb-30">
+                                                    <input name="confirm_mail" id="c_email" placeholder="Confirm Email Address" type="email">
                                                 </div>
 
                                                 <div class="col-12 mb-30">
@@ -167,18 +169,15 @@
                                                 </div>
 
                                                 <div class="col-12 mb-30">
-                                                    <input name="old_password" value="" autocomplete="off"
-                                                        type="password">
+                                                    <input name="old_password" value="" autocomplete="off" placeholder="Current Password" type="password">
                                                 </div>
 
                                                 <div class="col-lg-6 col-12 mb-30">
-                                                    <input name="password" id="new-pwd" placeholder="New Password"
-                                                        type="password">
+                                                    <input name="password" id="new-pwd" placeholder="New Password" type="password">
                                                 </div>
 
                                                 <div class="col-lg-6 col-12 mb-30">
-                                                    <input name="password_confirmation" id="confirm-pwd"
-                                                        placeholder="Confirm Password" type="password">
+                                                    <input name="password_confirmation" id="confirm-pwd" placeholder="Confirm Password" type="password">
                                                 </div>
 
                                                 <div class="col-12">

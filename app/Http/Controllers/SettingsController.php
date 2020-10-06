@@ -54,6 +54,11 @@ class SettingsController extends Controller
     {
         return view('admin.user.edit',compact('user'));
     }
+    public function deleteUser(User $user )
+    {
+        $user->delete();
+        return redirect()->back()->with('success','User deleted');
+    }
     public function updateUser( Request $request)
     {
         $user=User::find($request->id);
@@ -69,7 +74,7 @@ class SettingsController extends Controller
 
             ->addColumn('action', function ($row) {
 
-                $btn = '<div class="btn-group"><a href="' . URL::to('/') . '/users/' . $row->id . '" class="btn btn-sm btn-outline-primary">View</a><a href="' . URL::to('/') . '/edit-user/' . $row->id . '" class="btn btn-sm btn-outline-warning">Edit</a>
+                $btn = '<div class="btn-group"><a href="' . URL::to('/') . '/users/' . $row->id . '" class="btn btn-sm btn-outline-primary">View</a><a href="' . URL::to('/') . '/edit-user/' . $row->id . '" class="btn btn-sm btn-outline-warning">Edit</a><a href="' . URL::to('/') . '/delete-user/' . $row->id . '" onclick="return confirm('."'Are you sure you want to delete this item?'".')" class="btn btn-sm btn-outline-danger">Remove</a>
                                </div>';
 
                 return $btn;

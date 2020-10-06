@@ -22,6 +22,7 @@ class ProductsController extends Controller
     public function singleView($name)
     {
         $product = Product::where('product_name_dch', '=', $name)->first();
+
         $relatedProducts = $product->category->products->take(6);
         return view('front.singleProduct', compact('product', 'relatedProducts'));
     }

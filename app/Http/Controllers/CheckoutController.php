@@ -222,7 +222,6 @@ class CheckoutController extends Controller
             $user_id = $request->user_id;
         }
         //validate
-
         if ($request->shipping_different) {
             $shipping_different = 1;
             $s_firstname = $request->s_firstname;
@@ -230,6 +229,7 @@ class CheckoutController extends Controller
             $s_email = $request->s_email;
             $s_phone = $request->s_phone;
             $s_company = $request->s_company;
+            $s_company_number = $request->s_company_number;
             $s_address1 = $request->s_address1;
             $s_address2 = $request->s_address2;
             $s_town = $request->s_town;
@@ -240,6 +240,7 @@ class CheckoutController extends Controller
             $s_email = $request->email;
             $s_phone = $request->phone;
             $s_company = $request->company;
+            $s_company_number = $request->company_number;
             $s_address1 = $request->address1;
             $s_address2 = $request->address2;
             $s_town = $request->town;
@@ -254,6 +255,7 @@ class CheckoutController extends Controller
             "email" => $request->email,
             "phone" => $request->phone,
             "company" => $request->company,
+            "company_number" => $request->company_number,
             "address1" => $request->address1,
             "address2" => $request->address2,
             "town" => $request->town,
@@ -264,6 +266,7 @@ class CheckoutController extends Controller
             "s_email" => $s_email,
             "s_phone" => $s_phone,
             "s_company" => $s_company,
+            "s_company_number" => $s_company_number,
             "s_address1" => $s_address1,
             "s_address2" => $s_address2,
             "s_town" => $s_town,

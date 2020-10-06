@@ -53,4 +53,7 @@ return [
     'okMailBody' => 'Ok Mail Body',
     'continueShopping'=>'Continue Shopping',
     'wishList'=>'Wish List',
+    'yes'=>'yes',
+    'no'=>'no',
+    'ingredient'=>"ingredient",
 ];

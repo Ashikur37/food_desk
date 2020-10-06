@@ -423,7 +423,7 @@ class OrderController extends Controller
             })
             ->addColumn('username', function ($row) {
                 $type = $row->user_id == 0 ? "<br><span class='badge badge-danger'>Gast</span>" : "";
-                return $row->firstname . " " . $row->lastname . $type;
+                return $row->firstname . " " . $row->lastname;
             })
             ->addColumn('order_at', function ($row) {
                 return $row->created_at->format('d/m/Y');

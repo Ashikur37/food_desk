@@ -117,6 +117,9 @@ div#productContainer {
 
                         <!-- navigation section -->
                         <div class="main-menu">
+                            <form id="mylogout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                             <nav>
                                 <ul>
                                     <li><a href="{{URL::to('/')}}">{{__('f.home')}}</a></li>
@@ -126,6 +129,11 @@ div#productContainer {
                                     @endif
                                     <li><a href="{{route('checkout')}}">{{ __('f.checkout') }}</a></li>
                                     <li><a href="#">{{ __('f.contact') }}</a></li>
+                                    @if(auth()->check())
+                                        <li><a href="{{ route('logout') }}"
+                                               onclick="event.preventDefault();
+                                                     document.getElementById('mylogout-form').submit();">{{ __('f.logout') }}</a></li>
+                                    @endif
                                 </ul>
                             </nav>
                         </div>

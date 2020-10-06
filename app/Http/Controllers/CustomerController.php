@@ -92,10 +92,14 @@ class CustomerController extends Controller
     {
         $request->validate([
             'firstname' => ['required'],
-            'lastname' => ['required']
+            'lastname' => ['required'],
+            'email'=>'required|email|unique:users,email,' .auth()->id(),
+            'confirm_mail'=>'nullable|email|same:email',
 
         ]);
         $user_id = Auth::User()->id;
+        $old_email = auth()->user()->email;
+
         $obj_user = User::find($user_id);
         $obj_user->firstname = $request->firstname;
         $obj_user->lastname = $request->lastname;
@@ -109,7 +113,12 @@ class CustomerController extends Controller
             if ($request->password != $request->password_confirmation) {
                 return redirect()->back()->withError("Password doesn't match");
             }
+            $obj_user->email = $request->input('email');
             $obj_user->password = Hash::make($request['password']);
+            if ($request->input('email')!=$old_email){
+                $obj_user->email_verified_at=null;
+                auth()->user()->sendEmailVerificationNotification();
+            }
         }
         $obj_user->save();
         return redirect()->back()->with("success", "User information updated successfully");
