@@ -1,4 +1,4 @@
-(function($) {
+(function ($) {
     "use strict";
 
     /*--
@@ -10,7 +10,7 @@
     var menubarTop = $('.menubar-top');
 
 
-    windows.on('scroll', function() {
+    windows.on('scroll', function () {
         var scroll = windows.scrollTop();
 
 
@@ -37,12 +37,11 @@
     });
 
 
-
     /*--
     Scroll to top
     -----------------------------------*/
 
-    $('.scroll-top').on('click', function() {
+    $('.scroll-top').on('click', function () {
         $('html,body').animate({
             scrollTop: 0
         }, 2000);
@@ -53,11 +52,11 @@
     Display Cart on Hover
     -----------------------------------*/
 
-    $("#shopping-cart").mouseenter(function() {
+    $("#shopping-cart").mouseenter(function () {
         $("#cart-floating-box").stop().slideDown(1000);
     });
 
-    $("#shopping-cart").mouseleave(function() {
+    $("#shopping-cart").mouseleave(function () {
         $("#cart-floating-box").stop().slideUp(1000);
     });
 
@@ -66,7 +65,7 @@
     Hero slider one active
     -----------------------------------*/
     var heroSlider = $('.hero-slider-one');
-    heroSlider.on('touchstart', function() {
+    heroSlider.on('touchstart', function () {
         heroSlider.slick('slickPlay');
     });
 
@@ -147,11 +146,11 @@
         prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-caret-left"></i></button>',
         nextArrow: '<button type="button" class="slick-next"><i class="fa fa-caret-right"></i></button>',
         responsive: [{
-                breakpoint: 1499,
-                settings: {
-                    slidesToShow: 6,
-                }
-            },
+            breakpoint: 1499,
+            settings: {
+                slidesToShow: 6,
+            }
+        },
             {
                 breakpoint: 1199,
                 settings: {
@@ -193,11 +192,11 @@
         prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-caret-left"></i></button>',
         nextArrow: '<button type="button" class="slick-next"><i class="fa fa-caret-right"></i></button>',
         responsive: [{
-                breakpoint: 1499,
-                settings: {
-                    slidesToShow: 3,
-                }
-            },
+            breakpoint: 1499,
+            settings: {
+                slidesToShow: 3,
+            }
+        },
             {
                 breakpoint: 1199,
                 settings: {
@@ -238,11 +237,11 @@
         prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-caret-left"></i></button>',
         nextArrow: '<button type="button" class="slick-next"><i class="fa fa-caret-right"></i></button>',
         responsive: [{
-                breakpoint: 1499,
-                settings: {
-                    slidesToShow: 5,
-                }
-            },
+            breakpoint: 1499,
+            settings: {
+                slidesToShow: 5,
+            }
+        },
             {
                 breakpoint: 1199,
                 settings: {
@@ -283,11 +282,11 @@
         prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-caret-left"></i></button>',
         nextArrow: '<button type="button" class="slick-next"><i class="fa fa-caret-right"></i></button>',
         responsive: [{
-                breakpoint: 1499,
-                settings: {
-                    slidesToShow: 3,
-                }
-            },
+            breakpoint: 1499,
+            settings: {
+                slidesToShow: 3,
+            }
+        },
             {
                 breakpoint: 1199,
                 settings: {
@@ -334,11 +333,11 @@
         prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-caret-left"></i></button>',
         nextArrow: '<button type="button" class="slick-next"><i class="fa fa-caret-right"></i></button>',
         responsive: [{
-                breakpoint: 1499,
-                settings: {
-                    slidesToShow: 4,
-                }
-            },
+            breakpoint: 1499,
+            settings: {
+                slidesToShow: 4,
+            }
+        },
             {
                 breakpoint: 1199,
                 settings: {
@@ -385,11 +384,11 @@
         prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-caret-left"></i></button>',
         nextArrow: '<button type="button" class="slick-next"><i class="fa fa-caret-right"></i></button>',
         responsive: [{
-                breakpoint: 1499,
-                settings: {
-                    slidesToShow: 4,
-                }
-            },
+            breakpoint: 1499,
+            settings: {
+                slidesToShow: 4,
+            }
+        },
             {
                 breakpoint: 1199,
                 settings: {
@@ -436,11 +435,11 @@
         prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-caret-left"></i></button>',
         nextArrow: '<button type="button" class="slick-next"><i class="fa fa-caret-right"></i></button>',
         responsive: [{
-                breakpoint: 1499,
-                settings: {
-                    slidesToShow: 4,
-                }
-            },
+            breakpoint: 1499,
+            settings: {
+                slidesToShow: 4,
+            }
+        },
             {
                 breakpoint: 1199,
                 settings: {
@@ -487,11 +486,11 @@
         prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-caret-left"></i></button>',
         nextArrow: '<button type="button" class="slick-next"><i class="fa fa-caret-right"></i></button>',
         responsive: [{
-                breakpoint: 1499,
-                settings: {
-                    slidesToShow: 4,
-                }
-            },
+            breakpoint: 1499,
+            settings: {
+                slidesToShow: 4,
+            }
+        },
             {
                 breakpoint: 1199,
                 settings: {
@@ -532,11 +531,11 @@
         prevArrow: '<button type="button" class="slick-prev"><span class="arrow_carrot-left"></span></button>',
         nextArrow: '<button type="button" class="slick-next"><span class="arrow_carrot-right"></span></button>',
         responsive: [{
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: 1,
-                }
-            },
+            breakpoint: 1200,
+            settings: {
+                slidesToShow: 1,
+            }
+        },
             {
                 breakpoint: 991,
                 settings: {
@@ -563,12 +562,12 @@
         slidesToShow: 3,
         vertical: true,
         responsive: [{
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1
-                }
-            },
+            breakpoint: 1200,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 1
+            }
+        },
             {
                 breakpoint: 991,
                 settings: {
@@ -597,7 +596,7 @@
         ]
     });
 
-    $('.small-image-slider-single-product a').on('click', function(e) {
+    $('.small-image-slider-single-product a').on('click', function (e) {
         e.preventDefault();
 
         var $thisParent = $(this).closest('.product-image-slider');
@@ -617,12 +616,12 @@
         nextArrow: '<i class="fa fa-angle-right slick-next-btn"></i>',
         slidesToShow: 3,
         responsive: [{
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1
-                }
-            },
+            breakpoint: 1200,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 1
+            }
+        },
             {
                 breakpoint: 991,
                 settings: {
@@ -647,7 +646,7 @@
         ]
     });
 
-    $('.small-image-slider-single-product-tabstyle-3 a').on('click', function(e) {
+    $('.small-image-slider-single-product-tabstyle-3 a').on('click', function (e) {
         e.preventDefault();
 
         var $thisParent = $(this).closest('.product-image-slider');
@@ -661,7 +660,6 @@
     });
 
 
-
     /*-----------------------------------
     	Product image gallery slider
     	--------------------------------------*/
@@ -670,12 +668,12 @@
         nextArrow: '<i class="fa fa-angle-right slick-next-btn"></i>',
         slidesToShow: 3,
         responsive: [{
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1
-                }
-            },
+            breakpoint: 1200,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 1
+            }
+        },
             {
                 breakpoint: 991,
                 settings: {
@@ -708,12 +706,12 @@
         nextArrow: '<i class="fa fa-angle-right slick-next-btn"></i>',
         slidesToShow: 3,
         responsive: [{
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3
-                }
-            },
+            breakpoint: 1200,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3
+            }
+        },
             {
                 breakpoint: 991,
                 settings: {
@@ -738,13 +736,13 @@
         ]
     });
 
-    $('.modal').on('shown.bs.modal', function(e) {
+    $('.modal').on('shown.bs.modal', function (e) {
         $('.small-image-slider').resize();
         $('.small-image-slider').slick('setPosition');
 
     })
 
-    $('.small-image-slider a').on('click', function(e) {
+    $('.small-image-slider a').on('click', function (e) {
         e.preventDefault();
 
         var $thisParent = $(this).closest('.product-image-slider');
@@ -762,17 +760,30 @@
     --------------------------------*/
     $('.pro-qty').append('<a href="#" class="inc qty-btn">+</a>');
     $('.pro-qty').append('<a href="#" class= "dec qty-btn">-</a>');
-    $('.qty-btn').on('click', function(e) {
+    $('.qty-btn').on('click', function (e) {
         e.preventDefault();
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
+        var productUnit = $(".nice-select").val();
+
         if ($button.hasClass('inc')) {
-            var newVal = parseFloat(oldValue) + 1;
+            if (productUnit.toUpperCase() === "GR") {
+                var newVal = parseFloat(oldValue) + 10;
+            } else {
+                var newVal = parseFloat(oldValue) + 1;
+            }
         } else {
             // Don't allow decrementing below zero
             if (oldValue > 0) {
-                var newVal = parseFloat(oldValue) - 1;
+                if (productUnit.toUpperCase() === "GR") {
+                    var newVal = parseFloat(oldValue) - 10;
+                } else {
+                    var newVal = parseFloat(oldValue) - 1;
+                }
             } else {
+                newVal = 0;
+            }
+            if(newVal<0){
                 newVal = 0;
             }
         }
@@ -784,10 +795,10 @@
     /*-----
     Activate countdown
     --------------------------------*/
-    $('[data-countdown]').each(function() {
+    $('[data-countdown]').each(function () {
         var $this = $(this),
             finalDate = $(this).data('countdown');
-        $this.countdown(finalDate, function(event) {
+        $this.countdown(finalDate, function (event) {
             $this.html(event.strftime('<div class="single-countdown"><span class="single-countdown-time">%D</span><span class="single-countdown-text">Days</span></div><div class="single-countdown"><span class="single-countdown-time">%H</span><span class="single-countdown-text">Hours</span></div><div class="single-countdown"><span class="single-countdown-time">%M</span><span class="single-countdown-text">Mins</span></div><div class="single-countdown"><span class="single-countdown-time">%S</span><span class="single-countdown-text">Secs</span></div>'));
         });
     });
@@ -804,7 +815,6 @@
         meanRevealPosition: 'right',
         meanMenuCloseSize: '0',
     });
-
 
 
     /*--
@@ -832,7 +842,6 @@
         $("#mc-form input").val('');
 
     }
-
 
 
     /*---------------------
@@ -873,17 +882,18 @@
             $('.category-menu .menu-item-has-children ul').slideDown();
         }
     }
+
     categoryMenuToggle();
     windows.resize(categoryMenuToggle);
     categorySubMenuToggle();
     windows.resize(categorySubMenuToggle);
 
-    categoryToggle.on('click', function() {
+    categoryToggle.on('click', function () {
         categoryMenu.slideToggle();
     });
 
     /*-- Category Sub Menu --*/
-    $('.category-menu').on('click', 'li a, li a .menu-expand', function(e) {
+    $('.category-menu').on('click', 'li a, li a .menu-expand', function (e) {
         var $a = $(this).hasClass('menu-expand') ? $(this).parent() : $(this);
         if ($a.parent().hasClass('menu-item-has-children')) {
             if ($a.attr('href') === '#' || $(this).hasClass('menu-expand')) {
@@ -906,7 +916,7 @@
     categoryChildren.slideUp();
     categoryChildren.parents('li').addClass('has-children');
 
-    $('.sidebar-category').on('click', 'li.has-children > a', function(e) {
+    $('.sidebar-category').on('click', 'li.has-children > a', function (e) {
 
         if ($(this).parent().hasClass('has-children')) {
             if ($(this).siblings('ul:visible').length > 0) $(this).siblings('ul').slideUp();
@@ -924,7 +934,7 @@
     //More category
 
     $(".category-menu li.hidden").hide();
-    $("#more-btn").on('click', function(e) {
+    $("#more-btn").on('click', function (e) {
         e.preventDefault();
         $(".category-menu li.hidden").toggle(500);
         var htmlAfter = '<span class="icon_minus_alt2"></span> Less Categories';
@@ -975,7 +985,7 @@
         min: 0,
         max: 2000,
         values: [25, 970],
-        slide: function(event, ui) {
+        slide: function (event, ui) {
             $('#price-amount').val('Price: ' + '$' + ui.values[0] + ' - $' + ui.values[1]);
         }
     });
@@ -985,7 +995,7 @@
     /*--
     Product View Mode
     ------------------------*/
-    $('.view-mode-icons a').on('click', function(e) {
+    $('.view-mode-icons a').on('click', function (e) {
         e.preventDefault();
 
         var shopProductWrap = $('.shop-product-wrap');
@@ -997,7 +1007,6 @@
     });
 
 
-
     /*--
     Nice Select
     ------------------------*/
@@ -1006,7 +1015,7 @@
     /*-----
     Shipping Form Toggle
     --------------------------------*/
-    $('[data-shipping]').on('click', function() {
+    $('[data-shipping]').on('click', function () {
         if ($('[data-shipping]:checked').length > 0) {
             $('#shipping-form').slideDown();
         } else {
@@ -1017,7 +1026,7 @@
     /*-----
     	Payment Method Select
     	--------------------------------*/
-    $('[name="payment-method"]').on('click', function() {
+    $('[name="payment-method"]').on('click', function () {
 
         var $value = $(this).attr('value');
 
@@ -1025,9 +1034,6 @@
         $('[data-method="' + $value + '"]').slideDown();
 
     });
-
-
-
 
 
 })(jQuery);
