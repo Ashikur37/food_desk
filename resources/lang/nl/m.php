@@ -174,6 +174,7 @@ return [
     'youthenHeCanPickupTheProductsFrom'=>'Afhalen vanaf',
     'tuesday'=>'Dinsdag',
     'wednessday'=>'Woensdag',
+    'wednesday'=>'Woensdag',
     'thursday'=>'Donderdag',
     'friday'=>'Vrijdag',
     'saturday'=>'Zaterdag',
@@ -203,5 +204,7 @@ return [
     'homeDeliveryMail'=>'E-mail aan klant: "Levering aan huis"',
     'continueShopping'=>'Verder Winkelen',
     'wishList'=>'Wish List',
-    'ingredient'=>"Ingrediënten"
+    'ingredient'=>"Ingrediënten",
+    'closed'=>'gesloten',
+    'none'=>'none'
 ];

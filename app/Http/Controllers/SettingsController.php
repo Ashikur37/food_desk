@@ -10,6 +10,7 @@ use App\PickupTime;
 use App\PickupTimeException;
 use App\Setting;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\Auth;
@@ -28,62 +29,67 @@ class SettingsController extends Controller
     {
 
         $setting = Setting::firstOrFail();
-        if(auth()->user()->type==1){
+        if (auth()->user()->type == 1) {
             return view('settings.edit', compact('setting'));
-        }
-        else{
+        } else {
             return view('settings.editManager', compact('setting'));
 
         }
     }
+
     public function userList()
     {
         return view('admin.user.list');
     }
+
     public function emailSetting()
     {
         $setting = Setting::firstOrFail();
 
         return view('settings.email', compact('setting'));
     }
-    public function viewUser(User $user )
+
+    public function viewUser(User $user)
     {
-        return view('admin.user.details',compact('user'));
+        return view('admin.user.details', compact('user'));
     }
-    public function editUser(User $user )
+
+    public function editUser(User $user)
     {
-        return view('admin.user.edit',compact('user'));
+        return view('admin.user.edit', compact('user'));
     }
-    public function deleteUser(User $user )
+
+    public function deleteUser(User $user)
     {
         $user->delete();
-        return redirect()->back()->with('success','User deleted');
+        return redirect()->back()->with('success', 'User deleted');
     }
-    public function updateUser( Request $request)
+
+    public function updateUser(Request $request)
     {
-        $user=User::find($request->id);
+        $user = User::find($request->id);
         $user->update($request->all());
-        return redirect()->back()->with('success','User updated');
+        return redirect()->back()->with('success', 'User updated');
 
     }
+
     public function userData()
     {
         $data = User::whereType(0)->latest()->get();
         return Datatables::of($data)
             ->addIndexColumn()
-
             ->addColumn('action', function ($row) {
 
-                $btn = '<div class="btn-group"><a href="' . URL::to('/') . '/users/' . $row->id . '" class="btn btn-sm btn-outline-primary">View</a><a href="' . URL::to('/') . '/edit-user/' . $row->id . '" class="btn btn-sm btn-outline-warning">Edit</a><a href="' . URL::to('/') . '/delete-user/' . $row->id . '" onclick="return confirm('."'Are you sure you want to delete this item?'".')" class="btn btn-sm btn-outline-danger">Remove</a>
+                $btn = '<div class="btn-group"><a href="' . URL::to('/') . '/users/' . $row->id . '" class="btn btn-sm btn-outline-primary">View</a><a href="' . URL::to('/') . '/edit-user/' . $row->id . '" class="btn btn-sm btn-outline-warning">Edit</a><a href="' . URL::to('/') . '/delete-user/' . $row->id . '" onclick="return confirm(' . "'Are you sure you want to delete this item?'" . ')" class="btn btn-sm btn-outline-danger">Remove</a>
                                </div>';
 
                 return $btn;
             })
-
             ->rawColumns(['action'])
             ->escapeColumns([])
             ->make(true);
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -93,6 +99,7 @@ class SettingsController extends Controller
     {
         return view('settings.create');
     }
+
     public function orderSetting()
     {
         $day0 = OrderDayPickup::where('day', '=', 0)->first();
@@ -102,29 +109,38 @@ class SettingsController extends Controller
         $day4 = OrderDayPickup::where('day', '=', 4)->first();
         $day5 = OrderDayPickup::where('day', '=', 5)->first();
         $day6 = OrderDayPickup::where('day', '=', 6)->first();
-        $day7 = OrderDayPickup::where('day', '=', 7)->first();
+        $days = ['m.sunday', 'm.monday', 'm.tuesday', 'm.wednesday', 'm.thursday', 'm.friday', 'm.saturday',];
         $orderDayExceptions = OrderDayException::latest()->get();
         $pickupTimes = PickupTime::orderBy('day')->get();
         $pickupTimeExceptions = PickupTimeException::orderBy('date')->get();
-        $setting=Setting::first();
-        return view('settings.order', compact('setting','pickupTimeExceptions', 'pickupTimes', 'orderDayExceptions', 'day0', 'day1', 'day2', 'day3', 'day4', 'day5', 'day6'));
+        $setting = Setting::first();
+        return view('settings.order', compact('setting', 'pickupTimeExceptions', 'days', 'pickupTimes', 'orderDayExceptions', 'day0', 'day1', 'day2', 'day3', 'day4', 'day5', 'day6'));
     }
+
     public function pickupTime(Request $request)
     {
+
         PickupTime::whereNotNull('id')->delete();
         if ($request->day) {
+            $days = [];
             for ($i = 0; $i < count($request->day); $i++) {
-                PickupTime::create(
-                    [
+                if ($request->from[$i] == 'closed'||$request->from[$i] == 'none'):
+                    continue;
+                else:
+                    $days[] = [
                         "day" => $request->day[$i],
                         "from" => $request->from[$i],
                         "to" => $request->to[$i],
-                    ]
-                );
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
+                    ];
+                endif;
             }
+            PickupTime::insert($days);
         }
         return redirect()->back()->with('success', 'Pickup Times updated successfully');
     }
+
     public function pickupTimeException(Request $request)
     {
         PickupTimeException::whereNotNull('id')->delete();
@@ -141,19 +157,21 @@ class SettingsController extends Controller
         }
         return redirect()->back()->with('success', 'Pickup Times updated successfully');
     }
+
     public function pickupTimeExceptionRange(Request $request)
     {
-        if($request->to<$request->from){
+        if ($request->to < $request->from) {
             return redirect()->back()->with('error', 'Invalid format');
         }
-        $setting=Setting::first();
+        $setting = Setting::first();
         $setting->update([
-            "from_exception"=>$request->from,
-            "to_exception"=>$request->to
+            "from_exception" => $request->from,
+            "to_exception" => $request->to
         ]);
         return redirect()->back()->with('success', 'Pickup Times updated successfully');
 
     }
+
     public function orderPickup(Request $request)
     {
         for ($i = 0; $i < 7; $i++) {
@@ -165,6 +183,7 @@ class SettingsController extends Controller
         }
         return redirect()->back()->with('success', 'Order Pickup time updated successfully');
     }
+
     public function orderPickupException(Request $request)
     {
         OrderDayException::whereNotNull('id')->delete();
@@ -181,6 +200,7 @@ class SettingsController extends Controller
         }
         return redirect()->back()->with('success', 'Order Pickup Exception updated successfully');
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -201,7 +221,7 @@ class SettingsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      *
      * @return \Illuminate\View\View
      */
@@ -215,7 +235,7 @@ class SettingsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      *
      * @return \Illuminate\View\View
      */
@@ -225,31 +245,34 @@ class SettingsController extends Controller
 
         return view('settings.edit', compact('setting'));
     }
+
     public function changePassword()
     {
         return view('admin.changePassword');
     }
+
     public function changeEmail()
     {
         return view('admin.changeEmail');
     }
+
     public function updatePassword(Request $request)
     {
         $user_id = Auth::User()->id;
         $obj_user = User::find($user_id);
-        if($request->old_email){
-            if(auth()->user()->email!=$request->old_email){
+        if ($request->old_email) {
+            if (auth()->user()->email != $request->old_email) {
                 return redirect()->back()->withError("Wrong Email");
             }
-            if(!$request->new_email){
+            if (!$request->new_email) {
                 return redirect()->back()->withError("Email Required");
             }
-            if($request->new_email!=$request->confirm_email){
+            if ($request->new_email != $request->confirm_email) {
                 return redirect()->back()->withError("Email Doesn't Match");
             }
-            $obj_user->email=$request->new_email;
+            $obj_user->email = $request->new_email;
         }
-        if($request->old_password){
+        if ($request->old_password) {
             if (!(Hash::check($request->get('old_password'), Auth::user()->password))) {
                 return redirect()->back()->withError("Your current password does not matches with the password you provided. Please try again.");
             }
@@ -264,21 +287,25 @@ class SettingsController extends Controller
         $obj_user->save();
         return redirect()->back()->with("success", "Account updated successfully");
     }
+
     public function adminList()
     {
         $admins = User::whereType(2)->get();
         return view('admin.adminList', compact('admins'));
     }
+
     public function addAdmin()
     {
         return view('admin.createAdmin');
     }
+
     public function deleteAdmin(User $user)
     {
         $user->delete();
 
         return redirect()->route('adminList')->with('success', 'Admin deleted successfully');
     }
+
     public function insertAdmin(Request $request)
     {
         $request->validate([
@@ -297,11 +324,12 @@ class SettingsController extends Controller
         ]);
         return redirect()->route('adminList')->with('success', 'New admin added successfully');
     }
+
     /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param  int  $id
+     * @param int $id
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
@@ -339,7 +367,7 @@ class SettingsController extends Controller
             $request->banner_img4->move(public_path('images'), $path);
             $request["banner4"] = $path;
         }
-         if ($request->banner_img5) {
+        if ($request->banner_img5) {
             $path = 'b5' . time() . '.' . $request->banner_img5->getClientOriginalExtension();
             $request->banner_img5->move(public_path('images'), $path);
             $request["banner5"] = $path;
@@ -356,51 +384,53 @@ class SettingsController extends Controller
             $request->default_product_img->move(public_path('images'), $path);
             $request["default_product"] = $path;
         }
-        if($request->input('wishList',false)){
-            $request['wishList']= true;
-        }else{
-            $request['wishList']= false;
+        if ($request->input('wishList', false)) {
+            $request['wishList'] = true;
+        } else {
+            $request['wishList'] = false;
         }
 
         $requestData = $request->all();
 
         $setting = Setting::findOrFail($id);
-        $hour=$setting->cron_hour;
-        $minute=$setting->cron_minute;
+        $hour = $setting->cron_hour;
+        $minute = $setting->cron_minute;
         $setting->update($requestData);
-        if($request->cron_hour){
-            if($request->cron_hour!=$hour||$request->cron_minute!=$minute){
+        if ($request->cron_hour) {
+            if ($request->cron_hour != $hour || $request->cron_minute != $minute) {
                 exec('php artisan schedule:run');
             }
         }
 
         return redirect()->back()->with('flash_message', 'Setting updated!');
     }
-    public function removeBanner(){
-        $setting=Setting::first();
-        if(request()->id==1){
+
+    public function removeBanner()
+    {
+        $setting = Setting::first();
+        if (request()->id == 1) {
             $setting->update([
-                "banner"=>""
+                "banner" => ""
             ]);
         }
-        if(request()->id==2){
+        if (request()->id == 2) {
             $setting->update([
-                "banner2"=>""
+                "banner2" => ""
             ]);
         }
-        if(request()->id==3){
+        if (request()->id == 3) {
             $setting->update([
-                "banner3"=>""
+                "banner3" => ""
             ]);
         }
-        if(request()->id==4){
+        if (request()->id == 4) {
             $setting->update([
-                "banner4"=>""
+                "banner4" => ""
             ]);
         }
-         if(request()->id==5){
+        if (request()->id == 5) {
             $setting->update([
-                "banner5"=>""
+                "banner5" => ""
             ]);
         }
         return "deleted";
@@ -409,7 +439,7 @@ class SettingsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
