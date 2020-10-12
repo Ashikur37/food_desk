@@ -100,6 +100,8 @@ Route::get('update-billing', 'CheckoutController@updateBilling')->name('updateBi
 Route::get('order-data', 'OrderController@orderDataTable')->middleware('is_admin');
 Route::get('edit-order/{order}', 'OrderController@editOrder')->name('editOrder')->middleware('is_admin');
 Route::get('print-order/{order}', 'OrderController@printOrder')->name('printOrder')->middleware('is_admin');
+Route::get('print/per_product/{order}', 'OrderController@printProducts')->name('per_product')->middleware('is_admin');
+Route::get('print/per_order/{order}', 'OrderController@printPerOrder')->name('per_order')->middleware('is_admin');
 Route::get('print-order-sticker/{order}', 'OrderController@printOrderSticker')->name('printOrderSticker')->middleware('is_admin');
 
 Route::get('ok-mail/{order}', 'OrderController@okMail')->name('okMail')->middleware('is_admin');

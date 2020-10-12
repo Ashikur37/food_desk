@@ -26,15 +26,18 @@ class OrderController extends Controller
     {
         //
     }
+
     public function viewOrder(Order $order)
     {
         return view('admin.order.view', compact('order'));
     }
+
     public function orderList()
     {
 
         return view('admin.order.list');
     }
+
     public function exportProductReport(Request $request)
     {
         $start = $request->start;
@@ -57,9 +60,11 @@ class OrderController extends Controller
 
         return Excel::download($export, $product->product_name_dch . " " . $start . " to " . $end . '.xlsx');
     }
+
     public function updateOrder(Order $order)
     {
     }
+
     public function okMail(Order $order)
     {
 
@@ -77,6 +82,7 @@ class OrderController extends Controller
         });
         return redirect()->route('orderList')->with('success', 'OK mail sent');
     }
+
     public function updateOrderStatus(Order $order, $status)
     {
 
@@ -84,66 +90,54 @@ class OrderController extends Controller
         if ($status == -1) {
             $subject = Setting::firstOrFail()->ok_mail_subject;
             $body = Setting::firstOrFail()->ok_mail;
-            $body=implode($order->firstname.' '.$order->lastname,explode('#name',$body));
-            $body=implode($order->id,explode('#id',$body));
-            $body=implode($order->created_at->formatLocalized('%A %d/%b/%y '),explode('#date',$body));
-            $body=implode($order->date->formatLocalized('%A %d/%b/%y ') . " on " . $order->hour . ":" . $order->minute,explode('#pickup',$body));
-            $detail="<table style='border:1px solid black;width: 100%;border-collapse: collapse;'>";
-            foreach($order->orderLines as $item)
-           {
-            $detail.='<tr>
+            $body = implode($order->firstname . ' ' . $order->lastname, explode('#name', $body));
+            $body = implode($order->id, explode('#id', $body));
+            $body = implode($order->created_at->formatLocalized('%A %d/%b/%y '), explode('#date', $body));
+            $body = implode($order->date->formatLocalized('%A %d/%b/%y ') . " on " . $order->hour . ":" . $order->minute, explode('#pickup', $body));
+            $detail = "<table style='border:1px solid black;width: 100%;border-collapse: collapse;'>";
+            foreach ($order->orderLines as $item) {
+                $detail .= '<tr>
             <td style="padding:3px;border:1px solid black">';
-                if($item[ "product" ]->sell_product_option=="weight_wise"){
-                    $detail.=$item["quantity"]>999?($item["quantity"]/1000)."kg":$item["quantity"]."gr";
+                if ($item["product"]->sell_product_option == "weight_wise") {
+                    $detail .= $item["quantity"] > 999 ? ($item["quantity"] / 1000) . "kg" : $item["quantity"] . "gr";
+                } elseif ($item["product"]->sell_product_option == "per_unit") {
+                    $detail .= $item["quantity"] . "stuk";
+                } else {
+                    $detail .= $item["quantity"] . "person";
                 }
 
-                 elseif($item["product"]->sell_product_option=="per_unit")
-                 {
-                    $detail.=$item["quantity"]."stuk" ;
-                 }
-                 else {
-                    $detail.=$item["quantity"]."person";
-                 }
-
-            $detail.='</td>';
-            $detail.='<td style="padding:3px;border:1px solid black">'.$item->product->product_name_dch.'</td>';
-            $detail.='<td style="padding:3px;border:1px solid black">';
-            if($item["product"]->sell_product_option=="weight_wise")
-            {
-                $detail.='€'.number_format((float)$item["product"]->price_weight*1000, 2, ',', '').'/kg';
-            }
-             elseif($item["product"]->sell_product_option=="per_unit")
-             {
-                $detail.='€'.number_format((float)$item["product"]->price_per_unit,
-                2, ',', '').'/ stuk';
-             }
-                else {
-                    $detail.='€'.number_format((float)$item["product"]->price_per_person, 2, ',', '').'/person';
+                $detail .= '</td>';
+                $detail .= '<td style="padding:3px;border:1px solid black">' . $item->product->product_name_dch . '</td>';
+                $detail .= '<td style="padding:3px;border:1px solid black">';
+                if ($item["product"]->sell_product_option == "weight_wise") {
+                    $detail .= '€' . number_format((float)$item["product"]->price_weight * 1000, 2, ',', '') . '/kg';
+                } elseif ($item["product"]->sell_product_option == "per_unit") {
+                    $detail .= '€' . number_format((float)$item["product"]->price_per_unit,
+                            2, ',', '') . '/ stuk';
+                } else {
+                    $detail .= '€' . number_format((float)$item["product"]->price_per_person, 2, ',', '') . '/person';
                 }
-                $detail.='</td>
+                $detail .= '</td>
                 <td style="border:1px solid black;padding:3px;">';
-                if($item["product"]->sell_product_option=="weight_wise")
-                 {
-                    $detail.='€'.number_format((float)$item["product"]->price_weight*$item["quantity"], 2, ',', '');
-                 }
-                 elseif($item["product"]->sell_product_option=="per_unit"){
-                    $detail.='€'.number_format((float)$item["product"]->price_per_unit*$item["quantity"],
-                        2, ',', '');
-                 }
-                else {
-                    $detail.='€'.number_format((float)$item["product"]->price_per_person*$item["quantity"], 2, ',', '');
+                if ($item["product"]->sell_product_option == "weight_wise") {
+                    $detail .= '€' . number_format((float)$item["product"]->price_weight * $item["quantity"], 2, ',', '');
+                } elseif ($item["product"]->sell_product_option == "per_unit") {
+                    $detail .= '€' . number_format((float)$item["product"]->price_per_unit * $item["quantity"],
+                            2, ',', '');
+                } else {
+                    $detail .= '€' . number_format((float)$item["product"]->price_per_person * $item["quantity"], 2, ',', '');
                 }
-                $detail.='</td>
+                $detail .= '</td>
         </tr>';
-           }
-           $detail.='<tr>
+            }
+            $detail .= '<tr>
 
 
            <td colspan="3" style="text-align:center;border:1px solid black;padding:3px;" >Totaal</td>
-           <td style="border:1px solid black;padding:3px;">€'.$order->total.'</td>
+           <td style="border:1px solid black;padding:3px;">€' . $order->total . '</td>
            </tr></table>';
-           $body=implode($detail,explode('#detail',$body));
-           $body=implode('€'.$order->total,explode('#total',$body));
+            $body = implode($detail, explode('#detail', $body));
+            $body = implode('€' . $order->total, explode('#total', $body));
             $from_email = Setting::firstOrFail()->from_email;
 
 
@@ -176,7 +170,7 @@ class OrderController extends Controller
         } else if ($status == 4) {
             $subject = Setting::firstOrFail()->collection_complete_subject;
             $body = Setting::firstOrFail()->collection_complete;
-        }else if ($status == 6) {
+        } else if ($status == 6) {
             $subject = Setting::firstOrFail()->home_delivery_subject;
             $body = Setting::firstOrFail()->home_delivery_body;
         }
@@ -185,76 +179,65 @@ class OrderController extends Controller
         $from_email = Setting::firstOrFail()->from_email;
 
         $email = $order->email;
-        if($status!=0){
-            $body=implode($order->firstname.' '.$order->lastname,explode('#name',$body));
-        $body=implode($order->id,explode('#id',$body));
-        $body=implode($order->created_at->formatLocalized('%A %d/%b/%y '),explode('#date',$body));
-        $body=implode($order->date->formatLocalized('%A %d/%b/%y ') . " on " . $order->hour . ":" . $order->minute,explode('#pickup',$body));
-        $detail="<table style='border:1px solid black;width: 100%;border-collapse: collapse;'>";
-        foreach($order->orderLines as $item)
-       {
-        $detail.='<tr>
+        if ($status != 0) {
+            $body = implode($order->firstname . ' ' . $order->lastname, explode('#name', $body));
+            $body = implode($order->id, explode('#id', $body));
+            $body = implode($order->created_at->formatLocalized('%A %d/%b/%y '), explode('#date', $body));
+            $body = implode($order->date->formatLocalized('%A %d/%b/%y ') . " on " . $order->hour . ":" . $order->minute, explode('#pickup', $body));
+            $detail = "<table style='border:1px solid black;width: 100%;border-collapse: collapse;'>";
+            foreach ($order->orderLines as $item) {
+                $detail .= '<tr>
         <td style="padding:3px;border:1px solid black">';
-            if($item[ "product" ]->sell_product_option=="weight_wise"){
-                $detail.=$item["quantity"]>999?($item["quantity"]/1000)."kg":$item["quantity"]."gr";
-            }
+                if ($item["product"]->sell_product_option == "weight_wise") {
+                    $detail .= $item["quantity"] > 999 ? ($item["quantity"] / 1000) . "kg" : $item["quantity"] . "gr";
+                } elseif ($item["product"]->sell_product_option == "per_unit") {
+                    $detail .= $item["quantity"] . "stuk";
+                } else {
+                    $detail .= $item["quantity"] . "person";
+                }
 
-             elseif($item["product"]->sell_product_option=="per_unit")
-             {
-                $detail.=$item["quantity"]."stuk" ;
-             }
-             else {
-                $detail.=$item["quantity"]."person";
-             }
-
-        $detail.='</td>';
-        $detail.='<td style="padding:3px;border:1px solid black">'.$item->product->product_name_dch.'</td>';
-        $detail.='<td style="padding:3px;border:1px solid black">';
-        if($item["product"]->sell_product_option=="weight_wise")
-        {
-            $detail.='€'.number_format((float)$item["product"]->price_weight*1000, 2, ',', '').'/kg';
-        }
-         elseif($item["product"]->sell_product_option=="per_unit")
-         {
-            $detail.='€'.number_format((float)$item["product"]->price_per_unit,
-            2, ',', '').'/ stuk';
-         }
-            else {
-                $detail.='€'.number_format((float)$item["product"]->price_per_person, 2, ',', '').'/person';
-            }
-            $detail.='</td>
+                $detail .= '</td>';
+                $detail .= '<td style="padding:3px;border:1px solid black">' . $item->product->product_name_dch . '</td>';
+                $detail .= '<td style="padding:3px;border:1px solid black">';
+                if ($item["product"]->sell_product_option == "weight_wise") {
+                    $detail .= '€' . number_format((float)$item["product"]->price_weight * 1000, 2, ',', '') . '/kg';
+                } elseif ($item["product"]->sell_product_option == "per_unit") {
+                    $detail .= '€' . number_format((float)$item["product"]->price_per_unit,
+                            2, ',', '') . '/ stuk';
+                } else {
+                    $detail .= '€' . number_format((float)$item["product"]->price_per_person, 2, ',', '') . '/person';
+                }
+                $detail .= '</td>
             <td style="border:1px solid black;padding:3px;">';
-            if($item["product"]->sell_product_option=="weight_wise")
-             {
-                $detail.='€'.number_format((float)$item["product"]->price_weight*$item["quantity"], 2, ',', '');
-             }
-             elseif($item["product"]->sell_product_option=="per_unit"){
-                $detail.='€'.number_format((float)$item["product"]->price_per_unit*$item["quantity"],
-                    2, ',', '');
-             }
-            else {
-                $detail.='€'.number_format((float)$item["product"]->price_per_person*$item["quantity"], 2, ',', '');
-            }
-            $detail.='</td>
+                if ($item["product"]->sell_product_option == "weight_wise") {
+                    $detail .= '€' . number_format((float)$item["product"]->price_weight * $item["quantity"], 2, ',', '');
+                } elseif ($item["product"]->sell_product_option == "per_unit") {
+                    $detail .= '€' . number_format((float)$item["product"]->price_per_unit * $item["quantity"],
+                            2, ',', '');
+                } else {
+                    $detail .= '€' . number_format((float)$item["product"]->price_per_person * $item["quantity"], 2, ',', '');
+                }
+                $detail .= '</td>
     </tr>';
-       }
-       $detail.='<tr>
+            }
+            $detail .= '<tr>
 
 
        <td colspan="3" style="text-align:center;border:1px solid black;padding:3px;" >Totaal</td>
-       <td style="border:1px solid black;padding:3px;">€'.$order->total.'</td>
+       <td style="border:1px solid black;padding:3px;">€' . $order->total . '</td>
        </tr></table>';
-       $body=implode($detail,explode('#detail',$body));
-       $body=implode('€'.$order->total,explode('#total',$body));
-        $data = array("body" => $body);
-        Mail::send('mail', $data, function ($message) use ($subject, $email, $from_email) {
-            $message->to($email)
-                ->from($from_email)
-                ->subject($subject);
-        });
+            $body = implode($detail, explode('#detail', $body));
+            $body = implode('€' . $order->total, explode('#total', $body));
+            $data = array("body" => $body);
+            Mail::send('mail', $data, function ($message) use ($subject, $email, $from_email) {
+                $message->to($email)
+                    ->from($from_email)
+                    ->subject($subject);
+            });
         }
         return redirect()->route('orderList')->with('success', 'Order status updated successfully');
     }
+
     public function updateOrderPickup(Order $order, Request $request)
     {
         $order->date = $request->date;
@@ -273,29 +256,72 @@ class OrderController extends Controller
         });
         return redirect()->route('editOrder', $order->id)->with('success', 'Order Pickup time updated successfully');
     }
+
     public function editOrder(Order $order)
     {
         return view('admin.order.edit', compact('order'));
     }
+
     public function deleteOrder(Order $order)
     {
         $order->delete();
         return redirect()->back()->with('success', 'Order deleted successfully');
     }
+
     public function printOrder(Order $order)
     {
         return view('admin.order.print', compact('order'));
     }
+
     public function printOrderSticker(Order $order)
     {
         return view('admin.order.printSticker', compact('order'));
     }
 
+    public function printPerOrder(Order $order){
+        return response()->json([
+            "error" => 0,
+            "message" => "",
+            "data" =>[
+                'order_id'=>$order->id,
+                'name'=>$order->lastname,
+                'company_c'=>0,
+                'amount'=>$order->total,
+                'address'=>$order->s_address1,
+                'remark'=>'',
+                'date'=>$order->date,
+            ]
+        ]);
+    }
+
+    public function printProducts(Order $order)
+    {
+        //dd($order->orderLines->product);
+        $products = [];
+        foreach ($order->orderLines as $orderLine){
+            $products[] = [
+                'c_name'=>$order->lastname,
+                'company'=>0,
+                'name'=>$orderLine->product->product_name_dch,
+                'default_price'=>$orderLine->price,
+                'amount'=>$orderLine->price,
+                'extra'=>$orderLine->message,
+                'extra_field_text'=>'',
+                'remark'=>''
+            ];
+        }
+        return response()->json([
+            "error" => 0,
+            "message" => "array",
+            "data" =>$products
+        ]);
+    }
 
     public function orderReport()
     {
         return view('admin.report.order', ["orders" => []]);
     }
+
     public function orderReportExport(Request $request)
     {
         $start = $request->start;
@@ -306,6 +332,7 @@ class OrderController extends Controller
 
         return $pdf->download('disney.pdf');
     }
+
     public function orderReportResult(Request $request)
     {
         $start = $request->start;
@@ -313,10 +340,12 @@ class OrderController extends Controller
         $orders = Order::whereDate('date', '>=', $start)->whereDate('date', '<=', $end)->get();
         return view('admin.report.order', compact('orders', 'start', 'end'));
     }
+
     public function productReport()
     {
         return view('admin.report.product', ["orders" => []]);
     }
+
     public function productReportResult(Request $request)
     {
         $start = $request->start;
@@ -338,10 +367,12 @@ class OrderController extends Controller
         //whereBetween('created_at', [$request->from, $request->to])
         return view('admin.report.product', compact('orders', 'quantities', 'start', 'end'));
     }
+
     public function customerReport()
     {
         return view('admin.report.customer', ["customers" => []]);
     }
+
     public function customerReportResult(Request $request)
     {
         $start = $request->start;
@@ -361,6 +392,7 @@ class OrderController extends Controller
 
         return view('admin.report.customer', compact('customers', 'start', 'end'));
     }
+
     public function customerReportExport(Request $request)
     {
         $start = $request->start;
@@ -397,20 +429,18 @@ class OrderController extends Controller
 
         return $pdf->download('disney.pdf');
     }
+
     public function orderDataTable(Request $request)
     {
         if ($request->from && $request->to) {
             $data = Order::whereDate('date', '>=', $request->from)->whereDate('date', '<=', $request->to)->get();
-        }
-        elseif($request->from){
+        } elseif ($request->from) {
             $data = Order::whereDate('date', '>=', $request->from)->get();
 
-        }
-        elseif($request->to){
+        } elseif ($request->to) {
             $data = Order::whereDate('date', '<=', $request->to)->get();
 
-        }
-        else {
+        } else {
             $data = Order::latest()->get();
         }
         return Datatables::of($data)
@@ -418,7 +448,7 @@ class OrderController extends Controller
                 return "<input type='checkbox' class='chk' value='" . $row->id . "'>";
             })
             ->addColumn('delivery_time', function ($row) {
-                                setlocale(LC_TIME, 'Dutch');
+                setlocale(LC_TIME, 'Dutch');
                 return $row->date->formatLocalized('%A %d/%b/%y ') . " om " . $row->hour . ":" . $row->minute;
             })
             ->addColumn('username', function ($row) {
@@ -432,7 +462,7 @@ class OrderController extends Controller
                 $invoice = $row->give_invoice == 1 ? "<br><span class='text text-success ml-20'>Factuur</span>" : "";
                 return "<div class='btn btn-group'>
 
-                <a href='" . route('printOrderSticker', $row->id) . "' class='btn btn-sm btn-info'><i class='fas fa-qrcode'></i></a><a href='" . route('printOrder', $row->id) . "' class='btn btn-sm btn-primary'><i class='fas fa-print'></i></a><a href='" . route('editOrder', $row->id) . "' class='btn btn-sm btn-warning'><i class='fas fa-edit'></i></a><a onclick='return confirm(" . '"Bent u zeker dat u wilt verwijderen?"' . ")' href='" . route('deleteOrder', $row->id) . "' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i></a></div>" . $invoice;
+                <a href='" . route('printOrderSticker', $row->id) . "' class='btn btn-sm btn-info'><i class='fas fa-qrcode'></i></a><a href='" . route('printOrder', $row->id) . "' class='btn btn-sm btn-primary'><i class='fas fa-print'></i></a> <a href='javascript:void();' onclick='print_per_order(".$row->id.")' class='btn btn-sm btn-primary'><img src='".asset("assets/images/per_order.png")."' /></a> <a href='javascript:void();' onclick='print_per_product(".$row->id.")' class='btn btn-sm btn-primary'><img src='".asset("assets/images/per_product.png")."' /></a> <a href='" . route('editOrder', $row->id) . "' class='btn btn-sm btn-warning'><i class='fas fa-edit'></i></a><a onclick='return confirm(" . '"Bent u zeker dat u wilt verwijderen?"' . ")' href='" . route('deleteOrder', $row->id) . "' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i></a></div>" . $invoice;
             })
             ->editColumn('total', function ($row) {
                 return "€" . number_format((float)$row->total, 2, ',', '') . "";
@@ -448,7 +478,7 @@ class OrderController extends Controller
 
                 $option = '<select  class="form-control">
                     <option value="0" ' . $pending . '  >In afwachting</option>
-                    <option value="-1" '. $okay_email. ' >Bestelling ontvangen</option>
+                    <option value="-1" ' . $okay_email . ' >Bestelling ontvangen</option>
                     <option value="1" ' . $success . '  >Goedgekeurd</option>
                     <option value="2" ' . $hold . ' >On hold</option>
                     <option value="4" ' . $collection . ' >Afgerond</option>
@@ -461,6 +491,7 @@ class OrderController extends Controller
             ->escapeColumns([])
             ->make(true);
     }
+
     public function updateOrderLine(OrderLine $orderLine, Request $request)
     {
         $order = $orderLine->order;
@@ -475,12 +506,13 @@ class OrderController extends Controller
             $price = $orderLine->product->price_per_person * $orderLine->quantity;
             $newPrice = $orderLine->product->price_per_person * $quantity;
         }
-        $order->total = $order->total +   $newPrice - $price;
+        $order->total = $order->total + $newPrice - $price;
         $order->save();
         $orderLine->quantity = $quantity;
         $orderLine->save();
         return redirect()->route('editOrder', $order->id)->with('success', 'Item succesvol bijgewerkt');
     }
+
     public function deleteOrderLine(OrderLine $orderLine)
     {
         $order = $orderLine->order;
