@@ -287,9 +287,9 @@ class OrderController extends Controller
                 'name'=>$order->lastname,
                 'company_c'=>0,
                 'amount'=>$order->total,
-                'address'=>$order->s_address1,
+                'address'=>($order->s_address1)?$order->s_address1:"",
                 'remark'=>'',
-                'date'=>$order->date,
+                'date'=>date('Y-m-d h:i',strtotime($order->date)),
             ]
         ]);
     }
@@ -305,7 +305,7 @@ class OrderController extends Controller
                 'name'=>$orderLine->product->product_name_dch,
                 'default_price'=>$orderLine->price,
                 'amount'=>$orderLine->price,
-                'extra'=>$orderLine->message,
+                'extra'=>($orderLine->message)?$orderLine->message:"",
                 'extra_field_text'=>'',
                 'remark'=>''
             ];
