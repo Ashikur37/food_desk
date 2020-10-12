@@ -71,7 +71,7 @@
 @endsection @section('script')
 <script src="{{asset('admin/plugins/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
-<script src="{{asset('js/jquery.dymo.sdk.min.js')}}"></script>
+<script src="{{asset('http://labelwriter.com/software/dls/sdk/js/dymo.connect.framework.js')}}"></script>
 <script src="{{asset('js/print_label.js')}}"></script>
 <script type="text/javascript">
     let changeStatus = (id, status) => {

@@ -37,6 +37,7 @@
                 //var label = dymo.label.framework.openLabelXml(labelXml);
             	var label = dymo.label.framework.openLabelXml(labelXml);
                 var pngData = label.render();
+                alert(pngData);
                 var labelImage = document.getElementById('labelImage');
                 labelImage.src = "data:image/png;base64," + pngData;
             //alert(label);
