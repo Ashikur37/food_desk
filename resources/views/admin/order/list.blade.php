@@ -5,9 +5,9 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="com-md-12 preview-img hide">
+               {{-- <div class="com-md-12 preview-img hide">
                     <img id="labelImage" class="preview-image" src="" alt="">
-                </div>
+                </div>--}}
             </div>
             <!-- /.row -->
         </div>
@@ -71,7 +71,7 @@
 @endsection @section('script')
 <script src="{{asset('admin/plugins/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
-<script src="{{asset('http://labelwriter.com/software/dls/sdk/js/dymo.connect.framework.js')}}"></script>
+<script src="{{asset('js/jquery.dymo.sdk.min.js')}}"></script>
 <script src="{{asset('js/print_label.js')}}"></script>
 <script type="text/javascript">
     let changeStatus = (id, status) => {

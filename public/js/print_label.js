@@ -37,10 +37,10 @@
             	//alert(labelXmlTest);
                 //var label = dymo.label.framework.openLabelXml(labelXml);
             	var label = dymo.label.framework.openLabelXml(labelXml);
-                var pngData = label.render();
+                /*var pngData = label.render();
                 console.log("data",pngData);
                 var labelImage = document.getElementById('labelImage');
-                labelImage.src = "data:image/png;base64," + pngData;
+                labelImage.src = "data:image/png;base64," + pngData;*/
             //alert(label);
                 // select printer to print on
                 // for simplicity sake just use the first LabelWriter printer

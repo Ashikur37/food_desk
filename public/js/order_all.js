@@ -242,6 +242,111 @@ function stripslashes(str) {
 	});
 }
 
+function pageselectCallback(page_index, jq){
+	// Get number of elements per pagionation page from form
+
+	labeler_activated=true;
+	var items_per_page = 10;
+	//var max_elem = Math.min((page_index+1) * items_per_page, dataLength);
+	var max_elem = Math.min(items_per_page, (dataLength -(items_per_page*(page_index))));
+	var newcontent = '';
+
+	var start_index = page_index*items_per_page;
+	var end_index = max_elem;
+
+	$.ajax({
+		url: base_url+'cp/orders/ajax_orders',
+		type:'POST',
+		dataType: 'json',
+		data:{
+				start:start_index,
+				limit: end_index,
+				start_date: $("#filtered_start_date").val(),
+				end_date: $("#filtered_end_date").val()
+			},
+		success: function(members){
+
+			newcontent += '<thead>';
+			newcontent += '<tr>';
+			newcontent += '<th width=\"1%\"><input type=\"checkbox\" values=\"all\" onClick=\"select_all(\'check_all\',\'chk\','+start_index+','+(start_index+end_index)+');\" name =\"check_all\" id=\"check_all\"/></th>';
+			newcontent += '<th width=\"3%\">'+messages9+'</th>';
+			newcontent += '<th width="120px">'+messages10+'</th>';
+			newcontent += '<th>'+messages11+'</th>';
+			newcontent += '<th>'+messages12+'</th>';
+			newcontent += '<th width="80px">'+messages13+'</th>';
+			newcontent += '<th width="100px" style="text-align:left">'+messages14+'</th>';
+			newcontent += '<th>'+messages15+'</th>';
+			if(company_role == "super"){
+				newcontent += '<th>'+messages16+'</th>';
+			}
+			newcontent += '<th>&nbsp;</th>';
+			newcontent += '<th>'+messages17+'</th>';
+
+			if(labeler_activated)
+				newcontent += '<th>&nbsp;</th>';
+			newcontent += '</tr>';
+			newcontent += '</thead>';
+
+			for(var i=0;i<max_elem;i++)
+			{
+				newcontent += '<tr class=\"'+members[i][8]+'\">';
+				newcontent += '<td width=\"2%\" style=\"padding:0 10px;\"><input type="checkbox" value=\"'+members[i][0]+'\" name=\"del[]\" id=\"chk'+(i+start_index)+'\" /></td>';
+				newcontent += '<td nowrap=\"nowrap\" '+( (members[i][15] == "1")?'class=\"strik-out\"':'' )+' >'+members[i][1]+'</td>';
+				newcontent += '<td nowrap=\"nowrap\" '+( (members[i][15] == "1")?'class=\"strik-out\"':'' )+' width=\"70px\"><a onclick= \"show_client_data('+members[i][0]+')\" href=\"#\">'+stripslashes( urldecode( decodeURIComponent( members[i][2] ) ) )+'</a>&nbsp;'+((members[i][11]=='1')?'<img src=\"'+base_url+'assets/cp/images/red_dot.gif\"  width=\"5px\" title=\"'+messages18+'\">':'')+''+stripslashes( members[i][14] )+'</td>';
+				newcontent += '<td nowrap=\"nowrap\" '+( (members[i][15] == "1")?'class=\"strik-out\"':'' )+' ><a href=\"javascript:void(0);\" onclick=\"show_purchases('+members[i][0]+')\">'+members[i][3]+'&nbsp;&euro;</a>'+urldecode(members[i][9])+'</td>';
+				newcontent += '<td nowrap=\"nowrap\" width=\"90px\">'+urldecode(members[i][4])+'</td>';
+				newcontent += '<td nowrap=\"nowrap\" width=\"120px\">'+stripslashes( urldecode(members[i][5]) )+'</td>';
+				newcontent += '<td width=\"60px\" nowrap=\"nowrap\">'+urldecode(members[i][6])+'</td>';
+				newcontent += '<td nowrap=\"nowrap\">'+urldecode(members[i][7])+'</td>';
+				if(company_role == "super"){
+					newcontent += '<td nowrap=\"nowrap\">'+members[i][12]+'</td>';
+				}
+				newcontent += '<td nowrap=\"nowrap\">&nbsp;';
+				if(members[i][10] == 'subscribe')
+				  newcontent += '<img width=\"16\" height=\"16\" border=\"0\" alt=\"Factuur\" src=\"'+base_url+'assets/cp/images/checked_invoice_64.gif\">';
+				newcontent += '</td>';
+
+				newcontent += '<td nowrap=\"nowrap\">';
+				newcontent += '<a class="edit" href=\"javascript:;\" onClick="print_Popup('+members[i][0]+');"><img class=\"v_align_middle\" src=\"'+base_url+'assets/cp/images/print_16.gif\" width=\"16\" height=\"16\" alt="\Print\" border=\"0"\></a>';
+				newcontent += '&nbsp;|&nbsp';
+				newcontent += '<a class=\"edit\" href=\"'+base_url+'cp/orders/order_details_edit/update/'+members[i][0]+'"><img class=\"v_align_middle\" src=\"'+base_url+'assets/cp/images/edit.gif\" width=\"16\" height=\"16\" alt=\"Edit\" border=\"0\"></a>';
+				if(members[i][13]){
+					newcontent += '&nbsp;|&nbsp';
+					newcontent += '<a class=\"\" href=\"'+base_url+'cp/orders/order_details_edit/update/'+members[i][0]+'"\"><img class=\"v_align_middle\" src=\"'+base_url+'assets/cp/images/image-x-photo-cd.png\" width=\"16\" height=\"16\" alt=\"remove\" border=\"0\"></a>';
+				}
+				newcontent += '&nbsp;|&nbsp';
+				newcontent += '<a class=\"delete\" href=\"javascript:;\" onClick=\"return confirmation('+members[i][0]+');\"><img class=\"v_align_middle\" src=\"'+base_url+'assets/cp/images/delete.gif\" width=\"16\" height=\"16\" alt=\"remove\" border=\"0\"></a>';
+				newcontent += '</td>';
+
+				if(labeler_activated){
+					newcontent += '<td nowrap=\"nowrap\">&nbsp;';
+					newcontent += '<a class=\"print\" href=\"javascript: void(0);\" rel=\"'+members[i][0]+'\" onclick=\"print_labeler('+members[i][0]+',\'per_order\')\"><img width=\"16\" height=\"16\" border=\"0\" alt=\"label\" class=\"v_align_middle\" src=\"'+base_url+'assets/cp/images/per_order.png\" title=\"Download Label\"></a>';
+					newcontent += '&nbsp;|&nbsp';
+					newcontent += '<a class=\"print\" href=\"javascript: void(0);\" rel=\"'+members[i][0]+'\" onclick=\"print_labeler('+members[i][0]+',\'per_product\')\"><img width=\"16\" height=\"16\" border=\"0\" alt=\"label\" class=\"v_align_middle\" src=\"'+base_url+'assets/cp/images/per_product.png\" title=\"Download Label\"></a>';
+				    newcontent += '</td>';
+				}
+
+				newcontent += '</tr>';
+				//j++;
+
+			}
+
+				newcontent += '<tr>';
+				newcontent += '<td colspan=\"2\" style=\"color:#FF0000; font-weight:bold\">';
+				newcontent += '<input type=\"button\" class=\"button\" value=\"'+messages21+'\" title=\"Delete\", onclick=\"return ValidateSelection(this.form,\'chk\','+start_index+','+(start_index+max_elem)+'\)\" name=\"button\" id=\"button\"/>';
+				newcontent += '</td>';
+				newcontent += '<td colspan=\"9\" style=\"color:#FF0000; font-weight:bold\">';
+				newcontent += '<input type=\"button\" class=\"button\" value=\"'+messages22+'\" title=\"print all\" onclick=\"return ValidateSelection1(this.form,\'chk\', '+start_index+','+(start_index+max_elem)+')\" name=\"button\" id=\"button\"/></td>';
+				newcontent += '</tr>';
+
+			// Replace old content with new content
+			$('#order_content').html(newcontent);
+			}
+	});
+
+	// Prevent click event propagation
+	return false;
+}
 function getOptionsFromForm(){
 	var opt = {callback: pageselectCallback};
 
