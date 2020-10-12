@@ -127,7 +127,7 @@
     }
     let print_per_product = (order_id)=>{
         $.ajax({
-            url:'{{url('print/per_order')}}/'+order_id,
+            url:'{{url('print/per_product')}}/'+order_id,
             dataType: 'json',
             success:function(response){
                 if(response.error){
